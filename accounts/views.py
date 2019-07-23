@@ -1,3 +1,6 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def view_profile(request):
+    args = {'user': request.user}
+    return render(request, 'accounts/view_profile.html', args)

@@ -1,6 +1,10 @@
 from .models import UserProfile
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
 
 
-admin.site.register(UserProfile)
+@admin.register(UserProfile)
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('user', 'city', 'country', 'gender', 'linkedin')
+    list_filter = ('created', 'gender', 'city', 'country')
+    ordering = ('-created', 'user__username')
+    search_fields = ('user__username', 'linkedin')

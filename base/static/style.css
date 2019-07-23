@@ -1,12 +1,11 @@
-body {
+html {
     font-size: 70%;
-    padding-top: 57px;
+    padding-top: 60px;
 }
 
-.dropdown-menu .dropdown-item {
-    font-size: 0.5rem;
-}
-
-/* Responsiveness */
+/* #Responsiveness# */
 h1 { font-size: 2rem; }
 h2 { font-size: 1.8rem; }
+.navbar-toggler  .navbar-toggler-icon {font-size: 0.5rem; }
+.dropdown-menu .dropdown-item { font-size: 0.6rem; }
+/* /#Repsponiveness# */

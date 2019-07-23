@@ -1,0 +1,12 @@
+body {
+    font-size: 70%;
+    padding-top: 57px;
+}
+
+.dropdown-menu .dropdown-item {
+    font-size: 0.5rem;
+}
+
+/* Responsiveness */
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }

@@ -8,3 +8,4 @@ class UserProfileAdmin(admin.ModelAdmin):
     list_filter = ('created', 'gender', 'city', 'country')
     ordering = ('-created', 'user__username')
     search_fields = ('user__username', 'linkedin')
+    prepopulated_fields = {'slug': ('user', )}

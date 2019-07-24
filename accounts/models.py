@@ -1,8 +1,10 @@
 from django.contrib.auth.models import User
 from django_countries import fields
 from django.db import models
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
+from django.utils.text import slugify
+
 
 class UserProfile(models.Model):
 
@@ -14,6 +16,7 @@ class UserProfile(models.Model):
     )
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    slug = models.SlugField(unique=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics', blank=True)
@@ -41,8 +44,21 @@ class UserProfile(models.Model):
     def get_model_fields(self):
         return [((field.name), field.value_to_string(self)) for field in self._meta.fields]
 
+
     @receiver(post_save, sender=User)
     def create_userprofile(sender, instance, created, **kwargs):
         if created:
             user_profile = UserProfile(user=instance)
             user_profile.save()
+
+
+def pre_save_post_receiver(sender, instance, *args, **kwargs):
+    slug = slugify(instance.user)
+    # Making sure the slug doesn't already exist
+    exists = UserProfile.objects.filter(slug=slug).exists()
+
+    if exists:
+        slug = f'{slug} {instance.username}'
+    instance.slug = slug
+
+pre_save.connect(pre_save_post_receiver, sender=UserProfile)

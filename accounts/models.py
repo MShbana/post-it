@@ -22,11 +22,20 @@ class UserProfile(models.Model):
     linkedin = models.URLField(blank=True)
     gender =  models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True)
 
+    def __repr__(self):
+        return f"<UserProfile: user='{self.user}', image='{self.image}', city='{self.city}', country='{self.country}', linkedin='{self.linkedin}', gender='{self.gender}'>"
+
     def __str__(self):
         return f'{self.user} Profile'
 
-    def __repr__(self):
-        return f"<UserProfile: user='{self.user}', image='{self.image}', city='{self.city}', country='{self.country}', linkedin='{self.linkedin}', gender='{self.gender}'>"
+    def display_gender(self):
+        if self.gender:
+            return dict(self.GENDER_CHOICES)[self.gender]
+        else:
+            return None
+
+    def get_model_fields(self):
+        return [((field.name), field.value_to_string(self)) for field in self._meta.fields]
 
     class Meta:
         verbose_name_plural = 'Users Profiles'

@@ -4,16 +4,17 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="container">
-                <ul class="navbar-nav">
-                    <li class="nav-item ml-auto active">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
                         <a class="nav-link py-1" href="{% url 'home:home' %}">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item dropdown ml-auto">
                         <a class="nav-link py-1 dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Account
+                            {{ user.username }}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{% url 'accounts:view_profile' %}">Profile</a>
+                            <a class="dropdown-item" href="{% url 'accounts:view_account' username=user.username %}">My Account</a>
+                            <a class="dropdown-item" href="{% url 'accounts:view_account_info' username=user.username %}">Account Info</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Logout</a>
                         </div>

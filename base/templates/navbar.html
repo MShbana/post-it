@@ -13,8 +13,8 @@
                             {{ user.username }}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{% url 'accounts:view_account' username=user.username %}">My Account</a>
-                            <a class="dropdown-item" href="{% url 'accounts:view_account_info' username=user.username %}">Account Info</a>
+                            <a class="dropdown-item" href="{% url 'view_account' username=user.username %}">My Account</a>
+                            <a class="dropdown-item" href="{% url 'view_account_info' username=user.username %}">Account Info</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Logout</a>
                         </div>

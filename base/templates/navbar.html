@@ -9,15 +9,24 @@
                         <a class="nav-link py-1" href="{% url 'home:home' %}">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item dropdown ml-auto">
-                        <a class="nav-link py-1 dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{ user.username }}
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{% url 'view_account' username=user.username %}">My Account</a>
-                            <a class="dropdown-item" href="{% url 'view_account_info' username=user.username %}">Account Info</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Logout</a>
-                        </div>
+                        {% if user.is_authenticated %}
+                            <a class="nav-link py-1 dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ user.username }}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{% url 'view_account' username=user.username %}">My Account</a>
+                                <a class="dropdown-item" href="{% url 'view_account_info' username=user.username %}">Account Info</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Logout</a>
+                            </div>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link py-1" href="#">Register</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link py-1" href="#">Login</a>
+                            </li>
+                        {% endif %}
                     </li>
                 </ul>
             </div>

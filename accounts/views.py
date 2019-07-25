@@ -1,3 +1,4 @@
+from .forms import UserRegisterationForm
 from .models import UserProfile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
@@ -21,12 +22,12 @@ def view_account_info(request, slug):
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = UserRegisterationForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('home:home')
     else:
-        form = UserCreationForm()
+        form = UserRegisterationForm()
 
     args = {'form': form}
     return render(request, 'accounts/register.html', args)

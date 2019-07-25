@@ -29,6 +29,7 @@ urlpatterns = [
     path('<slug:slug>/about/', account_views.view_account_info, name='view_account_info'),
     path('register/', account_views.register, name='register'),
     path('login/', auth_views.LoginView.as_view(redirect_authenticated_user=True, template_name='accounts/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout')
 ]
 
 if settings.DEBUG:

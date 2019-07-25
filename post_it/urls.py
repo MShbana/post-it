@@ -19,8 +19,8 @@ from accounts import views as account_views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 from django.urls import path, include
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,6 +28,7 @@ urlpatterns = [
     path('<slug:slug>/profile', account_views.view_account, name='view_account'),
     path('<slug:slug>/about/', account_views.view_account_info, name='view_account_info'),
     path('register/', account_views.register, name='register'),
+    path('login/', auth_views.LoginView.as_view(redirect_authenticated_user=True, template_name='accounts/login.html'), name='login'),
 ]
 
 if settings.DEBUG:

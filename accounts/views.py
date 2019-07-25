@@ -22,6 +22,9 @@ def view_account_info(request, slug):
 
 
 def register(request):
+    if request.user.is_authenticated:
+        return redirect('home:home')
+
     if request.method == 'POST':
         form = UserRegisterationForm(request.POST)
         if form.is_valid():

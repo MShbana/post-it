@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.core.validators import RegexValidator
 
 
 class ExtraFieldsRequiredMixin(object):
@@ -11,7 +12,14 @@ class ExtraFieldsRequiredMixin(object):
         self.fields['first_name'].required = True
         self.fields['last_name'].required = True
 
+
+
 class UserRegisterationForm(ExtraFieldsRequiredMixin, UserCreationForm):
+
+    REGEX_PATTERN = RegexValidator(r'^[a-zA-Z]+$', 'Enter a valid name.')
+
+    first_name = forms.CharField(max_length=20, validators=[REGEX_PATTERN])
+    last_name = forms.CharField(max_length=20, validators=[REGEX_PATTERN])
 
     class Meta:
         model = User

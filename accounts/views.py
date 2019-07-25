@@ -1,5 +1,6 @@
 from .forms import UserRegisterationForm
 from .models import UserProfile
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -25,6 +26,7 @@ def register(request):
         form = UserRegisterationForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Your account has been created.')
             return redirect('home:home')
     else:
         form = UserRegisterationForm()

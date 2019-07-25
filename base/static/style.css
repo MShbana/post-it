@@ -19,6 +19,9 @@ body {
     color: #716C7A;
 }
 
+.site-name {
+    color: #6E6977;
+}
 
 /* #Responsiveness# */
 h1 { font-size: 2rem; }

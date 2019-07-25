@@ -1,7 +1,7 @@
-from django.contrib.auth.models import User
 from django_countries import fields
+from django.contrib.auth.models import User
 from django.db import models
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.text import slugify
 
@@ -52,13 +52,8 @@ class UserProfile(models.Model):
             user_profile.save()
 
 
-def pre_save_post_receiver(sender, instance, *args, **kwargs):
-    slug = slugify(instance.user)
-    # Making sure the slug doesn't already exist
-    exists = UserProfile.objects.filter(slug=slug).exists()
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.slug = slugify(self.user)
 
-    if exists:
-        slug = f'{slug} {instance.username}'
-    instance.slug = slug
-
-pre_save.connect(pre_save_post_receiver, sender=UserProfile)
+        super().save(*args, **kwargs)

@@ -9,15 +9,15 @@ from django.shortcuts import get_object_or_404, render, redirect
 
 @login_required
 def view_account(request, slug):
-    user_profile = get_object_or_404(Profile, slug=slug)
-    args = {'user': user_profile.user}
+    profile = get_object_or_404(Profile, slug=slug)
+    args = {'user': profile.user}
     return render(request, 'accounts/view_account.html', args)
 
 
 @login_required
 def view_account_info(request, slug):
-    user_profile = get_object_or_404(Profile, slug=slug)
-    args = {'user': user_profile.user}
+    profile = get_object_or_404(Profile, slug=slug)
+    args = {'user': profile.user}
     return render(request, 'accounts/view_account_info.html', args)
 
 

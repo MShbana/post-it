@@ -20,7 +20,8 @@
         <button class="btn btn-primary">Follow</button>
         <a href="#" class="btn btn-secondary">About</a>
     </div>
-    <div class="content-section">
-        <h1>User's Posts will appear here.</h1>
+    {% for post in posts %}
+        {% include "posts/_post_base.html" %}
+    {% endfor %}
     </div>  
 {% endblock content %}

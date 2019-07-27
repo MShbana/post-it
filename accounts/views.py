@@ -10,7 +10,9 @@ from django.shortcuts import get_object_or_404, render, redirect
 @login_required
 def view_account(request, slug):
     profile = get_object_or_404(Profile, slug=slug)
-    args = {'user': profile.user}
+    user = profile.user
+    posts = user.posts.all()
+    args = {'user': user, 'posts': posts}
     return render(request, 'accounts/view_account.html', args)
 
 

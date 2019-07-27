@@ -25,8 +25,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('home.urls')),
-    path('<slug:slug>/profile', account_views.view_account, name='view_account'),
-    path('<slug:slug>/about/', account_views.view_account_info, name='view_account_info'),
+    path('account/', include('accounts.urls')),
     path('register/', account_views.register, name='register'),
     path('login/', auth_views.LoginView.as_view(redirect_authenticated_user=True, template_name='accounts/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout')

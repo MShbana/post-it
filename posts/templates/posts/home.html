@@ -3,5 +3,7 @@
     Home
 {% endblock title %}
 {% block content %}
-    <h1 class="text-center">Home Page</h1>
+    {% for post in posts %}
+        {% include "posts/_post_base.html" %}
+    {% endfor %}
 {% endblock content %}

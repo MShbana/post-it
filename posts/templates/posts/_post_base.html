@@ -1,0 +1,24 @@
+<div class="content-section">
+    <div>
+        <h1 class="border-bottom pb-2 mb-4">{{ post.title }}</h1>            
+        <p>{{ post.body }}</p>
+    </div>
+    <div class="meta-data text-right row">
+        <div class="col-12">
+            <small>
+                Author: 
+                <span class="post-meta">
+                    <a href="{% url 'accounts:view_account' post.user.profile.slug %}">{{ post.user.username }}</a>
+                </span>
+            </small>
+        </div>
+        <div class="col-12">
+            <small>
+                Posted at: 
+                <span class="post-meta">
+                    {{ post.created }}
+                </span>
+            </small>
+        </div>
+    </div>
+</div>

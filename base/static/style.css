@@ -23,6 +23,10 @@ body {
     color: #6E6977;
 }
 
+.post-meta, .post-meta a {
+    color: #147AFF;
+}
+
 /* #Responsiveness# */
 h1 { font-size: 2rem; }
 h2 { font-size: 1.8rem; }

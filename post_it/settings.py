@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'base.apps.BaseConfig',
-    'home.apps.HomeConfig',
+    'posts.apps.PostsConfig',
     'accounts.apps.AccountsConfig',
     'django_countries',
     'crispy_forms',
@@ -130,5 +130,5 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Authentication & Authorization
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'home:home'
-LOGOUT_REDIRECT_URL = 'home:home'
+LOGIN_REDIRECT_URL = 'posts:home'
+LOGOUT_REDIRECT_URL = 'posts:home'

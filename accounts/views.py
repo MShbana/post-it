@@ -36,14 +36,14 @@ def view_update_account(request):
 
 def register(request):
     if request.user.is_authenticated:
-        return redirect('home:home')
+        return redirect('posts:home')
 
     if request.method == 'POST':
         form = UserRegisterationForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'Your account has been created. Your are able to login now.')
-            return redirect('home:home')
+            return redirect('posts:home')
     else:
         form = UserRegisterationForm()
 

@@ -7,7 +7,7 @@
                 <ul class="navbar-nav ml-auto">
                     {% if not request.user.is_anonymous %}
                         <li class="nav-item active mr-auto">
-                            <a class="nav-link" href="{% url 'home:home' %}">
+                            <a class="nav-link" href="{% url 'posts:home' %}">
                                 Home
                             </a>
                         </li>

@@ -6,7 +6,7 @@ from django.dispatch import receiver
 from django.utils.text import slugify
 
 
-class UserProfile(models.Model):
+class Profile(models.Model):
 
     GENDER_CHOICES = (
         ('M', 'Male'),
@@ -26,11 +26,10 @@ class UserProfile(models.Model):
     gender =  models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True)
 
     class Meta:
-        verbose_name_plural = 'Users Profiles'
         ordering = ('-created', )
 
     def __repr__(self):
-        return f"<UserProfile: user='{self.user}', image='{self.image}', city='{self.city}', country='{self.country}', linkedin='{self.linkedin}', gender='{self.gender}'>"
+        return f"<Profile: user='{self.user}', image='{self.image}', city='{self.city}', country='{self.country}', linkedin='{self.linkedin}', gender='{self.gender}'>"
 
     def __str__(self):
         return f'{self.user} Profile'
@@ -46,9 +45,9 @@ class UserProfile(models.Model):
 
 
     @receiver(post_save, sender=User)
-    def create_userprofile(sender, instance, created, **kwargs):
+    def create_profile(sender, instance, created, **kwargs):
         if created:
-            user_profile = UserProfile(user=instance)
+            user_profile = Profile(user=instance)
             user_profile.save()
 
 

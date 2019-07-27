@@ -1,12 +1,12 @@
 from .forms import UserRegisterationForm
-from .models import UserProfile
+from .models import Profile
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
 
-@admin.register(UserProfile)
-class UserProfileAdmin(admin.ModelAdmin):
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
     
     list_display = ('user', 'slug', 'city', 'country', 'gender', 'linkedin')
     list_filter = ('created', 'gender', 'city', 'country')

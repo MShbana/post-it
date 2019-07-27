@@ -12,12 +12,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'view_account' request.user.userprofile.slug %}">
+                            <a class="nav-link" href="{% url 'view_account' request.user.profile.slug %}">
                                 {{ request.user.username }}
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'view_account_info' request.user.userprofile.slug %}">
+                            <a class="nav-link" href="{% url 'view_account_info' request.user.profile.slug %}">
                                 Account Info
                             </a>
                         </li>

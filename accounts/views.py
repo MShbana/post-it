@@ -1,5 +1,5 @@
 from .forms import UserRegisterationForm
-from .models import UserProfile
+from .models import Profile
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
@@ -9,14 +9,14 @@ from django.shortcuts import get_object_or_404, render, redirect
 
 @login_required
 def view_account(request, slug):
-    user_profile = get_object_or_404(UserProfile, slug=slug)
+    user_profile = get_object_or_404(Profile, slug=slug)
     args = {'user': user_profile.user}
     return render(request, 'accounts/view_account.html', args)
 
 
 @login_required
 def view_account_info(request, slug):
-    user_profile = get_object_or_404(UserProfile, slug=slug)
+    user_profile = get_object_or_404(Profile, slug=slug)
     args = {'user': user_profile.user}
     return render(request, 'accounts/view_account_info.html', args)
 
@@ -29,7 +29,7 @@ def register(request):
         form = UserRegisterationForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Your account has been created.')
+            messages.success(request, 'Your account has been created. Your are able to login now.')
             return redirect('home:home')
     else:
         form = UserRegisterationForm()

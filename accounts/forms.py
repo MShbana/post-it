@@ -1,5 +1,6 @@
+from .models import Profile
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 
@@ -34,3 +35,29 @@ class UserRegisterationForm(ExtraFieldsRequiredMixin, UserCreationForm):
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError("This email is already registered. Please choose another one.")
         return email
+
+
+class UserUpdateForm(ExtraFieldsRequiredMixin, forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+         self.user = kwargs.pop('user',None)
+         super(UserUpdateForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'email')
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if self.instance.pk is not None and self.instance.email == email:
+            return email
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError('This email already exists. Please choose another one.')
+        return email
+
+
+class ProfileUpdateForm(forms.ModelForm):
+
+    class Meta:
+        model = Profile
+        fields = ('city', 'country', 'linkedin', 'gender', 'image')

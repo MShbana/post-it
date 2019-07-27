@@ -42,7 +42,5 @@ class Profile(models.Model):
         return [((field.name), field.value_to_string(self)) for field in self._meta.fields]
 
     def save(self, *args, **kwargs):
-        if not self.id:
-            self.slug = slugify(self.user)
-
+        self.slug = slugify(self.user)
         super().save(*args, **kwargs)

@@ -15,9 +15,8 @@ def view_account(request, slug):
 
 
 @login_required
-def view_account_info(request, slug):
-    profile = get_object_or_404(Profile, slug=slug)
-    args = {'user': profile.user}
+def view_account_info(request):
+    args = {'user': request.user }
     return render(request, 'accounts/view_account_info.html', args)
 
 

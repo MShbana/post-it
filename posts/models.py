@@ -8,11 +8,11 @@ class Post(models.Model):
     title = models.CharField(max_length=50, null=False, blank=False)
     slug = models.SlugField(unique=True, blank=True)
     body = models.TextField()
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+    date_posted = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ('-created',)
+        ordering = ('-date_posted',)
 
     def __repr__(self):
         return f"<Post: user='{self.user}', title='{self.title}'>"

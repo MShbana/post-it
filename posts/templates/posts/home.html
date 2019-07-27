@@ -1,8 +1,20 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 {% block title %}
     Home
 {% endblock title %}
 {% block content %}
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            {% crispy form %}
+        </fieldset>
+        <div class="form-group text-center">
+            <button class="btn btn-primary" type="submit">
+                Post
+            </button>
+        </div>
+    </form>
     {% for post in posts %}
         {% include "posts/_post_base.html" %}
     {% endfor %}

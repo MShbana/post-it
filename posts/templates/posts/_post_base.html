@@ -1,6 +1,14 @@
-<div class="content-section">
-    <div>
-        <h1 class="border-bottom pb-2 mb-4">{{ post.title }}</h1>            
+<div class="content-section post">
+    <h1 class="post-title"><a href="{% url 'posts:view_post' post.slug %}">{{ post.title }}</a></h1>
+    {% if request.user == post.user %}
+        <a href="#" class="btn btn-info btn-sm">
+            Edit
+        </a>
+        <button class="btn btn-danger btn-sm">
+            Delete
+        </button>
+    {% endif %}
+    <div class="post-body border-top pt-4 mt-2">
         <p>{{ post.body }}</p>
     </div>
     <div class="meta-data text-right row">

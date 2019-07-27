@@ -1,6 +1,6 @@
 from .forms import PostCreationForm
 from .models import Post
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView
 
 
@@ -24,3 +24,9 @@ class Home(TemplateView):
 
         args = {'form': form}
         return render(request, self.template_name, args)
+
+
+def view_post(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    args = {'post': post}
+    return render(request, 'posts/post.html', args)

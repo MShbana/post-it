@@ -27,6 +27,10 @@ body {
     color: #147AFF;
 }
 
+.post-title a {
+    text-decoration: none;
+}
+
 /* #Responsiveness# */
 h1 { font-size: 2rem; }
 h2 { font-size: 1.8rem; }

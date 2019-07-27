@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% block title %}
-    Home
+    Edit {{ post.title }}
 {% endblock title %}
 {% block content %}
     <form method="POST">
@@ -10,12 +10,12 @@
             {{ form|crispy }}
         </fieldset>
         <div class="form-group text-center">
-            <button class="btn btn-primary" type="submit">
-                Post
+            <button class="btn btn-success" type="submit">
+                Update
             </button>
+            <a href="{% url 'posts:view_post' post.slug %}" class="btn btn-secondary">
+                Cancel
+            </a>
         </div>
     </form>
-    {% for post in posts %}
-        {% include "posts/_post_base.html" %}
-    {% endfor %}
 {% endblock content %}

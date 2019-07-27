@@ -1,12 +1,12 @@
 <div class="content-section post">
     <h1 class="post-title"><a href="{% url 'posts:view_post' post.slug %}">{{ post.title }}</a></h1>
     {% if request.user == post.user %}
-        <a href="#" class="btn btn-info btn-sm">
+        <a href="{% url 'posts:edit_post' post.slug %} " class="btn btn-info btn-sm">
             Edit
         </a>
-        <button class="btn btn-danger btn-sm">
+        <a class="btn btn-danger btn-sm" href="{% url 'posts:delete_post' post.slug %}">
             Delete
-        </button>
+        </a>
     {% endif %}
     <div class="post-body border-top pt-4 mt-2">
         <p>{{ post.body }}</p>

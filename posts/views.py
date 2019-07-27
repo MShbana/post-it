@@ -1,5 +1,8 @@
 from .forms import PostCreationForm
 from .models import Post
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView
 
@@ -25,8 +28,44 @@ class Home(TemplateView):
         args = {'form': form}
         return render(request, self.template_name, args)
 
-
+@login_required
 def view_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
     args = {'post': post}
-    return render(request, 'posts/post.html', args)
+    return render(request, 'posts/view_post.html', args)
+
+
+@login_required
+def edit_post(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+
+    if request.user != post.user:
+        raise PermissionDenied()
+
+    if request.method == 'POST':
+        form = PostCreationForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your post has been successfully updated.')
+            return redirect('posts:view_post', post.slug)
+    else:
+        form = PostCreationForm(instance=post)
+
+    args = {'post': post, 'form': form}
+    return render(request, 'posts/edit_post.html', args)
+
+
+@login_required
+def delete_post(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+
+    if request.user != post.user:
+        raise PermissionDenied()
+
+    if request.method == 'POST':
+        post.delete()
+        messages.success(request, 'Your post has been successfully deleted.')
+        return redirect('posts:home')
+
+    args = {'post': post}
+    return render(request, 'posts/delete_post_confirm.html', args)

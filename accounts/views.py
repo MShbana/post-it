@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import Http404
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.shortcuts import get_object_or_404, render, redirect
@@ -85,6 +86,8 @@ def view_account(request, slug):
     profile = get_object_or_404(Profile, slug=slug)
     user = profile.user
 
+    is_following = profile.followers.filter(pk=request.user.id).exists()
+
     posts_list = user.posts.all()
     paginator = Paginator(posts_list, 10)
     page = request.GET.get('page')
@@ -97,7 +100,7 @@ def view_account(request, slug):
         posts = paginator.page(paginator.num_pages)
 
 
-    args = {'user': user, 'posts': posts}
+    args = {'user': user, 'posts': posts, 'is_following': is_following}
     return render(request, 'accounts/view_account.html', args)
 
 
@@ -119,3 +122,19 @@ def view_update_account(request):
 
     args = {'user': user, 'user_form': user_form, 'profile_form': profile_form}
     return render(request, 'accounts/view_update_account.html', args)
+
+from django.http import JsonResponse
+
+@login_required
+def follow_profile(request, slug, operation):
+    profile_to_follow_or_unfollow = get_object_or_404(Profile, slug=slug)
+    current_user_profile = request.user.profile
+
+    if operation == 'follow':
+        current_user_profile.following.add(profile_to_follow_or_unfollow)
+    elif operation == 'unfollow':
+        current_user_profile.following.remove(profile_to_follow_or_unfollow)
+    else:
+        raise Http404
+
+    return redirect('accounts:view_account', slug)

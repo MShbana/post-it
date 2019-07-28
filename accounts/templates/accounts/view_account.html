@@ -22,8 +22,16 @@
         </div>
     </div>
     <div class="text-center mb-4">
-        <button class="btn btn-primary">Follow</button>
-        <a href="#" class="btn btn-secondary">About</a>
+        {% if user != request.user %}
+            {% if is_following %}
+                <a href="{% url 'accounts:follow_profile' slug=user.profile.slug operation='unfollow' %}" class="btn btn-danger">Unfollow</a>
+            {% else %}
+                <a href="{% url 'accounts:follow_profile' slug=user.profile.slug  operation='follow' %}" class="btn btn-primary">Follow</a>
+            {% endif %}
+        {% endif %}
+        {% comment %}
+            <a href="#" class="btn btn-secondary">About</a>
+        {% endcomment %}
     </div>
     {% if posts %}
         {% for post in posts %}

@@ -15,7 +15,9 @@
         {% if followers_list %}
             {% for profile in followers_list %}
                 <li class="list-group-item">
-                    {{ profile.user.username }}
+                    <a href="{% url 'accounts:view_account' profile.slug %}">
+                        {{ profile.user.username }}
+                    </a>
                 </li>
             {% endfor %}
         {% else %}

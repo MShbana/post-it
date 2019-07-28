@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Count
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView
 
@@ -15,7 +16,8 @@ class Home(TemplateView):
     def get(self, request):
         form = PostCreationForm()
 
-        posts_list = Post.objects.all()
+        following_list = request.user.profile.following.all()
+        posts_list = Post.objects.filter(user__profile__in=following_list)
         paginator = Paginator(posts_list, 10)
         page = request.GET.get('page')
 
@@ -26,7 +28,14 @@ class Home(TemplateView):
         except EmptyPage:
             posts = paginator.page(paginator.num_pages)
 
-        args = {'posts': posts, 'form': form}
+        most_popular_posts = Post.objects.annotate(
+            num_comments=Count('comments')).order_by('-num_comments')[:10]
+
+        args = {
+            'posts': posts,
+            'most_popular_posts': most_popular_posts,
+            'form': form
+        }
         return render(request, self.template_name, args)
 
     def post(self, request):

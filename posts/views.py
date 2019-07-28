@@ -3,6 +3,7 @@ from .models import Post
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView
 
@@ -13,7 +14,18 @@ class Home(TemplateView):
 
     def get(self, request):
         form = PostCreationForm()
-        posts = Post.objects.all()
+
+        posts_list = Post.objects.all()
+        paginator = Paginator(posts_list, 10)
+        page = request.GET.get('page')
+
+        try:
+            posts = paginator.page(page)
+        except PageNotAnInteger:
+            posts = paginator.page(1)
+        except EmptyPage:
+            posts = paginator.page(paginator.num_pages)
+
         args = {'posts': posts, 'form': form}
         return render(request, self.template_name, args)
 
@@ -27,6 +39,7 @@ class Home(TemplateView):
 
         args = {'form': form}
         return render(request, self.template_name, args)
+
 
 @login_required
 def view_post(request, slug):

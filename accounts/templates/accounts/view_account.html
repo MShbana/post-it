@@ -16,7 +16,7 @@
             {% if user.get_full_name %}
                 {{ user.get_full_name }}
             {% endif %}
-            </div>
+        </div>
         <div class="col-12">
             (@{{ user.username }})
         </div>
@@ -28,5 +28,5 @@
     {% for post in posts %}
         {% include "posts/_post_base.html" %}
     {% endfor %}
-    </div>  
+    {% include "posts/_paginations.html" with page=posts %}
 {% endblock content %}

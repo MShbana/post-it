@@ -18,4 +18,5 @@
     {% for post in posts %}
         {% include "posts/_post_base.html" %}
     {% endfor %}
+    {% include "posts/_paginations.html" with page=posts %}
 {% endblock content %}

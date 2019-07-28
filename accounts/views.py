@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404, render, redirect
 
 
@@ -11,7 +12,19 @@ from django.shortcuts import get_object_or_404, render, redirect
 def view_account(request, slug):
     profile = get_object_or_404(Profile, slug=slug)
     user = profile.user
-    posts = user.posts.all()
+
+    posts_list = user.posts.all()
+    paginator = Paginator(posts_list, 10)
+    page = request.GET.get('page')
+
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
+
     args = {'user': user, 'posts': posts}
     return render(request, 'accounts/view_account.html', args)
 

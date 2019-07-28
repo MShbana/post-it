@@ -1,8 +1,9 @@
 from .forms import UserRegisterationForm, UserUpdateForm, ProfileUpdateForm
 from .models import Profile
 from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404, render, redirect
@@ -64,3 +65,19 @@ def register(request):
 
     args = {'form': form}
     return render(request, 'accounts/register.html', args)
+
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            messages.success(request, 'Your password has been successfully updated.')
+            return redirect('posts:home')
+    else:
+        form = PasswordChangeForm(user=request.user)
+
+    args = {'form': form}
+    return render(request, 'accounts/change_password.html', args)

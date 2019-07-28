@@ -50,6 +50,11 @@ urlpatterns = [
          auth_views.PasswordResetCompleteView.as_view(
              template_name='accounts/password_reset_complete.html'),
          name='password_reset_complete'),
+    # path('change-password/',
+    #      auth_views.PasswordChangeView.as_view(
+    #          template_name='accounts/change_password.html'),
+    #      name='change_password')
+    path('change-password/', account_views.change_password, name='change_password'),
 ]
 
 if settings.DEBUG:

@@ -21,6 +21,9 @@
                 {{ user_form|crispy }}
                 {{ profile_form|crispy }}
             </fieldset>
+            <fieldset class="form-group">
+                Password:<br>You can change your password through this <a href="{% url 'change_password' %}">form</a>.
+            </fieldset>
             <div class="form-group">
                 <button class="btn btn-success" type="submit">
                     Update

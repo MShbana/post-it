@@ -1,11 +1,16 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}
     {{ user.username }}
 {% endblock title %}
 {% block content %}
     <div class="row text-center mb-2">
         <div class="col-12 mb-2">
-            <img class="profile_pic" src="{{ user.profile.image.url }}">
+            {% if user.profile.image %}
+                <img class="profile-pic" src="{{ user.profile.image.url }}">
+            {% else %}
+                <img class="profile-pic" src="/media/default.jpg">
+            {% endif %}
         </div>
         <div class="col-12">
             {% if user.get_full_name %}

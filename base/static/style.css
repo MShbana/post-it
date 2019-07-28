@@ -1,6 +1,7 @@
 html {
     font-size: 70%;
     padding-top: 60px;
+
 }
 
 body {
@@ -23,6 +24,12 @@ body {
     color: #6E6977;
 }
 
+.post-body {
+    white-space: pre-line;
+    word-wrap: break-word;
+
+}
+
 .post-meta, .post-meta a {
     color: #147AFF;
 }
@@ -38,23 +45,23 @@ h3 { font-size: 1.4rem; }
 tr { font-size: 1rem; }
 .navbar-toggler  .navbar-toggler-icon {font-size: 0.5rem; }
 .dropdown-menu .dropdown-item { font-size: 0.6rem; }
-.profile_pic {
-    max-width: 100px;
-    max-height: 100px;
+.profile-pic {
+    width: 100px;
+    height: 100px;
     border-radius: 5px;
     border: 2px solid #0E150F;
 }
 @media screen and (max-width: 320px) {
     html { font-size: 50%; }
-    .profile_pic { width: 60px; height: 60px;}
+    .profile-pic { width: 60px; height: 60px;}
 }
 @media screen and (min-width: 321px) and (max-width: 576px) {
     html { font-size: 60%; }
-    .profile_pic { width: 80px; height: 80px;}
+    .profile-pic { width: 80px; height: 80px;}
 }
 @media screen and (min-width: 577px) and (max-width: 768px)
 {
     html { font-size: 65%; }
-    .profile_pic { width: 100px; height: 100px;}
+    .profile-pic { width: 100px; height: 100px;}
 }
 /* /#Repsponiveness# */

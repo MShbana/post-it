@@ -5,7 +5,7 @@ from django.db import models
 
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
-    title = models.CharField(max_length=50, null=False, blank=False)
+    title = models.CharField(max_length=250, null=False, blank=False)
     slug = models.SlugField(unique=True, blank=True)
     body = models.TextField()
     date_posted = models.DateTimeField(auto_now_add=True)

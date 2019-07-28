@@ -7,7 +7,11 @@
     <div class="content-section">
         <div class="row text-center mb-4">
             <div class="col-12 mb-2">
-                <img class="profile_pic" src="{{ user.profile.image.url }}">
+                {% if user.profile.image %}
+                    <img class="profile-pic" src="{{ user.profile.image_url }}">
+                {% else %}
+                    <img class="profile-pic" src="/media/default.jpg">
+                {% endif %}
             </div>
         </div>
         <h3 class="text-center py-2">Personal Information</h3>

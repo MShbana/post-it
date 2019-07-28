@@ -29,10 +29,10 @@
         {% for post in posts %}
             {% include "posts/_post_base.html" %}
         {% endfor %}
+        {% include "posts/_paginations.html" with page=posts %}
     {% else %}
         <div class="content-section text-center">
             <h3>{{ user.username }} has no posts yet...</h3>
         </div>
     {% endif %}
-    {% include "posts/_paginations.html" with page=posts %}
 {% endblock content %}

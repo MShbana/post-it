@@ -99,8 +99,11 @@ def view_account(request, slug):
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
 
-
-    args = {'user': user, 'posts': posts, 'is_following': is_following}
+    args = {
+        'user': user,
+        'posts': posts,
+        'is_following': is_following
+    }
     return render(request, 'accounts/view_account.html', args)
 
 
@@ -123,7 +126,6 @@ def view_update_account(request):
     args = {'user': user, 'user_form': user_form, 'profile_form': profile_form}
     return render(request, 'accounts/view_update_account.html', args)
 
-from django.http import JsonResponse
 
 @login_required
 def follow_profile(request, slug, operation):
@@ -138,3 +140,23 @@ def follow_profile(request, slug, operation):
         raise Http404
 
     return redirect('accounts:view_account', slug)
+
+
+@login_required
+def view_following_or_followers(request, slug, req):
+    profile = get_object_or_404(Profile, slug=slug)
+
+    if req == 'following':
+        args = {
+            'following_list': profile.following.all(),
+            'user': profile.user
+        }
+        return render(request, 'accounts/following.html', args)
+    elif req == 'followers':
+        args = {
+            'followers_list': profile.followers.all(),
+            'user': profile.user
+        }
+        return render(request, 'accounts/followers.html', args)
+    else:
+        raise Http404

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}
+    {{ user.username }} Following List
+{% endblock title %}
+{% block content %}
+    <ul class="list-group text-center">
+        <li class="list-group-item">
+            <span>
+                <a href="{% url 'accounts:view_account' user.profile.slug %}">
+                    {{ user.username }}
+                </a>
+            </span> 
+            (Following)
+        </li>
+        {% if following_list %}
+            {% for profile in following_list %}
+                <li class="list-group-item">
+                    {{ profile.user.username }}
+                </li>
+            {% endfor %}
+        {% else %}
+            <li class="list-group-item">
+                    {{ user.username }} has no followers yet.
+            </li>
+        {% endif %}
+    </ul>
+{% endblock content %}

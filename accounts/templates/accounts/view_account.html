@@ -20,6 +20,12 @@
         <div class="col-12">
             (@{{ user.username }})
         </div>
+        <div class="col-12">
+            <a href="{% url 'accounts:view_following_or_followers' slug=user.profile.slug req='following' %}">Following</a>
+        </div>
+        <div class="col-12">
+            <a href="{% url 'accounts:view_following_or_followers' slug=user.profile.slug req='followers' %}">Followers</a>
+        </div>
     </div>
     <div class="text-center mb-4">
         {% if user != request.user %}
@@ -29,9 +35,6 @@
                 <a href="{% url 'accounts:follow_profile' slug=user.profile.slug  operation='follow' %}" class="btn btn-primary">Follow</a>
             {% endif %}
         {% endif %}
-        {% comment %}
-            <a href="#" class="btn btn-secondary">About</a>
-        {% endcomment %}
     </div>
     {% if posts %}
         {% for post in posts %}

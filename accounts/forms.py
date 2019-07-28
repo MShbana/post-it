@@ -61,3 +61,6 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('city', 'country', 'linkedin', 'gender', 'image')
+        widgets = {
+            'image': forms.FileInput(),
+        }

@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-12">
+        {{ comment.body }}
+    </div>
+    <div class="col-12 text-right">
+        <small>
+            By: 
+            <span class="post-meta">
+                <a href="{% url 'accounts:view_account' comment.author.profile.slug %}">
+                    {% if comment.author == request.user %}
+                        You
+                    {% else %}
+                        {{ comment.author }}
+                    {% endif %}
+                </a>
+            </span>
+        </small>
+    </div>
+    <div class="col-12 text-right">
+        <small>
+            At: 
+            <span class="post-meta">
+                {{ comment.date_posted }}
+            </span>
+        </small>
+    </div>
+</div>

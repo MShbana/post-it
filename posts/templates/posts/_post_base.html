@@ -16,7 +16,13 @@
             <small>
                 Author: 
                 <span class="post-meta">
-                    <a href="{% url 'accounts:view_account' post.user.profile.slug %}">{{ post.user.username }}</a>
+                    <a href="{% url 'accounts:view_account' post.user.profile.slug %}">
+                        {% if  post.user == request.user %}
+                            You
+                        {% else %}
+                            {{ post.user }}
+                        {% endif %}
+                    </a>
                 </span>
             </small>
         </div>
@@ -27,6 +33,17 @@
                     {{ post.date_posted }}
                 </span>
             </small>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <a href="{% url 'posts:view_post' post.slug %}">
+                Leave a comment
+            </a>
+            <br>
+            <a href="{% url 'posts:view_post' post.slug %}">
+                View post comments ({{ post.comments.all.count }} comments )
+            </a>
         </div>
     </div>
 </div>

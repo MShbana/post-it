@@ -1,4 +1,4 @@
-from .forms import PostCreationForm
+from .forms import PostCreationForm, CommentForm
 from .models import Post
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -32,9 +32,9 @@ class Home(TemplateView):
     def post(self, request):
         form = PostCreationForm(request.POST)
         if form.is_valid():
-            saved_post = form.save(commit=False)
-            saved_post.user = request.user
-            saved_post.save()
+            post = form.save(commit=False)
+            post.user = request.user
+            post.save()
             return redirect('posts:home')
 
         args = {'form': form}
@@ -44,7 +44,20 @@ class Home(TemplateView):
 @login_required
 def view_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    args = {'post': post}
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.author = request.user
+            comment.post = post
+            comment.save()
+            messages.success(request, 'Your comment has been added.')
+            return redirect('posts:view_post', post.slug)
+    else:
+        form = CommentForm()
+
+    args = {'post': post, 'form': form}
     return render(request, 'posts/view_post.html', args)
 
 

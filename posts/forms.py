@@ -1,4 +1,4 @@
-from .models import Post
+from .models import Post, Comment
 from django import forms
 
 
@@ -14,3 +14,15 @@ class PostCreationForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ('title', 'body')
+
+
+class CommentForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['body'].label = False
+        self.fields['body'].widget.attrs['placeholder'] = 'Leave your comment here...'
+
+    class Meta:
+        model = Comment
+        fields = ('body', )

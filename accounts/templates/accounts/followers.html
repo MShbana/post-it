@@ -1,16 +1,14 @@
 {% extends "base.html" %}
 {% block title %}
-    {{ user.username }} Following List
+    {{ user.username }} Follower List
 {% endblock title %}
 {% block content %}
+    <div class="row text-center mb-4">
+        {% include "accounts/_account_header.html" %}
+    </div>
     <ul class="list-group text-center">
         <li class="list-group-item">
-            <span>
-                <a href="{% url 'accounts:view_account' user.profile.slug %}">
-                    {{ user.username }}
-                </a>
-            </span> 
-            (Followers)
+            Followers
         </li>
         {% if followers_list %}
             {% for profile in followers_list %}

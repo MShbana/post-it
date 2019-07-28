@@ -1,0 +1,13 @@
+<div class="col-12 mb-2">
+    {% if user.profile.image %}
+        <img class="profile-pic" src="{{ user.profile.image.url }}">
+    {% else %}
+        <img class="profile-pic" src="/media/default.jpg">
+    {% endif %}
+</div>
+<div class="col-12">
+    {{ user.get_full_name }}
+</div>
+<div class="col-12">
+    <a href="{% url 'accounts:view_account' user.profile.slug %}">@{{ user.username }}</a>
+</div>

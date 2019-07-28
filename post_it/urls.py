@@ -28,6 +28,7 @@ urlpatterns = [
     path('', include('posts.urls')),
     path('account/', include('accounts.urls')),
     path('register/', account_views.register, name='register'),
+    path('activate/<uidb64>/<token>/', account_views.activate_account, name='activate'),
     path('login/',
           auth_views.LoginView.as_view(
               template_name='accounts/login.html',
@@ -50,10 +51,6 @@ urlpatterns = [
          auth_views.PasswordResetCompleteView.as_view(
              template_name='accounts/password_reset_complete.html'),
          name='password_reset_complete'),
-    # path('change-password/',
-    #      auth_views.PasswordChangeView.as_view(
-    #          template_name='accounts/change_password.html'),
-    #      name='change_password')
     path('change-password/', account_views.change_password, name='change_password'),
 ]
 

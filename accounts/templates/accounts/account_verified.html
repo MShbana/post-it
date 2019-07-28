@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+    Registeration
+{% endblock title %}
+{% block content %}
+    <div class="content-section">
+        <h2 class="text-center">
+            Thank your for confirming your e-mail. Now you can <a href="{% url 'login' %}">Login to your account</a>.
+        </h2>
+    </div>
+{% endblock content %}

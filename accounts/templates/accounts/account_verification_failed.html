@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+    Registeration
+{% endblock title %}
+{% block content %}
+    <div class="content-section">
+        <h2 class="text-center">
+            Activation Link has expired or your account has been already activated. Try to <a href="{% url 'login' %}">Login</a>.
+        </h2>
+    </div>
+{% endblock content %}

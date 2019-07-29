@@ -7,7 +7,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView
-
+from itertools import chain
+from operator import attrgetter
 
 class Home(TemplateView):
     
@@ -17,7 +18,13 @@ class Home(TemplateView):
         form = PostCreationForm()
 
         following_list = request.user.profile.following.all()
-        posts_list = Post.objects.filter(user__profile__in=following_list)
+        following_posts_list = Post.objects.filter(user__profile__in=following_list)
+        user_posts_list = Post.objects.filter(user=request.user)
+        posts_list = sorted(
+            chain(following_posts_list, user_posts_list),
+            key=attrgetter('date_posted'),
+            reverse=True)
+
         paginator = Paginator(posts_list, 10)
         page = request.GET.get('page')
 

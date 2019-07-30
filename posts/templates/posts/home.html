@@ -35,15 +35,15 @@
                     <li class="list-group-item">
                         <div class="row">
                             <div class="col-12">
-                                <a href="{% url 'posts:view_post' post.slug %}">
+                                <a class="sidebar-post-title" href="{% url 'posts:view_post' post.slug %}">
                                     {{ post.title }}
                                 </a>
                             </div>
                             <div class="col-12">
-                                {{ post.comments.count }} comments
+                                <small class="text-muted">{{ post.comments.count }} comments</small>
                             </div>
                             <div class="col-12 text-right">
-                                <a class="text-right" href="{% url 'accounts:view_account' post.user.profile.slug %}">{{ post.user }}</a>
+                                <small><a class="text-right" href="{% url 'accounts:view_account' post.user.profile.slug %}">{{ post.user }}</a></small>
                             </div>
                         </div>
                     </li>

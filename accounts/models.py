@@ -47,12 +47,15 @@ class Profile(models.Model):
         super().save(*args, **kwargs)
 
 
-        if self.image:
-            img = Image.open(self.image.path)
-            if img.height > 300 or img.width > 300:
-                output_size = (300, 300)
-                img.thumbnail(output_size)
-                img.save(self.image.path)
+        # This is commented for now because it will cause issues
+        # when storing our files in AWS S3
+
+        # if self.image:
+        #     img = Image.open(self.image.path)
+        #     if img.height > 300 or img.width > 300:
+        #         output_size = (300, 300)
+        #         img.thumbnail(output_size)
+        #         img.save(self.image.path)
 
     def image_url(self):
         if self.image and hasattr(self.image, 'url'):

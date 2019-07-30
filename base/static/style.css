@@ -1,5 +1,5 @@
 html {
-    font-size: 70%;
+    font-size: 80%;
     padding-top: 60px;
 
 }
@@ -52,16 +52,16 @@ tr { font-size: 1rem; }
     border: 2px solid #0E150F;
 }
 @media screen and (max-width: 320px) {
-    html { font-size: 50%; }
+    html { font-size: 55%; }
     .profile-pic { width: 60px; height: 60px;}
 }
 @media screen and (min-width: 321px) and (max-width: 576px) {
-    html { font-size: 60%; }
+    html { font-size: 70%; }
     .profile-pic { width: 80px; height: 80px;}
 }
 @media screen and (min-width: 577px) and (max-width: 768px)
 {
-    html { font-size: 65%; }
+    html { font-size: 75%; }
     .profile-pic { width: 100px; height: 100px;}
 }
 /* /#Repsponiveness# */

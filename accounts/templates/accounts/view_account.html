@@ -22,14 +22,24 @@
             {% endif %}
         {% endif %}
     </div>
-    {% if posts %}
-        {% for post in posts %}
-            {% include "posts/_post_base.html" %}
-        {% endfor %}
-        {% include "posts/_paginations.html" with page=posts %}
-    {% else %}
-        <div class="content-section text-center">
-            <h3>{{ user.username }} has no posts yet...</h3>
-        </div>
-    {% endif %}
+    <div class="row">
+        {% if posts %}
+            <div class="col-12 pr-1 pl-1">
+                {% for post in posts %}
+                    {% include "posts/_post_base.html" %}
+                {% endfor %}
+            </div>
+            <div class="col-12">
+                {% include "posts/_paginations.html" with page=posts %}
+            </div>
+        {% else %}
+            <div class="col-12 content-section text-center mb-2">
+                {% if user == request.user %}
+                    <h1>You do not have any posts yet...</h1>
+                {% else %}
+                    <h1>{{ user.username }} has no posts yet...</h1>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
 {% endblock content %}

@@ -5,14 +5,14 @@
 {% endblock title %}
 {% block content %}
     <div class="row">
-        <div class="col-8">
+        <div class="col-sm-8 pr-1 pl-1">
             <form method="POST">
                 {% csrf_token %}
                 <fieldset class="form-group">
                     {{ form|crispy }}
                 </fieldset>
                 <div class="form-group text-center">
-                    <button class="btn btn-primary" type="submit">
+                    <button class="btn btn-outline-info" type="submit">
                         Post
                     </button>
                 </div>
@@ -21,14 +21,16 @@
                 {% for post in posts %}
                     {% include "posts/_post_base.html" %}
                 {% endfor %}
-                {% include "posts/_paginations.html" with page=posts %}
+                <div class="col-12">
+                    {% include "posts/_paginations.html" with page=posts %}
+                </div>
             {% else %}
-                <div class="content-section text-center">
-                    <h1>There are no posts yet...</h1>
+                <div class="col-12 content-section text-center mb-2">
+                    <h1>There are no posts yet... <br>Follow more people to see their posts in your homepage.</h1>
                 </div>
             {% endif %}
         </div>
-        <div class="col-4">
+        <div class="col-sm-4 pr-1 pl-1 pl-sm-2">
             <ul class="list-group">
                 <li class="list-group-item text-center">Most Commented Posts</li>
                 {% for post in most_popular_posts %}
@@ -40,10 +42,16 @@
                                 </a>
                             </div>
                             <div class="col-12">
-                                <small class="text-muted">{{ post.comments.count }} comments</small>
+                                <small class="text-muted">
+                                    {{ post.comments.count }} comments
+                                </small>
                             </div>
                             <div class="col-12 text-right">
-                                <small><a class="text-right" href="{% url 'accounts:view_account' post.user.profile.slug %}">{{ post.user }}</a></small>
+                                <small>
+                                    <a class="text-right" href="{% url 'accounts:view_account' post.user.profile.slug %}">
+                                        {{ post.user }}
+                                    </a>
+                                </small>
                             </div>
                         </div>
                     </li>

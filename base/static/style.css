@@ -1,19 +1,15 @@
 html {
     font-size: 80%;
     padding-top: 60px;
-
 }
 
 body {
-    background-color: #F3F7F7;
+    background-color: #2B3137;
 }
 
-.content-section {
-    background-color: #FFFFFF;
-    border: 1px solid #D3D1D6;
-    border-radius: 5px;
-    margin-bottom: 5px;
-    padding: 10px;
+.bg-custom {
+    background-color: #1F2428;
+    border-bottom: 2px solid #121517;
 }
 
 .content-section h3, .content-section td {
@@ -56,16 +52,20 @@ tr { font-size: 1rem; }
     border: 2px solid #0E150F;
 }
 @media screen and (max-width: 320px) {
-    html { font-size: 55%; }
+    html { font-size: 70%; }
     .profile-pic { width: 60px; height: 60px;}
 }
 @media screen and (min-width: 321px) and (max-width: 576px) {
-    html { font-size: 70%; }
     .profile-pic { width: 80px; height: 80px;}
 }
-@media screen and (min-width: 577px) and (max-width: 768px)
-{
-    html { font-size: 75%; }
+@media screen and (min-width: 577px) and (max-width: 768px) {
     .profile-pic { width: 100px; height: 100px;}
+}
+@media screen and (max-width: 576px)
+{
+    .content-section { background-color: #FFFFFF; border-bottom: 1px solid #E4E8EC; padding: 15px 10px; }
+}
+@media screen and (min-width: 577px) {
+    .content-section { background-color: #FFFFFF; border: 1px solid #C1CFDC; border-radius: 2px; margin-bottom: 5px; padding: 10px; }
 }
 /* /#Repsponiveness# */

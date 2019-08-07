@@ -4,7 +4,7 @@
     {{ user.username }}
 {% endblock title %}
 {% block content %}
-    <div class="row text-center mb-4">
+    <div class="row text-center mb-4 account-page">
         {% include "accounts/_account_header.html" %}
         <div class="col-12">
             <a href="{% url 'accounts:view_following_or_followers' slug=user.profile.slug req='following' %}">Following</a>

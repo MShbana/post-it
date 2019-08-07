@@ -1,42 +1,52 @@
 <div class="content-section post mr-0">
-    <h2 class="post-title"><a href="{% url 'posts:view_post' post.slug %}">{{ post.title }}</a></h2>
-    {% if request.user == post.user %}
-        <a href="{% url 'posts:edit_post' post.slug %} " class="btn btn-info btn-sm">
-            Edit
-        </a>
-        <a class="btn btn-danger btn-sm" href="{% url 'posts:delete_post' post.slug %}">
-            Delete
-        </a>
-    {% endif %}
-    <div class="post-body border-top pt-4 mt-2">
-        <p>{{ post.body }}</p>
-    </div>
-    <div class="meta-data text-right row">
-        <div class="col-12">
-            <small>
-                Author: 
-                <span class="post-meta">
-                    <a href="{% url 'accounts:view_account' post.user.profile.slug %}">
-                        {% if  post.user == request.user %}
-                            You
-                        {% else %}
-                            {{ post.user }}
-                        {% endif %}
-                    </a>
-                </span>
-            </small>
-        </div>
-        <div class="col-12">
-            <small>
-                Posted at: 
-                <span class="post-meta">
-                    {{ post.date_posted }}
-                </span>
-            </small>
-        </div>
-    </div>
     <div class="row">
+        <div class="col-auto pr-0">
+            <a href="{% url 'accounts:view_account' post.user.profile.slug %}">
+                {% if user.profile.image %}
+                    <img class="rounded-circle posts-profile-pic" src="{{ post.user.profile.image.url }}">
+                {% else %}
+                    <img class="posts-profile-pic" src="/media/default.jpg">
+                {% endif %}
+            </a>
+        </div>
+        <div class="float-right pl-0">
+            <div class="col-12 post-author">
+                <a href="{% url 'accounts:view_account' post.user.profile.slug %}">
+                    {{ post.user.username }}
+                </a>
+            </div>
+            <div class="col-12">
+                <small>
+                    <a class="text-muted" href="{% url 'posts:view_post' post.slug %}">
+                        {{ post.date_posted|date:"g:i A - d M Y" }}
+                    </a>
+                </small>
+                <br>
+            </div>
+            {% if post.user == request.user %}
+                <div class="col-12 pl-2">
+                    <a class="btn btn-link btn-sm post-edit" href="{% url 'posts:edit_post' post.slug %}">
+                        Edit
+                    </a>
+                    <a class="btn btn-link btn-sm post-delete" href="{% url 'posts:delete_post' post.slug %}">
+                        Delete
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-12 pt-4">
+            <h4 class="post-title">
+                <a href="{% url 'posts:view_post' post.slug %}">
+                    {{ post.title }}
+                </a>
+            </h4>
+        </div>
         <div class="col-12">
+            <p class="post-body">
+                {{ post.body }}
+            </p>
+        </div>
+        <div class="col-12 text-right new-view-comment">
             <a href="{% url 'posts:view_post' post.slug %}">
                 Leave a comment
             </a>

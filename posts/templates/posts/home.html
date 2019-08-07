@@ -4,17 +4,20 @@
     Home
 {% endblock title %}
 {% block content %}
-    <div class="row">
+    <div class="row home-page">
         <div class="col-sm-8 pr-1 pl-1">
-            <form method="POST">
+            <form method="POST" class="mb-4">
                 {% csrf_token %}
-                <fieldset class="form-group">
-                    {{ form|crispy }}
-                </fieldset>
-                <div class="form-group text-center">
-                    <button class="btn btn-outline-info" type="submit">
-                        Post
-                    </button>
+                <div class="input-group mb-1">
+                    {{ form.title }}
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-info" type="submit">
+                            Post
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group new-post">
+                    {{ form.body }}
                 </div>
             </form>
             {% if posts %}
@@ -30,7 +33,7 @@
                 </div>
             {% endif %}
         </div>
-        <div class="col-sm-4 pr-1 pl-1 pl-sm-2">
+        <div class="col-sm-4 pr-1 pl-1 pl-sm-2 sidebar">
             <ul class="list-group">
                 <li class="list-group-item text-center">Most Commented Posts</li>
                 {% for post in most_popular_posts %}

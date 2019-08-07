@@ -1,4 +1,4 @@
-from .forms import PostCreationForm, CommentForm
+from .forms import PostForm, CommentForm
 from .models import Post
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -15,7 +15,7 @@ class Home(TemplateView):
     template_name = 'posts/home.html'
 
     def get(self, request):
-        form = PostCreationForm()
+        form = PostForm()
 
         following_list = request.user.profile.following.all()
         following_posts_list = Post.objects.filter(user__profile__in=following_list)
@@ -46,7 +46,7 @@ class Home(TemplateView):
         return render(request, self.template_name, args)
 
     def post(self, request):
-        form = PostCreationForm(request.POST)
+        form = PostForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
             post.user = request.user
@@ -85,13 +85,13 @@ def edit_post(request, slug):
         raise PermissionDenied()
 
     if request.method == 'POST':
-        form = PostCreationForm(request.POST, instance=post)
+        form = PostForm(request.POST, instance=post)
         if form.is_valid():
             form.save()
             messages.success(request, 'Your post has been successfully updated.')
             return redirect('posts:view_post', post.slug)
     else:
-        form = PostCreationForm(instance=post)
+        form = PostForm(instance=post)
 
     args = {'post': post, 'form': form}
     return render(request, 'posts/edit_post.html', args)

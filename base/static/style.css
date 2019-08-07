@@ -12,60 +12,109 @@ body {
     border-bottom: 2px solid #121517;
 }
 
-.content-section h3, .content-section td {
-    color: #716C7A;
-}
-
 .site-name {
     color: #6E6977;
 }
 
 .post-body {
+    color: #3E4347;
     white-space: pre-line;
     word-wrap: break-word;
 
 }
 
-.post-meta, .post-meta a {
+.post-meta,
+.post-meta a {
     color: #147AFF;
 }
 
+.post-author a {
+    color: #37546C;
+    font-weight: bold;
+}
+
 .post-title a {
-    text-decoration: none;
+    color: #474D52;
+    font-weight: bold;
 }
 
 .sidebar-post-title {
     font-size: 0.9rem;
 }
 
-/* #Responsiveness# */
-h1 { font-size: 1,8rem; }
+.content-section,
+.list-group-item {
+    background-color: #E3E8ED;
+}
+
+input[type=text]:focus,
+.new-post textarea:focus {
+    outline: 2px solid #3CA3B8;
+}
+
+.new-post textarea {
+    height: 80px;
+}
+
+a.post-delete {
+    color: #420E01;
+}
+
+a.post-delete:hover {
+    color: #FD1C4D;
+}
+
+a.post-edit {
+    color: #044201;
+}
+
+a.post-edit:hover {
+    color: #0BBB02;
+}
+
+.new-view-comment a {
+    color: #23116F;
+}
+
+.new-view-comment a:hover {
+    color: #491CFD;
+}
+
+
+/******************* #Responsiveness# ******************/
+h1 { font-size: 1.8rem; }
 h2 { font-size: 1.6rem; }
 h3 { font-size: 1.4rem; }
+h4 { font-size: 1.2rem; }
 tr { font-size: 1rem; }
 .navbar-toggler  .navbar-toggler-icon {font-size: 0.5rem; }
 .dropdown-menu .dropdown-item { font-size: 0.6rem; }
-.profile-pic {
+.accounts-profile-pic {
     width: 100px;
     height: 100px;
     border-radius: 5px;
     border: 2px solid #0E150F;
 }
+.posts-profile-pic {
+    width: 50px;
+    height: 50px;
+}
 @media screen and (max-width: 320px) {
     html { font-size: 70%; }
-    .profile-pic { width: 60px; height: 60px;}
+    .accounts-profile-pic { width: 60px; height: 60px;}
 }
 @media screen and (min-width: 321px) and (max-width: 576px) {
-    .profile-pic { width: 80px; height: 80px;}
+    .accounts-profile-pic { width: 80px; height: 80px;}
 }
 @media screen and (min-width: 577px) and (max-width: 768px) {
-    .profile-pic { width: 100px; height: 100px;}
+    .accounts-profile-pic { width: 100px; height: 100px;}
+    .posts-profile-pic { width: 60px; height: 60px; }
 }
 @media screen and (max-width: 576px)
 {
-    .content-section { background-color: #FFFFFF; border-bottom: 1px solid #E4E8EC; padding: 15px 10px; }
+    .content-section { border-bottom: 1px solid #ADB3B8; padding: 15px 10px; }
 }
 @media screen and (min-width: 577px) {
-    .content-section { background-color: #FFFFFF; border: 1px solid #C1CFDC; border-radius: 2px; margin-bottom: 5px; padding: 10px; }
+    .content-section { border: 1px solid #768593; border-radius: 3px; margin-bottom: 5px; padding: 10px; }
 }
-/* /#Repsponiveness# */
+/******************* /#Repsponiveness# ******************/

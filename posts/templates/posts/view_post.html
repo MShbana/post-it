@@ -4,33 +4,40 @@
     {{ post.title }}
 {% endblock title %}
 {% block content %}
-    {% include "posts/_post_base.html" %}
-    <form method="POST">
-        {% csrf_token %}
-        <div class="form-group">
-            {{ form|crispy }}
-            <button class="btn btn-outline-info" type="submit">
-                Comment
-            </button>
+    <div class="row">
+        <div class="col-12 pr-1 pl-1">
+            {% include "posts/_post_base.html" %}
         </div>
-    </form>
-    <div class="row mb-4">
-        <div class="col-6">
+        <div class="col-12 pr-1 pl-1">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="input-group my-3">
+                    {{ form.body }}
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-info" type="submit">
+                            Comment
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-12 pr-1 pl-1">
             <ul class="list-group">
-                <li class="list-group-item text-center">Comments</li>
-                    {% if post.comments.all %}
-                        {% for comment in post.comments.all %}
-                            <li class="list-group-item">
-                                {% include "posts/_comment_base.html" %}
-                            </li>
-                        {% endfor %}
-                    {% else %}
-                        <li class="list-group-item text-center">
-                            This post has not comments yet...
+                <li class="list-group-item text-center">
+                    Comments
+                </li>
+                {% if post.comments.all %}
+                    {% for comment in post.comments.all %}
+                        <li class="list-group-item">
+                            {% include "posts/_comment_base.html" %}
                         </li>
-                    {% endif %}
-                </ul>
+                    {% endfor %}
+                {% else %}
+                    <li class="list-group-item text-center">
+                        This post has not comments yet...
+                    </li>
+                {% endif %}
+            </ul>
         </div>
-        <div class="col-6"></div>
     </div>
 {% endblock content %}

@@ -1,7 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
-    <head lang="en">
+<html lang="en">
+    <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -20,14 +20,17 @@
             {% include "navbar.html" %}
         </header>
         <main class="container">
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }} text-center">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-
+            <div class="row">
+                <div class="col-12 pr-1 pl-1">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} text-center">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
             {% block content %}{% endblock content %}
         </main>
 

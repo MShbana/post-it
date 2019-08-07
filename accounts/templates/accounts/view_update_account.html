@@ -21,9 +21,12 @@
             </div>
         </div>
         <div class="col-12">
-            <h3 class="text-center py-2 view-update-account-header">Personal Information</h3>
+                <!-- <h3 class="text-center py-2 view-update-account-header">Personal Information</h3> -->
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
+                <legend class="pb-2 mb-4">
+                        Personal Information
+                </legend>
                 <fieldset class="form-group">
                     {{ user_form|crispy }}
                     {{ profile_form|crispy }}

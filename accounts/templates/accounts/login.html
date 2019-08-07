@@ -7,6 +7,9 @@
     <div class="content-section logged-out">
         <form method="POST">
             {% csrf_token %}
+            <legend class="pb-2 mb-4">
+                Sign in to <span class="site-name">Post It</span>
+            </legend>
             <fieldset class="form-group">
                 {{ form|crispy }}
                 <small class="pl-2">

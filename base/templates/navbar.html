@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-sm navbar-dark bg-custom fixed-top">
+<nav class="navbar navbar-expand navbar-dark bg-custom fixed-top">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -6,14 +6,14 @@
             <div class="container">
                 <ul class="navbar-nav text-center">
                     {% if not request.user.is_anonymous %}
-                        <li class="nav-item active mr-sm-auto">
+                        <li class="nav-item active mr-auto">
                             <a class="nav-link" href="{% url 'posts:home' %}">
                                 Home
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'accounts:view_account' request.user.profile.slug %}">
-                                Account
+                                Profile
                             </a>
                         </li>
                         <li class="nav-item">
@@ -25,7 +25,7 @@
                             <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
                         </li>
                     {% else %}
-                        <li class="nav-item mr-sm-auto">
+                        <li class="nav-item mr-auto">
                             <a class="nav-link py-1" href="{% url 'register' %}">Register</a>
                         </li>
                         <li class="nav-item">

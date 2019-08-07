@@ -1,6 +1,6 @@
 html {
     font-size: 80%;
-    padding-top: 47px;
+    padding-top: 60px;
 }
 
 body {
@@ -101,6 +101,45 @@ a.post-edit:hover {
     margin-top: 10px;
 }
 
+.account-header {
+    background-color: #E3E8ED;
+    border: 1px solid #4A545E;
+    border-radius: 3px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    margin-bottom: 10px;
+}
+
+.accounts-profile-pic {
+    border: 1px solid #4E6379;
+    border-radius: 3px;
+}
+
+.fullname,
+.fullname-info {
+    font-weight: bold;
+}
+
+.fullname {
+    color: #C6CCD2;
+}
+
+.username a {
+    color: #163B60;
+}
+
+.username a:hover {
+    color: #286BAF;
+}
+
+.username-info a {
+    color: #1C4C7D;
+}
+
+.username-info a:hover {
+    color: #448CD5;
+}
+
 
 /******************* #Responsiveness# ******************/
 h1 { font-size: 1.8rem; }
@@ -127,7 +166,7 @@ tr { font-size: 1rem; }
 }
 @media screen and (max-width: 576px)
 {
-    html { padding-top: 37px; }
+    html { padding-top: 40px; }
     .content-section { border-bottom: 1px solid #ADB3B8; padding: 15px 10px; }
 }
 @media screen and (min-width: 577px) {

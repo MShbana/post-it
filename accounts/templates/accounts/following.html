@@ -3,25 +3,31 @@
     {{ user.username }} Following List
 {% endblock title %}
 {% block content %}
-    <div class="row text-center mb-4">
-        {% include "accounts/_account_header.html" %}
-    </div>
-    <ul class="list-group text-center">
-        <li class="list-group-item">
-            Followers
-        </li>
-        {% if following_list %}
-            {% for profile in following_list %}
-                <li class="list-group-item">
-                    <a href="{% url 'accounts:view_account' profile.slug %}">
-                        {{ profile.user.username }}
+    <div class="content-section long-page">
+        <ul class="list-group text-center">
+            <li class="list-group-item sidebar-header">
+                <span class="username-info">
+                    <a href="{% url 'accounts:view_account' user.profile.slug %}">
+                        {{ user.username }}
                     </a>
-                </li>
-            {% endfor %}
-        {% else %}
-            <li class="list-group-item">
-                    {{ user.username }} doesn't follow anyone yet.
+                </span>
+                <span>
+                    Following List
+                </span>
             </li>
-        {% endif %}
-    </ul>
+            {% if following_list %}
+                {% for profile in following_list %}
+                    <li class="list-group-item username-info">
+                        <a href="{% url 'accounts:view_account' profile.slug %}">
+                            {{ profile.user.username }}
+                        </a>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <li class="list-group-item">
+                    {{ user.username }} has not followed anyone yet.
+                </li>
+            {% endif %}
+        </ul>
+    </div>
 {% endblock content %}

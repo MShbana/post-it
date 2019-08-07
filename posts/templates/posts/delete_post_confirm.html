@@ -10,7 +10,7 @@
                 <fieldset class="form-group text-center">
                     <h4 class="pb-4">Are you sure you want to delete "{{ post.title }}"</h4>
                     <button class="btn btn-outline-danger btn-sm" type="submit">Delete</button>
-                    <a class="btn btn-outline-secondary btn-sm" href="{% url 'posts:home' %}">Cancel</a>
+                    <input class="btn btn-outline-secondary btn-sm" action="action" type="button" value="Cancel" onclick="window.history.go(-1); return false;">
                 </fieldset>
             </form>
         </div>

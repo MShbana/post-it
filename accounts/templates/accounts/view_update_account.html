@@ -6,8 +6,7 @@
 {% block content %}
     <div class="content-section row">
         <div class="col-12 text-center">
-                {% include "accounts/_account_header.html" %}
-
+            {% include "accounts/_account_header.html" %}
         </div>
         <div class="col-12">
             <h3 class="text-center py-2">Personal Information</h3>
@@ -21,7 +20,7 @@
                     Password:<br>You can change your password through this <a href="{% url 'change_password' %}">form</a>.
                 </fieldset>
                 <div class="form-group">
-                    <button class="btn btn-success" type="submit">
+                    <button class="btn btn-outline-info" type="submit">
                         Update
                     </button>
                 </div>

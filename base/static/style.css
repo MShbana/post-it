@@ -29,7 +29,8 @@ body {
 }
 
 .post-author a:hover {
-    color: #486F8E;
+    color: #527EA3;
+    text-decoration: none;
 }
 
 .post-title a {
@@ -39,6 +40,7 @@ body {
 
 .post-title a:hover {
     color: #050505;
+    text-decoration: none;
 }
 
 .sidebar-post-title {

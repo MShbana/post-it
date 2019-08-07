@@ -5,7 +5,7 @@
 {% endblock title %}
 {% block content %}
     <div class="content-section row">
-        <div class="col-12 text-center">
+        <div class="col-12 text-center mb-4">
             <div class="col-12 mb-2">
                 {% if user.profile.image %}
                     <img class="accounts-profile-pic" src="{{ user.profile.image.url }}">
@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="col-12">
-            <h3 class="text-center py-2">Personal Information</h3>
+            <h3 class="text-center py-2 view-update-account-header">Personal Information</h3>
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <fieldset class="form-group">

@@ -140,6 +140,10 @@ a.post-edit:hover {
     color: #448CD5;
 }
 
+.view-update-account-header {
+    font-weight: bold;
+    color: #4C4F52;
+}
 
 /******************* #Responsiveness# ******************/
 h1 { font-size: 1.8rem; }
@@ -158,7 +162,7 @@ tr { font-size: 1rem; }
     .accounts-profile-pic { width: 60px; height: 60px;}
 }
 @media screen and (min-width: 321px) and (max-width: 576px) {
-    .accounts-profile-pic { width: 80px; height: 80px;}
+    .accounts-profile-pic { width: 70px; height: 70px;}
 }
 @media screen and (min-width: 577px) and (max-width: 768px) {
     .accounts-profile-pic { width: 100px; height: 100px;}

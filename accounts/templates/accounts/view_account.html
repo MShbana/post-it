@@ -33,11 +33,11 @@
                 {% include "posts/_paginations.html" with page=posts %}
             </div>
         {% else %}
-            <div class="col-12 content-section text-center mb-2">
+            <div class="col-12 content-section text-center mb-2 long-page">
                 {% if user == request.user %}
-                    <h1>You do not have any posts yet...</h1>
+                    <h3>You do not have any posts yet...</h3>
                 {% else %}
-                    <h1>{{ user.username }} has no posts yet...</h1>
+                    <h3>{{ user.username }} has no posts yet...</h3>
                 {% endif %}
             </div>
         {% endif %}

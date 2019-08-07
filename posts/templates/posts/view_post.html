@@ -23,7 +23,7 @@
         </div>
         <div class="col-12 pr-1 pl-1">
             <ul class="list-group">
-                <li class="list-group-item text-center">
+                <li class="list-group-item text-center sidebar-header">
                     Comments
                 </li>
                 {% if post.comments.all %}
@@ -34,7 +34,7 @@
                     {% endfor %}
                 {% else %}
                     <li class="list-group-item text-center">
-                        This post has not comments yet...
+                        This post has no comments yet...
                     </li>
                 {% endif %}
             </ul>

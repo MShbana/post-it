@@ -4,18 +4,22 @@
     Edit {{ post.title }}
 {% endblock title %}
 {% block content %}
-    <form method="POST">
-        {% csrf_token %}
-        <fieldset class="form-group">
-            {{ form|crispy }}
-        </fieldset>
-        <div class="form-group text-center">
-            <button class="btn btn-success" type="submit">
-                Update
-            </button>
-            <a href="{% url 'posts:home' %}" class="btn btn-secondary">
-                Cancel
-            </a>
+    <div class="content-section row">
+        <div class="col-12 pr-1 pl-1">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    {{ form|crispy }}
+                </fieldset>
+                <div class="form-group text-center">
+                    <button class="btn btn-success" type="submit">
+                        Update
+                    </button>
+                    <a href="{% url 'posts:home' %}" class="btn btn-secondary">
+                        Cancel
+                    </a>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 {% endblock content %}

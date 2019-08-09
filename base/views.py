@@ -10,4 +10,5 @@ def error_404(request, exception):
 
 
 def error_500(request, exception):
-    return render(request, 'error_500.html', status=404)
+    return render(request, 'error_500.html', status=500)
+

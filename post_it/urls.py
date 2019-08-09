@@ -18,7 +18,7 @@ Including another URLconf
 from accounts import views as account_views
 from base import views as error_views
 from django.conf import settings
-from django.conf.urls import handler404
+from django.conf.urls import handler403, handler404
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
@@ -61,3 +61,4 @@ if settings.DEBUG:
 
 
 handler404 = error_views.error_404
+handler403 = error_views.error_403

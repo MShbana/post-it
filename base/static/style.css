@@ -105,9 +105,7 @@ a.post-edit:hover {
     background-color: #E3E8ED;
     border: 1px solid #4A545E;
     border-radius: 3px;
-    padding-bottom: 10px;
-    padding-top: 10px;
-    margin-bottom: 10px;
+    padding-top: 15px;
 }
 
 .accounts-profile-pic {
@@ -115,13 +113,9 @@ a.post-edit:hover {
     border-radius: 3px;
 }
 
-.fullname,
-.fullname-info {
+.username,
+.fullname{
     font-weight: bold;
-}
-
-.fullname {
-    color: #C6CCD2;
 }
 
 .username a {
@@ -130,14 +124,6 @@ a.post-edit:hover {
 
 .username a:hover {
     color: #286BAF;
-}
-
-.username-info a {
-    color: #1C4C7D;
-}
-
-.username-info a:hover {
-    color: #448CD5;
 }
 
 .view-update-account-header {

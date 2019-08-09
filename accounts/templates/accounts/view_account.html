@@ -12,12 +12,15 @@
                 <img class="accounts-profile-pic" src="/media/default.jpg">
             {% endif %}
         </div>
-        <div class="col-12 fullname pb-2 username">
+        <div class="col-12 fullname">
+            {{ user.get_full_name }}
+        </div>
+        <div class="col-12 pb-2 username">
             <a href="{% url 'accounts:view_account' user.profile.slug %}">
-                {{ user.get_full_name }} (@{{ user.username }})
+                @{{ user.username }}
             </a>
         </div>
-        <div class=" col-12 text-center pb-3">
+        <div class=" col-12 text-center pb-4">
             {% if user != request.user %}
                 {% if is_following %}
                     <a href="{% url 'accounts:follow_profile' slug=user.profile.slug operation='unfollow' %}" class="btn btn-danger btn-sm">Unfollow</a>
@@ -26,11 +29,15 @@
                 {% endif %}
             {% endif %}
         </div>
-        <div class="col-12">
-            <a href="{% url 'accounts:view_following_or_followers' slug=user.profile.slug req='following' %}">Following List</a>
-        </div>
-        <div class="col-12 mb-2">
-            <a href="{% url 'accounts:view_following_or_followers' slug=user.profile.slug req='followers' %}">Followers List</a>
+    </div>
+    <div class="row text-center">
+        <div class="btn-block" role="group">
+            <a class="my-1 btn btn-info btn-block" href="{% url 'accounts:view_following_or_followers' slug=user.profile.slug req='following' %}">
+                Following List
+            </a>
+            <a class="my-1 btn btn-info btn-block" href="{% url 'accounts:view_following_or_followers' slug=user.profile.slug req='followers' %}">
+                Followers List
+            </a>
         </div>
     </div>
     <div class="row">

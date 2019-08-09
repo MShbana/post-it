@@ -13,15 +13,14 @@
                     <img class="accounts-profile-pic" src="/media/default.jpg">
                 {% endif %}
             </div>
-            <div class="col-12 fullname-info">
+            <div class="col-12 fullname">
                 {{ user.get_full_name }}
             </div>
-            <div class="col-12 username-info">
+            <div class="col-12 pb-2 username">
                 <a href="{% url 'accounts:view_account' user.profile.slug %}">@{{ user.username }}</a>
             </div>
         </div>
         <div class="col-12">
-                <!-- <h3 class="text-center py-2 view-update-account-header">Personal Information</h3> -->
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <legend class="pb-2 mb-4">

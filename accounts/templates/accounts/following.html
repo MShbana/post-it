@@ -6,7 +6,7 @@
     <div class="content-section long-page">
         <ul class="list-group text-center">
             <li class="list-group-item sidebar-header">
-                <span class="username-info">
+                <span class="username">
                     <a href="{% url 'accounts:view_account' user.profile.slug %}">
                         {{ user.username }}
                     </a>
@@ -17,7 +17,7 @@
             </li>
             {% if following_list %}
                 {% for profile in following_list %}
-                    <li class="list-group-item username-info">
+                    <li class="list-group-item username">
                         <a href="{% url 'accounts:view_account' profile.slug %}">
                             {{ profile.user.username }}
                         </a>
@@ -25,7 +25,14 @@
                 {% endfor %}
             {% else %}
                 <li class="list-group-item">
-                    {{ user.username }} has not followed anyone yet.
+                    <span class="username">
+                        <a href="{% url 'accounts:view_account' user.profile.slug %}">
+                            {{ user.username }}
+                        </a>
+                    </span>
+                    <span>
+                        has not followed anyone yet.
+                    </span>
                 </li>
             {% endif %}
         </ul>

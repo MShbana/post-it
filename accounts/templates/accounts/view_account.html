@@ -29,14 +29,12 @@
                 {% endif %}
             {% endif %}
         </div>
-    </div>
-    <div class="row text-center">
-        <div class="btn-block" role="group">
-            <a class="my-1 btn btn-info btn-block" href="{% url 'accounts:view_following_or_followers' slug=user.profile.slug req='following' %}">
-                Following List
+        <div class="btn-block btn-group btn-group-vertical">
+            <a class="btn btn-info" href="{% url 'accounts:view_following_or_followers' slug=user.profile.slug req='following' %}">
+                Following
             </a>
-            <a class="my-1 btn btn-info btn-block" href="{% url 'accounts:view_following_or_followers' slug=user.profile.slug req='followers' %}">
-                Followers List
+            <a class="btn btn-info " href="{% url 'accounts:view_following_or_followers' slug=user.profile.slug req='followers' %}">
+                Followers
             </a>
         </div>
     </div>

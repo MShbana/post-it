@@ -36,29 +36,35 @@
         <div class="col-sm-4 pr-1 pl-1 pl-sm-2 sidebar">
             <ul class="list-group">
                 <li class="list-group-item text-center sidebar-header">Most Commented Posts</li>
-                {% for post in most_popular_posts %}
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-12 post-title">
-                                <a class="sidebar-post-title" href="{% url 'posts:view_post' post.slug %}">
-                                    {{ post.title }}
-                                </a>
-                            </div>
-                            <div class="col-12">
-                                <small class="text-muted">
-                                    {{ post.comments.count }} comments
-                                </small>
-                            </div>
-                            <div class="col-12 text-right post-author">
-                                <small>
-                                    <a class="text-right" href="{% url 'accounts:view_account' post.user.profile.slug %}">
-                                        {{ post.user }}
+                {% if most_popular_posts %}
+                    {% for post in most_popular_posts %}
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-12 post-title">
+                                    <a class="sidebar-post-title" href="{% url 'posts:view_post' post.slug %}">
+                                        {{ post.title }}
                                     </a>
-                                </small>
+                                </div>
+                                <div class="col-12">
+                                    <small class="text-muted">
+                                        {{ post.comments.count }} comments
+                                    </small>
+                                </div>
+                                <div class="col-12 text-right post-author">
+                                    <small>
+                                        <a class="text-right" href="{% url 'accounts:view_account' post.user.profile.slug %}">
+                                            {{ post.user }}
+                                        </a>
+                                    </small>
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                {% endfor %}
+                        </li>
+                    {% endfor %}
+                {% else %}
+                        <li class="list-group-item">
+                            There are no posts in the site yet.
+                        </li>
+                {% endif %}
             </ul>
         </div>
     </div>

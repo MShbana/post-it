@@ -2,8 +2,8 @@
     <div class="row">
         <div class="col-auto pr-0">
             <a href="{% url 'accounts:view_account' post.user.profile.slug %}">
-                {% if user.profile.image %}
-                    <img class="rounded-circle posts-profile-pic" src="{{ post.user.profile.image.url }}">
+                {% if post.user.profile.image %}
+                    <img class="rounded-circle posts-profile-pic" src="{{ post.user.profile.image_url }}">
                 {% else %}
                     <img class="posts-profile-pic" src="/media/default.jpg">
                 {% endif %}

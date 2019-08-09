@@ -19,7 +19,6 @@ from accounts import views as account_views
 from base import views as error_views
 from django.conf import settings
 from django.conf.urls import handler403, handler404, handler500
-from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
@@ -57,7 +56,10 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
+    from django.conf.urls.static import static
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+    urlpatterns += staticfiles_urlpatterns()
 
 
 handler403 = error_views.error_403

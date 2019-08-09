@@ -33,14 +33,19 @@
     <div class="row text-center">
         <div class="btn-block" role="group">
             <a class="my-1 btn btn-info btn-block" href="{% url 'accounts:view_following_or_followers' slug=user.profile.slug req='following' %}">
-                Following List
+                Following
             </a>
             <a class="my-1 btn btn-info btn-block" href="{% url 'accounts:view_following_or_followers' slug=user.profile.slug req='followers' %}">
-                Followers List
+                Followers
             </a>
         </div>
     </div>
     <div class="row">
+            {% if user == request.user %}
+                <div class="col-12 pt-2 pr-1 pl-1">
+                    {% include "posts/_new_post_form.html" %}
+                </div>
+            {% endif %}
             {% if posts %}
             <div class="col-12 pr-1 pl-1">
                 {% for post in posts %}

@@ -14,6 +14,7 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.shortcuts import get_object_or_404, render, redirect
 from django.template.loader import render_to_string
+from posts.forms import PostForm
 
 
 def register(request):
@@ -102,8 +103,23 @@ def view_account(request, slug):
     args = {
         'user': user,
         'posts': posts,
-        'is_following': is_following
+        'is_following': is_following,
     }
+
+    if user == request.user:
+        if request.method == 'POST':
+            form = PostForm(request.POST)
+            if form.is_valid():
+                post = form.save(commit=False)
+                post.user = request.user
+                post.save()
+                messages.success(request, 'Your post has been successfully created.')
+                return redirect('accounts:view_account', request.user.profile.slug)
+        else:
+            form = PostForm()
+
+        args.update({'form': form})
+
     return render(request, 'accounts/view_account.html', args)
 
 

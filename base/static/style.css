@@ -17,7 +17,8 @@ body {
     color: #6E6977;
 }
 
-.post-body {
+.post-body,
+.post-title {
     color: #3E4347;
     white-space: pre-line;
     word-wrap: break-word;

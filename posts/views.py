@@ -51,6 +51,7 @@ class Home(TemplateView):
             post = form.save(commit=False)
             post.user = request.user
             post.save()
+            messages.success(request, 'Your post has been successfully created.')
             return redirect('posts:home')
 
         args = {'form': form}

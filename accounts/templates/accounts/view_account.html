@@ -39,6 +39,11 @@
         </div>
     </div>
     <div class="row">
+            {% if user == request.user %}
+                <div class="col-12 pt-2 pr-1 pl-1">
+                    {% include "posts/_new_post_form.html" %}
+                </div>
+            {% endif %}
             {% if posts %}
             <div class="col-12 pr-1 pl-1">
                 {% for post in posts %}

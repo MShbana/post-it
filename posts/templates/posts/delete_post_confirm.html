@@ -1,19 +1,21 @@
-{% comment %}
-<button class="btn btn-link btn-sm post-delete" data-href="{% url 'posts:delete_post' post.slug %}" data-toggle="modal" data-target="#confirm-delete">
-    Delete
-</button>
-{% endcomment %}
-<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="confirm-deleteLabel" aria-hidden="true">
+<div class="modal fade" id="confirmDelete{{ post.slug }}" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="confirm-deleteLabel">Delete Post</h5>
+                <h5 class="modal-title text-danger" id="confirmDeleteLabel">
+                    Delete Post
+                </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body post-title">
-                Are you sure you want to delete {{ post.title }}
+            <div class="modal-body text-center">
+                <span class="text-danger">
+                    Are you sure you want to delete
+                </span>
+                <span class="post-title">
+                    {{ post.title }}
+                </span>?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

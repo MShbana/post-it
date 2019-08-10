@@ -27,7 +27,7 @@
                     <a class="btn btn-link btn-sm post-edit" href="{% url 'posts:edit_post' post.slug %}">
                         Edit
                     </a>
-                    <button class="btn btn-link btn-sm post-delete" data-href="{% url 'posts:delete_post' post.slug %}" data-toggle="modal" data-target="#confirm-delete">
+                    <button class="btn btn-link btn-sm post-delete" data-href="{% url 'posts:delete_post' post.slug %}" data-toggle="modal" data-target="#confirmDelete{{ post.slug }}">
                         Delete
                     </button>
                     {% include "posts/delete_post_confirm.html" %}

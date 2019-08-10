@@ -146,6 +146,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
 # Authentication & Authorization
+AUTHENTICATION_BACKENDS = ('accounts.backends.CaseInsensitiveModelBackend', )
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'posts:home'
 LOGOUT_REDIRECT_URL = 'posts:home'

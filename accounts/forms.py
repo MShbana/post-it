@@ -31,10 +31,16 @@ class UserRegisterationForm(ExtraFieldsRequiredMixin, UserCreationForm):
         fields = UserCreationForm.Meta.fields + ('first_name', 'last_name', 'email')
 
     def clean_email(self):
-        email = self.cleaned_data['email']
-        if User.objects.filter(email=email).exists():
-            raise forms.ValidationError("This email is already registered. Please choose another one.")
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email__iexact=email).exists():
+            raise forms.ValidationError('A user with this email is already registered.')
         return email
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username__iexact=username).exists():
+            raise forms.ValidationError('This username is already taken.')
+        return username
 
 
 class UserUpdateForm(ExtraFieldsRequiredMixin, forms.ModelForm):
@@ -48,12 +54,18 @@ class UserUpdateForm(ExtraFieldsRequiredMixin, forms.ModelForm):
         fields = ('username', 'first_name', 'last_name', 'email')
 
     def clean_email(self):
-        email = self.cleaned_data['email']
-        if self.instance.pk is not None and self.instance.email == email:
-            return email
-        if User.objects.filter(email=email).exists():
-            raise forms.ValidationError('This email already exists. Please choose another one.')
+        email = self.cleaned_data.get('email')
+        current_user_username = self.instance.username
+        if User.objects.filter(email__iexact=email).exclude(username__iexact=current_user_username).exists():
+            raise forms.ValidationError('A user with this email is already registered.')
         return email
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        current_user_email = self.instance.email
+        if User.objects.filter(username__iexact=username).exclude(email__iexact=current_user_email).exists():
+            raise forms.ValidationError('This username is already taken.')
+        return username
 
 
 class ProfileUpdateForm(forms.ModelForm):

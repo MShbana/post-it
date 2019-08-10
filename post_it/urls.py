@@ -29,6 +29,8 @@ urlpatterns = [
     path('', include('posts.urls')),
     path('account/', include('accounts.urls')),
     path('register/', account_views.register, name='register'),
+    path('ajax/validate_username/', account_views.validate_username, name='validate_username'),
+    path('ajax/validate_email/', account_views.validate_email, name='validate_email'),
     path('activate/<uidb64>/<token>/', account_views.activate_account, name='activate'),
     path('login/',
           auth_views.LoginView.as_view(

@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.shortcuts import get_object_or_404, render, redirect
@@ -48,6 +48,18 @@ def register(request):
 
     args = {'form': form}
     return render(request, 'accounts/register.html', args)
+
+
+def validate_username(request):
+    username = request.GET.get('username', None)
+    data = {'is_taken': User.objects.filter(username__iexact=username).exists()}
+    return JsonResponse(data)
+
+
+def validate_email(request):
+    email = request.GET.get('email', None)
+    data = {'is_taken': User.objects.filter(email__iexact=email).exists()}
+    return JsonResponse(data)
 
 
 def activate_account(request, uidb64, token):

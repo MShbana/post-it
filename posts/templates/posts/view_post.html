@@ -41,8 +41,7 @@
             </ul>
         </div>
     </div>
-    {% block scripts %}
-        <script src="{% static 'posts/main.js' %}"></script>
-    {% endblock scripts %}
 {% endblock content %}
-
+{% block scripts %}
+    <script src="{% static 'posts/main.js' %}"></script>
+{% endblock scripts %}

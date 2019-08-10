@@ -63,11 +63,11 @@ input[type=text]:focus,
     height: 80px;
 }
 
-a.post-delete {
+button.post-delete {
     color: #420E01;
 }
 
-a.post-delete:hover {
+button.post-delete:hover {
     color: #FD1C4D;
 }
 

@@ -98,17 +98,24 @@ def edit_post(request, slug):
     return render(request, 'posts/edit_post.html', args)
 
 
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.views.decorators.http import require_POST
+
+@require_POST
 @login_required
 def delete_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
+    absolute_url = request.build_absolute_uri(reverse('posts:view_post', args=[post.slug]))
 
     if request.user != post.user:
         raise PermissionDenied()
 
-    if request.method == 'POST':
-        post.delete()
-        messages.success(request, 'Your post has been successfully deleted.')
+    post.delete()
+    messages.success(request, 'Your post has been successfully deleted.')
+
+    referer_url = request.META.get('HTTP_REFERER', '/')
+    if referer_url == absolute_url:
         return redirect('posts:home')
 
-    args = {'post': post}
-    return render(request, 'posts/delete_post_confirm.html', args)
+    return HttpResponseRedirect(referer_url)

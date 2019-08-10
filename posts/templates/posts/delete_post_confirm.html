@@ -1,27 +1,29 @@
-{% extends "base.html" %}
-{% block title %}
-    Delete {{ post.title }}
-{% endblock title %}
-{% block content %}
-    <div class="content-section row long-page">
-        <div class="col-12 pt-4 pr-1 pl-1">
-            <form method="POST">
-                {% csrf_token %}
-                <fieldset class="form-group text-center">
-                    <h4 class="text-danger pb-4">
-                        <span>
-                            Are you sure you want to delete the below post?
-                        </span>
-                        <span class="post-title">
-                            <a class="post-title" href="{% url 'posts:view_post' post.slug %}">
-                                {{ post.title }}
-                            </a>
-                        </span>
-                    </h4>
-                    <button class="btn btn-outline-danger btn-sm" type="submit">Delete</button>
-                    <input class="btn btn-outline-secondary btn-sm" action="action" type="button" value="Cancel" onclick="window.history.go(-1); return false;">
-                </fieldset>
-            </form>
+{% comment %}
+<button class="btn btn-link btn-sm post-delete" data-href="{% url 'posts:delete_post' post.slug %}" data-toggle="modal" data-target="#confirm-delete">
+    Delete
+</button>
+{% endcomment %}
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="confirm-deleteLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirm-deleteLabel">Delete Post</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body post-title">
+                Are you sure you want to delete {{ post.title }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <form id="post-delete-form" action="{% url 'posts:delete_post' post.slug %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger post-delete-confirm">
+                        Delete
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
-{% endblock content %}
+</div>

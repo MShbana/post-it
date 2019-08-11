@@ -5,10 +5,15 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
+from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView
 from itertools import chain
 from operator import attrgetter
+
+
 
 class Home(TemplateView):
     
@@ -97,10 +102,6 @@ def edit_post(request, slug):
     args = {'post': post, 'form': form}
     return render(request, 'posts/edit_post.html', args)
 
-
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-from django.views.decorators.http import require_POST
 
 @require_POST
 @login_required

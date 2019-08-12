@@ -29,41 +29,34 @@
                     {% for post in most_popular_posts %}
                         <li class="list-group-item">
                             <div class="row">
-                                {% comment %}
-                                    <div class="col-12 post-title">
-                                        <a class="sidebar-post-title" href="{% url 'posts:view_post' post.slug %}">
-                                            {{ post.title }}
-                                        </a>
-                                    </div>
-                                    <div class="col-12">
-                                        <small class="text-muted">
-                                            {{ post.comments.count }} comments
-                                        </small>
-                                    </div>
-                                    <div class="col-12 text-right post-author">
-                                        <small>
-                                            <a class="text-right" href="{% url 'accounts:view_account' post.user.profile.slug %}">
-                                                {{ post.user }}
-                                            </a>
-                                        </small>
-                                    </div>
-                                {% endcomment %}
                                 <div class="col-auto pr-0">
+                                    <a href="{% url 'accounts:view_account' post.user.profile.slug %}">
+                                        {% if post.user.profile.image %}
+                                            <img class="rounded-circle comments-profile-pic" src="{{ post.user.profile.image_url }}">
+                                        {% else %}
+                                            <img class="posts-profile-pic" src="/media/default.jpg">
+                                        {% endif %}
+                                    </a>
+                                </div>
+                                <div class="float-right pl-0">
+                                    <div class="col-12 post-author">
                                         <a href="{% url 'accounts:view_account' post.user.profile.slug %}">
-                                            {% if post.user.profile.image %}
-                                                <img class="rounded-circle comments-profile-pic" src="{{ post.user.profile.image_url }}">
-                                            {% else %}
-                                                <img class="posts-profile-pic" src="/media/default.jpg">
-                                            {% endif %}
+                                            {{ post.user.username }}
                                         </a>
                                     </div>
-                                    <div class="float-right pl-0">
-                                        <div class="col-12 post-author">
-                                            <a href="{% url 'accounts:view_account' post.user.profile.slug %}">
-                                                {{ post.user.username }}
-                                            </a>
-                                        </div>
-                                    </div>
+                                    {% if post.user == request.user %}
+                                <div class="col-12 pl-2">
+                                    <a class="btn btn-link btn-sm post-edit pr-0" href="{% url 'posts:edit_post' post.slug %}">
+                                        Edit
+                                    </a>
+                                    <button class="btn btn-link btn-sm post-delete pl-0" data-href="{% url 'posts:delete_post' post.slug %}" data-toggle="modal" data-target="#confirmDelete{{ post.slug }}">
+                                        Delete
+                                    </button>
+                                    {% include "posts/delete_post_confirm.html" %}
+                                </div>
+                                {% endif %}
+                                </div>
+                                
                                 <div class="col-12 post-title pt-2">
                                     <a class="sidebar-post-title" href="{% url 'posts:view_post' post.slug %}">
                                         {{ post.title }}

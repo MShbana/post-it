@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}
     {{ user.username }} Follower List
 {% endblock title %}
@@ -18,9 +19,20 @@
             {% if followers_list %}
                 {% for profile in followers_list %}
                     <li class="list-group-item username">
-                        <a href="{% url 'accounts:view_account' profile.slug %}">
-                            {{ profile.user.username }}
-                        </a>
+                        <div class="float-left">
+                            <a href="{% url 'accounts:view_account' profile.slug %}">
+                                {{ profile.user.username }}
+                            </a>
+                        </div>
+                        {% if profile.user != current_user %}
+                            <div class="float-right">
+                                {% if profile in current_user_following_list %}
+                                    {% include "accounts/_follow_base.html" with is_following=True %}
+                                {% else %}
+                                    {% include "accounts/_follow_base.html" with is_following=False %}
+                                {% endif %}
+                            </div>
+                        {% endif %}
                     </li>
                 {% endfor %}
             {% else %}
@@ -39,3 +51,7 @@
     </div>
 
 {% endblock content %}
+{% block scripts %}
+    <script src="{% static 'main.js' %}"></script>
+    <script src="{% static 'accounts/main.js' %}"></script>
+{% endblock scripts %}

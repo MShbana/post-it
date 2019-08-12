@@ -100,9 +100,10 @@ def view_account(request, slug):
     profile = get_object_or_404(Profile, slug=slug)
     user = profile.user
     current_user = request.user
-    current_user_profile = request.user.profile
 
-    is_following = current_user_profile.following.filter(pk=profile.id).exists()
+    # Used when loading the view without any button clicks
+    # (to determine the color and text of the following button).
+    is_following = current_user.profile.following.filter(pk=profile.id).exists()
 
     posts_list = user.posts.all()
     paginator = Paginator(posts_list, 10)
@@ -117,6 +118,8 @@ def view_account(request, slug):
 
     args = {
         'user': user,
+        'profile': profile,
+        'current_user': current_user,
         'posts': posts,
         'is_following': is_following,
     }
@@ -160,7 +163,8 @@ def view_update_account(request):
 
 @require_POST
 @login_required
-def follow_or_unfollow_profile(request, slug):
+def follow_or_unfollow_profile(request):
+    slug = request.POST.get('slug')
     profile_to_follow_or_unfollow = get_object_or_404(Profile, slug=slug)
     current_user_profile = request.user.profile
     is_following = current_user_profile.following.filter(pk=profile_to_follow_or_unfollow.id).exists()
@@ -171,8 +175,10 @@ def follow_or_unfollow_profile(request, slug):
         current_user_profile.following.add(profile_to_follow_or_unfollow)
 
     data = {
-        'is_following': current_user_profile.following.filter(pk=profile_to_follow_or_unfollow.id).exists()
+        # Used in the ajax request to change the colors and text of the following button.
+        'is_following': current_user_profile.following.filter(pk=profile_to_follow_or_unfollow.id).exists(),
     }
+
     return JsonResponse(data)
 
 
@@ -180,17 +186,17 @@ def follow_or_unfollow_profile(request, slug):
 def view_following_or_followers(request, slug, req):
     profile = get_object_or_404(Profile, slug=slug)
 
+    args = {
+        'user': profile.user,
+        'current_user': request.user,
+        'current_user_following_list': request.user.profile.following.all()
+    }
+
     if req == 'following':
-        args = {
-            'following_list': profile.following.all(),
-            'user': profile.user
-        }
+        args.update({'following_list': profile.following.all()})
         return render(request, 'accounts/following.html', args)
     elif req == 'followers':
-        args = {
-            'followers_list': profile.followers.all(),
-            'user': profile.user
-        }
+        args.update({'followers_list': profile.followers.all()})
         return render(request, 'accounts/followers.html', args)
     else:
         raise Http404

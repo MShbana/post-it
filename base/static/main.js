@@ -24,5 +24,9 @@ $.ajaxSetup({
         if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
             xhr.setRequestHeader("X-CSRFToken", csrftoken);
         }
-    }
+    },
+
+    // Local Host Error Checking for Ajax requests.
+    // error: function(xhr, exception){
+        // alert('Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText);
 });

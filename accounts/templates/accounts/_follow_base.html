@@ -1,0 +1,9 @@
+{% if is_following %}
+    <button type="submit" class="btn btn-sm btn-danger following-btn" data-profile-slug="{{ profile.slug }}">
+        Unfollow
+    </button>
+{% else %}
+    <button type="submit" class="btn btn-sm  btn-success following-btn" data-profile-slug="{{ profile.slug }}">
+        Follow
+    </button>     
+{% endif %}

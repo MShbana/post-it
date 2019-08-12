@@ -6,8 +6,8 @@
 {% block content %}
     <div class="row account-header text-center">
         <div class="col-12 mb-2">
-            {% if user.profile.image %}
-                <img class="accounts-profile-pic" src="{{ user.profile.image_url }}">
+            {% if profile.image %}
+                <img class="accounts-profile-pic" src="{{ profile.image_url }}">
             {% else %}
                 <img class="accounts-profile-pic" src="/media/default.jpg">
             {% endif %}
@@ -16,26 +16,26 @@
             {{ user.get_full_name }}
         </div>
         <div class="col-12 pb-2 username">
-            <a href="{% url 'accounts:view_account' user.profile.slug %}">
+            <a href="{% url 'accounts:view_account' profile.slug %}">
                 @{{ user.username }}
             </a>
         </div>
         <div class=" col-12 text-center pb-4">
-            {% if user != request.user %}
-                {% include "accounts/_follow_form_base.html" %}
+            {% if user != current_user %}
+                {% include "accounts/_follow_base.html" %}
             {% endif %}
         </div>
         <div class="btn-block btn-group btn-group-vertical">
-            <a class="btn btn-info" href="{% url 'accounts:view_following_or_followers' slug=user.profile.slug req='following' %}">
+            <a class="btn btn-info" href="{% url 'accounts:view_following_or_followers' slug=profile.slug req='following' %}">
                 Following
             </a>
-            <a class="btn btn-info " href="{% url 'accounts:view_following_or_followers' slug=user.profile.slug req='followers' %}">
+            <a class="btn btn-info " href="{% url 'accounts:view_following_or_followers' slug=profile.slug req='followers' %}">
                 Followers
             </a>
         </div>
     </div>
     <div class="row">
-            {% if user == request.user %}
+            {% if user == current_user %}
                 <div class="col-12 pt-2 pr-1 pl-1">
                     {% include "posts/_new_post_form.html" %}
                 </div>
@@ -51,7 +51,7 @@
             </div>
         {% else %}
             <div class="col-12 content-section text-center mb-2 long-page">
-                {% if user == request.user %}
+                {% if user == current_user %}
                     <h3>You do not have any posts yet...</h3>
                 {% else %}
                     <h3>{{ user.username }} has no posts yet...</h3>
@@ -61,7 +61,6 @@
     </div>
 {% endblock content %}
 {% block scripts %}
-    <script src="{% static 'main.js' %}">
-    </script>
-    {% include "accounts/_follow_form_ajax_base.html" %}
+    <script src="{% static 'main.js' %}"></script>
+    <script src="{% static 'accounts/main.js' %}"></script>
 {% endblock scripts %}

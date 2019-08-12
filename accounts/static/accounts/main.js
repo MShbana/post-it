@@ -1,11 +1,11 @@
 $("#id_username").on('input', function() {
     var $id_username = $(this);
-    var $id_username_val = $(this).val();
+    var $username = $(this).val();
 
     $.ajax({
-        url: '/ajax/validate_username',
+        url: '/ajax/validate_username/',
         data: {
-            'username': $id_username_val
+            'username': $username
         },
         dataType: 'json',
         success: function(data) {
@@ -23,12 +23,12 @@ $("#id_username").on('input', function() {
 
 $("#id_email").on('input', function() {
     var $id_email = $(this);
-    var $id_email_val = $(this).val();
+    var $email = $(this).val();
 
     $.ajax({
-        url: '/ajax/validate_email',
+        url: '/ajax/validate_email/',
         data: {
-            'email': $id_email_val
+            'email': $email
         },
         dataType: 'json',
         success: function(data) {
@@ -41,4 +41,32 @@ $("#id_email").on('input', function() {
             }
         }
     });
+});
+
+$('.following-btn').on('click', function(e) {
+    e.preventDefault();
+
+    var $follow_button = $(this);
+    var $slug = $(this).data('profile-slug');
+
+    $.ajax({
+        type: 'POST',
+        url: '/account/ajax/follow/',
+        data: {
+            'slug': $slug,
+        },
+        dataType: 'json',
+        success: function(data) {
+            if (data.is_following) {
+                $follow_button.text('Unfollow');
+                $follow_button.removeClass('btn-success');
+                $follow_button.addClass('btn-danger');
+            } else {
+                $follow_button.text('Follow')
+                $follow_button.removeClass('btn-danger')
+                $follow_button.addClass('btn-success');
+            }
+        }
+    });
+    return false;
 });

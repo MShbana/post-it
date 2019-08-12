@@ -14,6 +14,7 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.shortcuts import get_object_or_404, render, redirect
 from django.template.loader import render_to_string
+from django.views.decorators.http import require_POST
 from posts.forms import PostForm
 
 
@@ -98,8 +99,10 @@ def change_password(request):
 def view_account(request, slug):
     profile = get_object_or_404(Profile, slug=slug)
     user = profile.user
+    current_user = request.user
+    current_user_profile = request.user.profile
 
-    is_following = profile.followers.filter(pk=request.user.id).exists()
+    is_following = current_user_profile.following.filter(pk=profile.id).exists()
 
     posts_list = user.posts.all()
     paginator = Paginator(posts_list, 10)
@@ -118,15 +121,15 @@ def view_account(request, slug):
         'is_following': is_following,
     }
 
-    if user == request.user:
+    if user == current_user:
         if request.method == 'POST':
             form = PostForm(request.POST)
             if form.is_valid():
                 post = form.save(commit=False)
-                post.user = request.user
+                post.user = current_user
                 post.save()
                 messages.success(request, 'Your post has been successfully created.')
-                return redirect('accounts:view_account', request.user.profile.slug)
+                return redirect('accounts:view_account', current_user.profile.slug)
         else:
             form = PostForm()
 
@@ -155,19 +158,22 @@ def view_update_account(request):
     return render(request, 'accounts/view_update_account.html', args)
 
 
+@require_POST
 @login_required
-def follow_profile(request, slug, operation):
+def follow_or_unfollow_profile(request, slug):
     profile_to_follow_or_unfollow = get_object_or_404(Profile, slug=slug)
     current_user_profile = request.user.profile
+    is_following = current_user_profile.following.filter(pk=profile_to_follow_or_unfollow.id).exists()
 
-    if operation == 'follow':
-        current_user_profile.following.add(profile_to_follow_or_unfollow)
-    elif operation == 'unfollow':
+    if is_following:
         current_user_profile.following.remove(profile_to_follow_or_unfollow)
     else:
-        raise Http404
+        current_user_profile.following.add(profile_to_follow_or_unfollow)
 
-    return redirect('accounts:view_account', slug)
+    data = {
+        'is_following': current_user_profile.following.filter(pk=profile_to_follow_or_unfollow.id).exists()
+    }
+    return JsonResponse(data)
 
 
 @login_required

@@ -22,11 +22,7 @@
         </div>
         <div class=" col-12 text-center pb-4">
             {% if user != request.user %}
-                {% if is_following %}
-                    <a href="{% url 'accounts:follow_profile' slug=user.profile.slug operation='unfollow' %}" class="btn btn-danger btn-sm">Unfollow</a>
-                {% else %}
-                    <a href="{% url 'accounts:follow_profile' slug=user.profile.slug  operation='follow' %}" class="btn btn-success btn-sm">Follow</a>
-                {% endif %}
+                {% include "accounts/_follow_form_base.html" %}
             {% endif %}
         </div>
         <div class="btn-block btn-group btn-group-vertical">
@@ -64,3 +60,8 @@
         {% endif %}
     </div>
 {% endblock content %}
+{% block scripts %}
+    <script src="{% static 'main.js' %}">
+    </script>
+    {% include "accounts/_follow_form_ajax_base.html" %}
+{% endblock scripts %}

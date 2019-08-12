@@ -16,7 +16,7 @@ $('.following-btn').on('click', function(e) {
             $follow_button.text('Unfollow');
             $follow_button.removeClass('btn-success');
             $follow_button.addClass('btn-danger');
-            $account_wrapper.fadeTo(1000, 0.5, function() {
+            $account_wrapper.fadeTo(500, 0.4, function() {
                 $(this).slideUp();
             });
         }

@@ -1,43 +1,43 @@
 <nav class="navbar navbar-expand navbar-dark bg-custom fixed-top">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <div class="container">
-                <ul class="navbar-nav text-center">
-                    {% if not request.user.is_anonymous %}
-                        <li class="nav-item active mr-auto">
-                            <a class="nav-link" href="{% url 'posts:home' %}">
-                                Home
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'accounts:view_account' request.user.profile.slug %}">
-                                Profile
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'accounts:view_update_account' %}">
-                                Account
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link extra-btn" href="{% url 'posts:home' %}#popular_posts">
-                                Popular Posts
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
-                        </li>
-                    {% else %}
-                        <li class="nav-item mr-auto">
-                            <a class="nav-link py-1" href="{% url 'register' %}">Register</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link py-1" href="{% url 'login' %}">Login</a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="container">
+            <ul class="navbar-nav text-center">
+                {% if not request.user.is_anonymous %}
+                    <li class="nav-item active mr-auto">
+                        <a class="nav-link" href="{% url 'posts:home' %}">
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'accounts:view_account' request.user.profile.slug %}">
+                            Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'accounts:view_update_account' %}">
+                            Account
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link extra-btn" href="{% url 'posts:home' %}#popularPosts">
+                            Popular Posts
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item mr-auto">
+                        <a class="nav-link py-1" href="{% url 'register' %}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link py-1" href="{% url 'login' %}">Login</a>
+                    </li>
+                {% endif %}
+            </ul>
         </div>
-      </nav>
+    </div>
+</nav>

@@ -6,7 +6,46 @@
 {% endblock title %}
 {% block content %}
     <div class="row home-page">
-        <div class="col-sm-8 pr-1 pl-1">
+        <div class="col-sm-3 pr-1 pl-1 pl-sm-2">
+                <a id="suggestedFriends"></a>
+                <ul class="list-group">
+                    <li class="list-group-item text-center sidebar-header">Suggested Friends</li>
+                    {% if suggested_friends %}
+                        {% for profile in suggested_friends %}
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-auto pr-0">
+                                        <a href="{% url 'accounts:view_account' profile.slug %}">
+                                        {% if profile.image %}
+                                            <img class="rounded-circle comments-profile-pic" src="{{ profile.image_url }}">
+                                        {% else %}
+                                            <img class="rounded-circle comments-profile-pic" src="/media/default.jpg">
+                                        {% endif %}
+                                        </a>
+                                    </div>
+                                    <div class="col post-author">
+                                        <a href="{% url 'accounts:view_account' profile.slug %}">
+                                            {{ profile.user.username }}
+                                        </a>
+                                        </div>
+                                    {% if profile.user != request.user %}
+                                        <div class="col text-right">
+                                            {% include "accounts/_follow_base.html" with is_following=False  test=suggested_friends.count %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                            <li class="list-group-item">
+                                <div class="text-center">
+                                    There are no suggested friends.
+                                </div>
+                            </li>
+                    {% endif %}
+                </ul>
+        </div>
+        <div class="col-sm-6 pr-1 pl-1">
             {% include "posts/_new_post_form.html" %}
             {% if posts %}
                 {% for post in posts %}
@@ -21,9 +60,9 @@
                 </div>
             {% endif %}
         </div>
-        <div class="col-sm-4 pr-1 pl-1 pl-sm-2 sidebar">
-            <a id="popular_posts"></a>
-            <ul class="list-group" id="popular-posts">
+        <div class="col-sm-3 pr-1 pl-1 pl-sm-2 sidebar">
+            <a id="popularPosts"></a>
+            <ul class="list-group">
                 <li class="list-group-item text-center sidebar-header">Most Commented Posts</li>
                 {% if most_popular_posts %}
                     {% for post in most_popular_posts %}
@@ -34,7 +73,7 @@
                                         {% if post.user.profile.image %}
                                             <img class="rounded-circle comments-profile-pic" src="{{ post.user.profile.image_url }}">
                                         {% else %}
-                                            <img class="posts-profile-pic" src="/media/default.jpg">
+                                            <img class="rounded-circle comments-profile-pic" src="/media/default.jpg">
                                         {% endif %}
                                     </a>
                                 </div>
@@ -56,7 +95,6 @@
                                 </div>
                                 {% endif %}
                                 </div>
-                                
                                 <div class="col-12 post-title pt-2">
                                     <a class="sidebar-post-title" href="{% url 'posts:view_post' post.slug %}">
                                         {{ post.title }}
@@ -88,3 +126,7 @@
         </div>
     </div>
 {% endblock content %}
+{% block scripts %}
+    <script src="{% static 'main.js' %}"></script>
+    <script src="{% static 'posts/main.js' %}"></script>
+{% endblock scripts %}

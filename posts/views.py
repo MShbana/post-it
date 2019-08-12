@@ -1,5 +1,6 @@
 from .forms import PostForm, CommentForm
 from .models import Post
+from accounts.models import Profile
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
@@ -43,10 +44,14 @@ class Home(TemplateView):
         most_popular_posts = Post.objects.annotate(
             num_comments=Count('comments')).order_by('-num_comments')[:10]
 
+        suggested_friends = Profile.objects.all().exclude(pk__in=following_list).exclude(user=request.user).order_by('-created')[:10]
+
         args = {
             'posts': posts,
             'most_popular_posts': most_popular_posts,
-            'form': form
+            'form': form,
+            'suggested_friends': suggested_friends,
+            'following_list': following_list
         }
         return render(request, self.template_name, args)
 

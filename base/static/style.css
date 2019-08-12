@@ -152,7 +152,7 @@ legend {
     opacity: 1;
 }
 
-#popular_posts::before {
+#popularPosts::before {
     content: "";
     display: block;
     height: 60px;

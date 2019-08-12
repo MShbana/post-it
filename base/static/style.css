@@ -20,7 +20,7 @@ body {
 .post-body,
 .post-title {
     color: #3E4347;
-    white-space: pre-line;
+    /* white-space: pre-line; */
     word-wrap: break-word;
 
 }
@@ -152,6 +152,12 @@ legend {
     opacity: 1;
 }
 
+#popular_posts::before {
+    content: "";
+    display: block;
+    height: 60px;
+    margin: -60px 0 0 0;
+}
 
 /******************* #Responsiveness# ******************/
 h1 { font-size: 1.8rem; }
@@ -178,9 +184,11 @@ tr { font-size: 1rem; }
 }
 @media screen and (max-width: 576px)
 {
+    .extra-btn { display: block; }
     .content-section { border-bottom: 1px solid #ADB3B8; padding: 15px 10px; }
 }
 @media screen and (min-width: 577px) {
+    .extra-btn { display: none; }
     .content-section { border: 1px solid #768593; border-radius: 3px; margin-bottom: 5px; padding: 10px; }
 }
 /******************* /#Repsponiveness# ******************/

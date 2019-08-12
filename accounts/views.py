@@ -104,6 +104,7 @@ def view_account(request, slug):
     # Used when loading the view without any button clicks
     # (to determine the color and text of the following button).
     is_following = current_user.profile.following.filter(pk=profile.id).exists()
+    is_followed = current_user.profile.followers.filter(pk=profile.id).exists()
 
     posts_list = user.posts.all()
     paginator = Paginator(posts_list, 10)
@@ -122,6 +123,7 @@ def view_account(request, slug):
         'current_user': current_user,
         'posts': posts,
         'is_following': is_following,
+        'is_followed': is_followed
     }
 
     if user == current_user:

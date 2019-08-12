@@ -158,6 +158,15 @@ legend {
     margin: -60px 0 0 0;
 }
 
+.follows-you {
+    background-color: #D4D4D4;
+    /* border: 1px solid #D4D4D4; */
+    border-radius: 3px;
+    font-weight: bold;
+    padding: 4px;
+    color: #151471;
+}
+
 /******************* #Responsiveness# ******************/
 h1 { font-size: 1.8rem; }
 h2 { font-size: 1.6rem; }

@@ -20,6 +20,11 @@
                 @{{ user.username }}
             </a>
         </div>
+        {% if is_followed %}
+            <div class="col-12 text-center pb-4">
+                <span class="follows-you">Follows You</span>
+            </div>
+        {% endif %}
         <div class=" col-12 text-center pb-4">
             {% if user != current_user %}
                 {% include "accounts/_follow_base.html" %}

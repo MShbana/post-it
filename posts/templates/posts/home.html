@@ -27,7 +27,7 @@
                                         <a href="{% url 'accounts:view_account' profile.slug %}">
                                             {{ profile.user.username }}
                                         </a>
-                                        </div>
+                                    </div>
                                     {% if profile.user != request.user %}
                                         <div class="col text-right">
                                             {% include "accounts/_follow_base.html" with is_following=False %}
@@ -116,11 +116,11 @@
                         </li>
                     {% endfor %}
                 {% else %}
-                        <li class="list-group-item">
-                            <div class="text-center">
-                                There are no posts in the site yet.
-                            </div>
-                        </li>
+                    <li class="list-group-item">
+                        <div class="text-center">
+                            There are no posts in the site yet.
+                        </div>
+                    </li>
                 {% endif %}
             </ul>
         </div>

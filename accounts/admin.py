@@ -1,4 +1,4 @@
-from .forms import UserRegisterationForm
+from .forms import UserRegisterationForm, UserUpdateForm
 from .models import Profile
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    
+
     list_display = ('user', 'slug', 'city', 'country', 'gender', 'linkedin')
     list_filter = ('created', 'gender', 'city', 'country')
     ordering = ('-created', 'user__username')
@@ -16,11 +16,25 @@ class ProfileAdmin(admin.ModelAdmin):
 
 
 class CustomUserAdmin(UserAdmin):
-    
-    # form = UserUpdateForm
+
+    form = UserUpdateForm
     add_form = UserRegisterationForm
     add_fieldsets = (
-        (None, {'fields': ('username', 'first_name', 'last_name', 'email', 'password1', 'password2'),}),)
+        (
+            None,
+            {
+                'fields':
+                (
+                    'username',
+                    'first_name',
+                    'last_name',
+                    'email',
+                    'password1',
+                    'password2'
+                ),
+            }
+        ),
+    )
 
 
 admin.site.unregister(User)

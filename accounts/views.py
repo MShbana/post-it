@@ -30,19 +30,22 @@ def register(request):
             user.save()
 
             current_site = get_current_site(request)
-            mail_subject = 'Activate your Post It account.'
-            message = render_to_string('accounts/account_activation_email.html', {
-                'user': user,
-                'domain': current_site.domain,
-                'uid':urlsafe_base64_encode(force_bytes(user.pk)),
-                'token':account_activation_token.make_token(user),
-            })
+            mail_subject = 'Activate your Post It account'
+            message = render_to_string(
+                'accounts/account_activation_email.html', {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': account_activation_token.make_token(user), }
+            )
             to_email = form.cleaned_data.get('email')
             email = EmailMessage(
                         mail_subject, message, to=[to_email]
             )
             email.send()
-            messages.success(request, 'Your account has been successfully created.')
+            messages.success(
+                request, 'Your account has been successfully created.'
+            )
             return render(request, 'accounts/account_created.html')
     else:
         form = UserRegisterationForm()
@@ -53,13 +56,17 @@ def register(request):
 
 def validate_username(request):
     username = request.GET.get('username', None)
-    data = {'is_taken': User.objects.filter(username__iexact=username).exists()}
+    data = {
+        'is_taken': User.objects.filter(username__iexact=username).exists()
+    }
     return JsonResponse(data)
 
 
 def validate_email(request):
     email = request.GET.get('email', None)
-    data = {'is_taken': User.objects.filter(email__iexact=email).exists()}
+    data = {
+        'is_taken': User.objects.filter(email__iexact=email).exists()
+    }
     return JsonResponse(data)
 
 
@@ -72,7 +79,9 @@ def activate_account(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        messages.success(request, 'Your account has been successfully activated.')
+        messages.success(
+            request, 'Your account has been successfully activated.'
+        )
         return render(request, 'accounts/account_verified.html')
     else:
         messages.warning(request, 'Activation Link is invalid.')
@@ -86,7 +95,9 @@ def change_password(request):
         if form.is_valid():
             form.save()
             update_session_auth_hash(request, form.user)
-            messages.success(request, 'Your password has been successfully updated.')
+            messages.success(
+                request, 'Your password has been successfully updated.'
+            )
             return redirect('posts:home')
     else:
         form = PasswordChangeForm(user=request.user)
@@ -103,8 +114,10 @@ def view_account(request, slug):
 
     # Used when loading the view without any button clicks
     # (to determine the color and text of the following button).
-    is_following = current_user.profile.following.filter(pk=profile.id).exists()
-    is_followed = current_user.profile.followers.filter(pk=profile.id).exists()
+    is_following = current_user.profile.following.\
+        filter(pk=profile.id).exists()
+    is_followed = current_user.profile.followers.\
+        filter(pk=profile.id).exists()
 
     posts_list = user.posts.all()
     paginator = Paginator(posts_list, 10)
@@ -133,8 +146,11 @@ def view_account(request, slug):
                 post = form.save(commit=False)
                 post.user = current_user
                 post.save()
-                messages.success(request, 'Your post has been successfully created.')
-                return redirect('accounts:view_account', current_user.profile.slug)
+                messages.success(
+                    request, 'Your post has been successfully created.'
+                )
+                return redirect('accounts:view_account',
+                                current_user.profile.slug)
         else:
             form = PostForm()
 
@@ -149,11 +165,17 @@ def view_update_account(request):
 
     if request.method == 'POST':
         user_form = UserUpdateForm(data=request.POST, instance=user, user=user)
-        profile_form = ProfileUpdateForm(data=request.POST, files=request.FILES, instance=user.profile)
+        profile_form = ProfileUpdateForm(
+                            data=request.POST,
+                            files=request.FILES,
+                            instance=user.profile
+        )
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
-            messages.success(request, 'Your account Information has been updated.')
+            messages.success(
+                request, 'Your account Information has been updated.'
+            )
             return redirect('accounts:view_update_account')
     else:
         user_form = UserUpdateForm(instance=user)
@@ -169,7 +191,8 @@ def follow_or_unfollow_profile(request):
     slug = request.POST.get('slug')
     profile_to_follow_or_unfollow = get_object_or_404(Profile, slug=slug)
     current_user_profile = request.user.profile
-    is_following = current_user_profile.following.filter(pk=profile_to_follow_or_unfollow.id).exists()
+    is_following = current_user_profile.following.\
+        filter(pk=profile_to_follow_or_unfollow.id).exists()
 
     if is_following:
         current_user_profile.following.remove(profile_to_follow_or_unfollow)
@@ -177,8 +200,10 @@ def follow_or_unfollow_profile(request):
         current_user_profile.following.add(profile_to_follow_or_unfollow)
 
     data = {
-        # Used in the ajax request to change the colors and text of the following button.
-        'is_following': current_user_profile.following.filter(pk=profile_to_follow_or_unfollow.id).exists(),
+        # Used in the ajax request to change the colors and
+        # text of the following button.
+        'is_following': current_user_profile.following.filter(
+                                pk=profile_to_follow_or_unfollow.id).exists(),
     }
 
     return JsonResponse(data)

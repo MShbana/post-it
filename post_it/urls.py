@@ -25,41 +25,85 @@ from django.urls import path, include
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('posts.urls')),
-    path('account/', include('accounts.urls')),
-    path('register/', account_views.register, name='register'),
-    path('ajax/validate_username/', account_views.validate_username, name='validate_username'),
-    path('ajax/validate_email/', account_views.validate_email, name='validate_email'),
-    path('activate/<uidb64>/<token>/', account_views.activate_account, name='activate'),
-    path('login/',
-          auth_views.LoginView.as_view(
-              template_name='accounts/login.html',
-              redirect_authenticated_user=True),
-          name='login'),
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
-    path('password-reset/',
-         auth_views.PasswordResetView.as_view(
-             template_name='accounts/password_reset.html'),
-         name='password_reset'),
-    path('password-reset/done/',
-         auth_views.PasswordResetDoneView.as_view(
-             template_name='accounts/password_reset_done.html'),
-         name='password_reset_done'),
-    path('password-reset/confirm/<uidb64>/<token>/',
-         auth_views.PasswordResetConfirmView.as_view(
-             template_name='accounts/password_reset_confirm.html'),
-         name='password_reset_confirm'),
-    path('password-reset/complete/',
-         auth_views.PasswordResetCompleteView.as_view(
-             template_name='accounts/password_reset_complete.html'),
-         name='password_reset_complete'),
-    path('change-password/', account_views.change_password, name='change_password'),
+    path(
+        'admin/',
+        admin.site.urls
+    ),
+    path(
+        '',
+        include('posts.urls')
+    ),
+    path(
+        'account/',
+        include('accounts.urls')
+    ),
+    path(
+        'register/',
+        account_views.register,
+        name='register'
+    ),
+    path(
+        'ajax/validate_username/',
+        account_views.validate_username,
+        name='validate_username'
+    ),
+    path(
+        'ajax/validate_email/',
+        account_views.validate_email,
+        name='validate_email'
+    ),
+    path(
+        'activate/<uidb64>/<token>/',
+        account_views.activate_account,
+        name='activate'
+    ),
+    path(
+        'login/',
+        auth_views.LoginView.as_view(
+            template_name='accounts/login.html',
+            redirect_authenticated_user=True),
+        name='login'
+    ),
+    path(
+        'logout/',
+        auth_views.LogoutView.as_view(),
+        name='logout'
+    ),
+    path(
+        'password-reset/',
+        auth_views.PasswordResetView.as_view(
+            template_name='accounts/password_reset.html'),
+        name='password_reset'
+    ),
+    path(
+        'password-reset/done/',
+        auth_views.PasswordResetDoneView.as_view(
+            template_name='accounts/password_reset_done.html'),
+        name='password_reset_done'
+    ),
+    path(
+        'password-reset/confirm/<uidb64>/<token>/',
+        auth_views.PasswordResetConfirmView.as_view(
+            template_name='accounts/password_reset_confirm.html'),
+        name='password_reset_confirm'
+    ),
+    path(
+        'password-reset/complete/',
+        auth_views.PasswordResetCompleteView.as_view(
+            template_name='accounts/password_reset_complete.html'),
+        name='password_reset_complete'),
+    path(
+        'change-password/',
+        account_views.change_password,
+        name='change_password'
+    ),
 ]
 
 if settings.DEBUG:
     from django.conf.urls.static import static
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT)
     from django.contrib.staticfiles.urls import staticfiles_urlpatterns
     urlpatterns += staticfiles_urlpatterns()
 

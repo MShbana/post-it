@@ -23,3 +23,8 @@ $('.following-btn').on('click', function(e) {
     });
     return false;
 });
+
+
+$('.comment-delete').on("click",function(){
+    $(window).scrollTop(0);
+});

@@ -6,7 +6,7 @@
 {% endblock title %}
 {% block content %}
     <div class="row">
-        <div class="col-12 pr-1 pl-1">
+        <div class="col-12 pr-1 pl-1 pb-4">
             {% include "posts/_post_base.html" %}
         </div>
         <div class="col-12 pr-1 pl-1">
@@ -27,18 +27,19 @@
                 <li class="list-group-item text-center sidebar-header">
                     Comments
                 </li>
-                {% if post.comments.all %}
-                    {% for comment in post.comments.all %}
-                        <li class="list-group-item">
-                            {% include "posts/_comment_base.html" %}
-                        </li>
-                    {% endfor %}
-                {% else %}
+                {% for comment in post.comments.all %}
+                    <li class="list-group-item">
+                        {% include "posts/_comment_base.html" %}
+                    </li>
+                {% empty %}
                     <li class="list-group-item text-center">
                         This post has no comments yet...
                     </li>
-                {% endif %}
+                {% endfor %}
             </ul>
         </div>
     </div>
 {% endblock content %}
+{% block scripts %}
+    <script src="{% static 'posts/main.js' %}"></script>
+{% endblock scripts %}

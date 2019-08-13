@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col-auto pr-0">
-        <a href="{% url 'accounts:view_account' post.user.profile.slug %}">
-            {% if user.profile.image %}
-                <img class="rounded-circle comments-profile-pic" src="{{ post.user.profile.image.url }}">
+        <a href="{% url 'accounts:view_account' comment.author.profile.slug %}">
+            {% if comment.author.profile.image %}
+                <img class="rounded-circle comments-profile-pic" src="{{ comment.author.profile.image.url }}">
             {% else %}
                 <img class="rounded-circle posts-profile-pic" src="/media/default.jpg">
             {% endif %}
@@ -10,8 +10,8 @@
     </div>
     <div class="float-right pl-0">
         <div class="col-12 post-author">
-            <a href="{% url 'accounts:view_account' post.user.profile.slug %}">
-                {{ post.user.username }}
+            <a href="{% url 'accounts:view_account' comment.author.profile.slug %}">
+                {{ comment.author.username }}
             </a>
         </div>
     </div>
@@ -20,6 +20,18 @@
             {{ comment.body }}
         </p>
     </div>
+    {% if comment.author == request.user %}
+        <div class="col-12 pl-2 text-right">
+            <a class="btn btn-link btn-sm post-edit" href="{% url 'posts:edit_comment' comment.pk %}">
+                Edit
+            </a>
+            <button class="btn btn-link btn-sm comment-delete" data-toggle="modal" data-target="#confirmDeleteComment{{ comment.pk }}">
+                Delete
+            </button>
+            {% include "posts/delete_comment_confirm.html" %}
+        </div>
+    {% endif %}
+
     <div class="col-12 text-right">
         <small class="text-muted">
             {{ comment.date_posted|date:"g:i A - d M Y" }}

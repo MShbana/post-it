@@ -1,5 +1,5 @@
 from .forms import PostForm, CommentForm
-from .models import Post
+from .models import Post, Comment
 from accounts.models import Profile
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -120,7 +120,8 @@ def edit_post(request, slug):
 def delete_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
     absolute_url = request.build_absolute_uri(
-        reverse('posts:view_post', args=[post.slug]))
+        reverse('posts:view_post', args=[post.slug])
+    )
 
     if request.user != post.user:
         raise PermissionDenied()
@@ -133,3 +134,41 @@ def delete_post(request, slug):
         return redirect('posts:home')
 
     return HttpResponseRedirect(referer_url)
+
+
+@require_POST
+@login_required
+def delete_comment(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+
+    if request.user != comment.author:
+        raise PermissionDenied()
+
+    comment.delete()
+    messages.success(request, 'Your comment has been successfully deleted.')
+    return redirect('posts:view_post', comment.post.slug)
+
+
+
+@login_required
+def edit_commnet(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+
+    if request.user != comment.author:
+        raise PermissionDenied()
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            form.save()
+            messages.success(
+                request,
+                f'Your comment has been on {comment.post.title} successfully updated.'
+            )
+            return redirect('posts:view_post', comment.post.slug)
+
+    else:
+        form = CommentForm(instance=comment)
+
+    args = {'comment': comment, 'form': form}
+    return render(request, 'posts/edit_comment.html', args)

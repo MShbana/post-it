@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% block title %}
-    Edit {{ post.title }}
+    Edit {{ comment.post.title }}
 {% endblock title %}
 {% block content %}
     <div class="content-section row long-page">
@@ -9,10 +9,11 @@
             <form method="POST">
                 {% csrf_token %}
                 <legend class="pb-2 mb-4 post-title">
-                    Update
-                    <a href="{% url 'posts:view_post' post.slug %}">
-                        {{ post.title }}
+                    Update Comment on
+                    <a href="#">
+                        {{ comment.post.title }}
                     </a>
+                    Post
                 </legend>
                 <fieldset class="form-group">
                     {{ form|crispy }}

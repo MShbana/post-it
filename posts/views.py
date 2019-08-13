@@ -15,16 +15,16 @@ from itertools import chain
 from operator import attrgetter
 
 
-
 class Home(TemplateView):
-    
+
     template_name = 'posts/home.html'
 
     def get(self, request):
         form = PostForm()
 
         following_list = request.user.profile.following.all()
-        following_posts_list = Post.objects.filter(user__profile__in=following_list)
+        following_posts_list = Post.objects.filter(
+                                    user__profile__in=following_list)
         user_posts_list = Post.objects.filter(user=request.user)
         posts_list = sorted(
             chain(following_posts_list, user_posts_list),
@@ -44,7 +44,10 @@ class Home(TemplateView):
         most_popular_posts = Post.objects.annotate(
             num_comments=Count('comments')).order_by('-num_comments')[:10]
 
-        suggested_friends = Profile.objects.all().exclude(pk__in=following_list).exclude(user=request.user).order_by('-created')[:10]
+        suggested_friends = Profile.objects.all().\
+            exclude(pk__in=following_list).\
+            exclude(user=request.user).\
+            order_by('-created')[:10]
 
         args = {
             'posts': posts,
@@ -61,7 +64,9 @@ class Home(TemplateView):
             post = form.save(commit=False)
             post.user = request.user
             post.save()
-            messages.success(request, 'Your post has been successfully created.')
+            messages.success(
+                request, 'Your post has been successfully created.'
+            )
             return redirect('posts:home')
 
         args = {'form': form}
@@ -99,7 +104,9 @@ def edit_post(request, slug):
         form = PostForm(request.POST, instance=post)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Your post has been successfully updated.')
+            messages.success(
+                request, 'Your post has been successfully updated.'
+            )
             return redirect('posts:view_post', post.slug)
     else:
         form = PostForm(instance=post)
@@ -112,7 +119,8 @@ def edit_post(request, slug):
 @login_required
 def delete_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    absolute_url = request.build_absolute_uri(reverse('posts:view_post', args=[post.slug]))
+    absolute_url = request.build_absolute_uri(
+        reverse('posts:view_post', args=[post.slug]))
 
     if request.user != post.user:
         raise PermissionDenied()

@@ -4,7 +4,11 @@ from django.db import models
 
 
 class Post(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
+    user = models.ForeignKey(
+                User,
+                on_delete=models.CASCADE,
+                related_name='posts'
+    )
     title = models.CharField(max_length=250, null=False, blank=False)
     slug = models.SlugField(unique=True, blank=True)
     body = models.TextField()
@@ -27,8 +31,16 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='total_comments')
+    post = models.ForeignKey(
+                Post,
+                on_delete=models.CASCADE,
+                related_name='comments'
+    )
+    author = models.ForeignKey(
+                User,
+                on_delete=models.CASCADE,
+                related_name='total_comments'
+    )
     body = models.CharField(max_length=250)
     date_posted = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)

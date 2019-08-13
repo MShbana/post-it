@@ -13,7 +13,6 @@ class PostForm(forms.ModelForm):
         self.fields['body'].widget.attrs['placeholder'] = 'Your Post'
         self.fields['body'].widget.attrs['class'] = 'form-control'
 
-
     class Meta:
         model = Post
         fields = ('title', 'body')
@@ -24,7 +23,8 @@ class CommentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['body'].label = False
-        self.fields['body'].widget.attrs['placeholder'] = 'Leave your comment here...'
+        self.fields['body'].\
+            widget.attrs['placeholder'] = 'Leave your comment here...'
         self.fields['body'].widget.attrs['class'] = 'form-control'
 
     class Meta:

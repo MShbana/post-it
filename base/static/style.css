@@ -61,10 +61,12 @@ input[type=text]:focus,
     height: 80px;
 }
 
+button.comment-delete,
 button.post-delete {
     color: #420E01;
 }
 
+button.comment-delete:hover,
 button.post-delete:hover {
     color: #FD1C4D;
 }
@@ -160,12 +162,16 @@ legend {
 
 .follows-you {
     background-color: #D4D4D4;
-    /* border: 1px solid #D4D4D4; */
     border-radius: 3px;
+    color: #151471;
     font-weight: bold;
     padding: 4px;
-    color: #151471;
 }
+
+body.modal-open div.modal-backdrop {
+    z-index: 0;
+}
+
 
 /******************* #Responsiveness# ******************/
 h1 { font-size: 1.8rem; }

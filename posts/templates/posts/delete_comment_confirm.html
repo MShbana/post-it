@@ -1,9 +1,9 @@
-<div class="modal fade pt-5" id="confirmDeletePost{{ post.slug }}" tabindex="-1" role="dialog" aria-labelledby="confirmDeletePostLabel" aria-hidden="true">
+<div class="modal fade pt-5" id="confirmDeleteComment{{ comment.pk }}" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteCommentLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-danger" id="confirmDeletePostLabel">
-                    Delete Post
+                <h5 class="modal-title text-danger" id="confirmDeleteCommentLabel">
+                    Delete Comment
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -11,17 +11,21 @@
             </div>
             <div class="modal-body text-center">
                 <span class="text-danger">
-                    Are you sure you want to delete this post
+                    Are you sure you want to delete your comment on
                 </span>
                 <span class="post-title">
-                    {{ post.title }}
+                    {% if comment.post.user == request.user %}
+                        Your
+                    {% else %}
+                        {{ comment.post.user }}
+                    {% endif %}
                 </span>?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <form id="post-delete-form" action="{% url 'posts:delete_post' post.slug %}" method="POST">
+                <form id="comment-delete-form" action="{% url 'posts:delete_comment' comment.pk %}" method="POST">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-danger post-delete-confirm">
+                    <button type="submit" class="btn btn-danger comment-delete-confirm">
                         Delete
                     </button>
                 </form>

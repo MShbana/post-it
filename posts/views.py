@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
@@ -20,18 +20,15 @@ class Home(TemplateView):
     template_name = 'posts/home.html'
 
     def get(self, request):
-        form = PostForm()
 
-        following_list = request.user.profile.following.all()
-        following_posts_list = Post.objects.filter(
-                                    user__profile__in=following_list)
-        user_posts_list = Post.objects.filter(user=request.user)
-        posts_list = sorted(
-            chain(following_posts_list, user_posts_list),
-            key=attrgetter('date_posted'),
-            reverse=True)
-
-        paginator = Paginator(posts_list, 10)
+        current_user = request.user
+        following_list = current_user.profile.following.all()
+        home_posts = Post.objects\
+                        .filter(
+                            Q(user=current_user)|
+                            Q(user__profile__in=following_list)
+        )
+        paginator = Paginator(home_posts, 10)
         page = request.GET.get('page')
 
         try:
@@ -49,12 +46,13 @@ class Home(TemplateView):
             exclude(user=request.user).\
             order_by('-created')[:10]
 
+        form = PostForm()
+
         args = {
             'posts': posts,
             'most_popular_posts': most_popular_posts,
             'form': form,
             'suggested_friends': suggested_friends,
-            'following_list': following_list
         }
         return render(request, self.template_name, args)
 

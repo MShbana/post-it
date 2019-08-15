@@ -53,14 +53,12 @@ $(function() {
                     var $postID = $('#post-' + data.pk);
                     $form[0].reset();
                     var $successAlert = $('div.new-post-success');
-                    $successAlert.show();
+                    $successAlert.show().delay(500).fadeOut(3000);
+
                     $postID.css('background-color', '#FFFFFF');
-                    setTimeout(function(){
-                        $postID.css('background-color', '#C1CCD7');
-                        $successAlert.fadeTo(500, 0).slideUp(500, function(){
-                            $(this).remove();
-                        });
-                    }, 3000)
+                    window.setTimeout(function() {
+                        $postID.css('background-color', '#E3E8ED');
+                    }, 3000);
                 }
                 else {
                     console.log('Post Creation Failed.');
@@ -76,4 +74,30 @@ $(function() {
             $(this).remove();
         });
     }, 3000);
+
+
+    var $newCommentBtn = $('.new-comment-btn');
+    $newCommentBtn.on('click', function(e){
+        var $btn = $(this);
+        var $post_id = $(this).data('newcomment-btn-id');
+        console.log($post_id);
+        var $commentForm = $('[data-newcomment-form-id=' + $post_id + ']');
+        var $postComments = $('[data-viewcomments-id=' + $post_id + ']');
+        $commentForm.toggleClass('hidden');
+        if ($postComments.length > 0 ) {
+            $postComments.addClass('hidden');
+        }
+    });
+
+    var $viewCommentsBtn = $('.view-comments-btn');
+    $viewCommentsBtn.on('click', function() {
+        var $btn = $(this);
+        var $post_id = $(this).data('viewcomments-btn-id');
+        var $postComments = $('[data-viewcomments-id=' + $post_id + ']');
+        var $commentForm = $('[data-newcomment-form-id=' + $post_id + ']');
+        $postComments.toggleClass('hidden');
+        if ($commentForm.length > 0) {
+            $commentForm.addClass('hidden');
+        }
+    });
 });

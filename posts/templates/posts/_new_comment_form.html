@@ -1,0 +1,11 @@
+<form method="POST">
+    {% csrf_token %}
+    <div class="input-group">
+        {{ comment_form.body }}
+        <div class="input-group-append">
+            <button class="btn btn-outline-info" type="submit">
+                Comment
+            </button>
+        </div>
+    </div>
+</form>

@@ -49,7 +49,8 @@ body {
 
 .content-section,
 .list-group-item {
-    background-color: #C1CCD7;
+    /* background-color: #C1CCD7; */
+    background-color: #E3E8ED;
 }
 
 input[type=text]:focus,
@@ -172,6 +173,9 @@ body.modal-open div.modal-backdrop {
     z-index: 0;
 }
 
+.hidden {
+    display: none;
+}
 
 /******************* #Responsiveness# ******************/
 h1 { font-size: 1.8rem; }

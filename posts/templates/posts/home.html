@@ -7,43 +7,43 @@
 {% block content %}
     <div class="row home-page">
         <div class="col-md-3 pr-1 pl-1 pl-sm-2 mb-5 order-2 order-md-1">
-                <a id="suggestedFriends"></a>
-                <ul class="list-group">
-                    <li class="list-group-item text-center sidebar-header">Suggested Friends</li>
-                    {% if suggested_friends %}
-                        {% for profile in suggested_friends %}
-                            <li class="list-group-item">
-                                <div class="row">
-                                    <div class="col-auto pr-0">
-                                        <a href="{% url 'accounts:view_account' profile.slug %}">
-                                        {% if profile.image %}
-                                            <img class="rounded-circle comments-profile-pic" src="{{ profile.image_url }}">
-                                        {% else %}
-                                            <img class="rounded-circle comments-profile-pic" src="/media/default.jpg">
-                                        {% endif %}
-                                        </a>
-                                    </div>
-                                    <div class="col post-author">
-                                        <a href="{% url 'accounts:view_account' profile.slug %}">
-                                            {{ profile.user.username }}
-                                        </a>
-                                    </div>
-                                    {% if profile.user != request.user %}
-                                        <div class="col text-right">
-                                            {% include "accounts/_follow_base.html" with is_following=False %}
-                                        </div>
+            <a id="suggestedFriends"></a>
+            <ul class="list-group">
+                <li class="list-group-item text-center sidebar-header">Suggested Friends</li>
+                {% if suggested_friends %}
+                    {% for profile in suggested_friends %}
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-auto pr-0">
+                                    <a href="{% url 'accounts:view_account' profile.slug %}">
+                                    {% if profile.image %}
+                                        <img class="rounded-circle comments-profile-pic" src="{{ profile.image_url }}">
+                                    {% else %}
+                                        <img class="rounded-circle comments-profile-pic" src="/media/default.jpg">
                                     {% endif %}
+                                    </a>
                                 </div>
-                            </li>
-                        {% endfor %}
-                    {% else %}
-                            <li class="list-group-item">
-                                <div class="text-center">
-                                    There are no suggested friends.
+                                <div class="col post-author">
+                                    <a href="{% url 'accounts:view_account' profile.slug %}">
+                                        {{ profile.user.username }}
+                                    </a>
                                 </div>
-                            </li>
-                    {% endif %}
-                </ul>
+                                {% if profile.user != request.user %}
+                                    <div class="col text-right">
+                                        {% include "accounts/_follow_base.html" with is_following=False %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <li class="list-group-item">
+                        <div class="text-center">
+                            There are no suggested friends.
+                        </div>
+                    </li>
+                {% endif %}
+            </ul>
         </div>
         <div class="col-md-6 pr-1 pl-1 order-1 order-md-2">
                 <div class="col-12 pr-1 pl-1">

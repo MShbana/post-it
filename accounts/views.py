@@ -15,7 +15,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.shortcuts import get_object_or_404, render, redirect
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_POST
-from posts.forms import PostForm
+from posts.forms import PostForm, CommentForm
 from posts.orm_utils import get_paginated_posts
 
 
@@ -132,11 +132,11 @@ def view_account(request, slug):
     }
 
     if user == current_user and request.method == 'POST':
-        form = PostForm(request.POST)
+        post_form = PostForm(request.POST)
         data = {}
 
-        if form.is_valid():
-            post = form.save(commit=False)
+        if post_form.is_valid():
+            post = post_form.save(commit=False)
             post.user = current_user
             post.save()
             posts_list = user.posts.all()
@@ -156,8 +156,12 @@ def view_account(request, slug):
         return JsonResponse(data)
 
     elif user == current_user and request.method == 'GET':
-        form = PostForm()
-        args.update({'form': form})
+        post_form = PostForm()
+        comment_form = CommentForm()
+        args.update({
+            'post_form': post_form,
+            'comment_form': comment_form
+        })
 
     return render(request, 'accounts/view_account.html', args)
 

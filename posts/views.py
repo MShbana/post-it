@@ -23,23 +23,25 @@ class Home(TemplateView):
     template_name = 'posts/home.html'
 
     def get(self, request):
-        form = PostForm()
+        post_form = PostForm()
+        comment_form = CommentForm()
         posts_list, following_list, current_user = get_home_posts_list(request)
         posts = get_paginated_posts(request, posts_list)
         args = {
             'posts': posts,
             'most_popular_posts': get_most_popular_posts(),
-            'form': form,
+            'post_form': post_form,
+            'comment_form': comment_form,
             'suggested_friends': get_suggested_friends(request, following_list),
         }
         return render(request, self.template_name, args)
 
     def post(self, request):
-        form = PostForm(request.POST)
+        post_form = PostForm(request.POST)
         data = {}
 
-        if form.is_valid():
-            post = form.save(commit=False)
+        if post_form.is_valid():
+            post = post_form.save(commit=False)
             post.user = request.user
             post.save()
             posts_list, _, _ = get_home_posts_list(request)
@@ -64,18 +66,18 @@ def view_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
 
     if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
             comment.author = request.user
             comment.post = post
             comment.save()
             messages.success(request, 'Your comment has been added.')
             return redirect('posts:view_post', post.slug)
     else:
-        form = CommentForm()
+        comment_form = CommentForm()
 
-    args = {'post': post, 'form': form}
+    args = {'post': post, 'comment_form': comment_form}
     return render(request, 'posts/view_post.html', args)
 
 

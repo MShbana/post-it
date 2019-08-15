@@ -40,16 +40,14 @@
         </div>
     </div>
     <div class="row">
-            {% if user == current_user %}
-                <div class="col-12 pt-2 pr-1 pl-1">
-                    {% include "posts/_new_post_form.html" %}
-                </div>
-            {% endif %}
-            {% if posts %}
-            <div class="col-12 pr-1 pl-1">
-                {% for post in posts %}
-                    {% include "posts/_post_base.html" %}
-                {% endfor %}
+        {% if user == current_user %}
+            <div class="col-12 pt-2 pr-1 pl-1">
+                {% include "posts/_new_post_form.html" %}
+            </div>
+        {% endif %}
+        {% if posts %}
+            <div class="col-12 pr-1 pl-1 posts">
+                {% include "posts/_posts_base.html" %}
             </div>
             <div class="col-12">
                 {% include "posts/_paginations.html" with page=posts %}
@@ -68,4 +66,5 @@
 {% block scripts %}
     <script src="{% static 'main.js' %}"></script>
     <script src="{% static 'accounts/main.js' %}"></script>
+    <script src="{% static 'posts/main.js' %}"></script>
 {% endblock scripts %}

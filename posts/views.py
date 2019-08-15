@@ -1,18 +1,21 @@
 from .forms import PostForm, CommentForm
 from .models import Post, Comment
+from .orm_utils import (
+    get_home_posts_list,
+    get_paginated_posts,
+    get_most_popular_posts,
+    get_suggested_friends
+)
 from accounts.models import Profile
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.db.models import Count, Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
+from django.template.loader import render_to_string
 from django.urls import reverse
 from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView
-from itertools import chain
-from operator import attrgetter
 
 
 class Home(TemplateView):
@@ -20,55 +23,40 @@ class Home(TemplateView):
     template_name = 'posts/home.html'
 
     def get(self, request):
-
-        current_user = request.user
-        following_list = current_user.profile.following.all()
-        home_posts = Post.objects\
-                        .filter(
-                            Q(user=current_user)|
-                            Q(user__profile__in=following_list)
-        )
-        paginator = Paginator(home_posts, 10)
-        page = request.GET.get('page')
-
-        try:
-            posts = paginator.page(page)
-        except PageNotAnInteger:
-            posts = paginator.page(1)
-        except EmptyPage:
-            posts = paginator.page(paginator.num_pages)
-
-        most_popular_posts = Post.objects.annotate(
-            num_comments=Count('comments')).order_by('-num_comments')[:10]
-
-        suggested_friends = Profile.objects.all().\
-            exclude(pk__in=following_list).\
-            exclude(user=request.user).\
-            order_by('-created')[:10]
-
         form = PostForm()
-
+        posts_list, following_list, current_user = get_home_posts_list(request)
+        posts = get_paginated_posts(request, posts_list)
         args = {
             'posts': posts,
-            'most_popular_posts': most_popular_posts,
+            'most_popular_posts': get_most_popular_posts(),
             'form': form,
-            'suggested_friends': suggested_friends,
+            'suggested_friends': get_suggested_friends(request, following_list),
         }
         return render(request, self.template_name, args)
 
     def post(self, request):
         form = PostForm(request.POST)
+        data = {}
+
         if form.is_valid():
             post = form.save(commit=False)
             post.user = request.user
             post.save()
-            messages.success(
-                request, 'Your post has been successfully created.'
-            )
-            return redirect('posts:home')
+            posts_list, _, _ = get_home_posts_list(request)
+            posts = get_paginated_posts(request, posts_list)
 
-        args = {'form': form}
-        return render(request, self.template_name, args)
+            data = {
+                'posts': render_to_string(
+                    'posts/_posts_base.html',
+                    {'posts': posts},
+                    request=request
+                ),
+                'pk': post.pk,
+                'form_is_valid': True
+            }
+        else:
+            data['form_is_valid'] = False
+        return JsonResponse(data)
 
 
 @login_required
@@ -89,6 +77,9 @@ def view_post(request, slug):
 
     args = {'post': post, 'form': form}
     return render(request, 'posts/view_post.html', args)
+
+
+from django.http import JsonResponse
 
 
 @login_required

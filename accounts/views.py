@@ -16,6 +16,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_POST
 from posts.forms import PostForm
+from posts.orm_utils import get_paginated_posts
 
 
 def register(request):
@@ -120,16 +121,7 @@ def view_account(request, slug):
         filter(pk=profile.id).exists()
 
     posts_list = user.posts.all()
-    paginator = Paginator(posts_list, 10)
-    page = request.GET.get('page')
-
-    try:
-        posts = paginator.page(page)
-    except PageNotAnInteger:
-        posts = paginator.page(1)
-    except EmptyPage:
-        posts = paginator.page(paginator.num_pages)
-
+    posts = get_paginated_posts(request, posts_list)
     args = {
         'user': user,
         'profile': profile,
@@ -139,21 +131,32 @@ def view_account(request, slug):
         'is_followed': is_followed
     }
 
-    if user == current_user:
-        if request.method == 'POST':
-            form = PostForm(request.POST)
-            if form.is_valid():
-                post = form.save(commit=False)
-                post.user = current_user
-                post.save()
-                messages.success(
-                    request, 'Your post has been successfully created.'
-                )
-                return redirect('accounts:view_account',
-                                current_user.profile.slug)
-        else:
-            form = PostForm()
+    if user == current_user and request.method == 'POST':
+        form = PostForm(request.POST)
+        data = {}
 
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = current_user
+            post.save()
+            posts_list = user.posts.all()
+            posts = get_paginated_posts(request, posts_list)
+
+            data = {
+                'posts': render_to_string(
+                    'posts/_posts_base.html',
+                    {'posts': posts},
+                    request=request
+                ),
+                'pk': post.pk,
+                'form_is_valid': True
+            }
+        else:
+            data['form_is_valid'] = False
+        return JsonResponse(data)
+
+    elif user == current_user and request.method == 'GET':
+        form = PostForm()
         args.update({'form': form})
 
     return render(request, 'accounts/view_account.html', args)

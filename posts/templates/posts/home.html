@@ -46,11 +46,13 @@
                 </ul>
         </div>
         <div class="col-md-6 pr-1 pl-1 order-1 order-md-2">
-            {% include "posts/_new_post_form.html" %}
+                <div class="col-12 pr-1 pl-1">
+                    {% include "posts/_new_post_form.html" %}
+                </div>
             {% if posts %}
-                {% for post in posts %}
-                    {% include "posts/_post_base.html" %}
-                {% endfor %}
+                <div class="col-12 pt-2 pr-1 pl-1 posts">
+                    {% include 'posts/_posts_base.html' %}
+                </div>
                 <div class="col-12">
                     {% include "posts/_paginations.html" with page=posts %}
                 </div>

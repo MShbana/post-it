@@ -1,9 +1,9 @@
-<form method="POST">
+<form method="POST" class="new-post-form-ajax">
     {% csrf_token %}
     <div class="input-group mb-1">
         {{ form.title }}
         <div class="input-group-append">
-            <button class="btn btn-outline-info" type="submit">
+            <button class="btn btn-outline-info newPost" type="submit">
                 Post
             </button>
         </div>

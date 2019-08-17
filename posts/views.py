@@ -25,7 +25,8 @@ class Home(TemplateView):
     def get(self, request):
         post_form = PostForm()
         comment_form = CommentForm()
-
+        # edit_post_form = PostForm()
+        form = PostForm()
         posts_list, following_list, _ = get_home_posts_list(request)
         posts = get_paginated_posts(request, posts_list)
         args = {
@@ -33,6 +34,7 @@ class Home(TemplateView):
             'most_popular_posts': get_most_popular_posts(),
             'post_form': post_form,
             'comment_form': comment_form,
+            # 'edit_post_form': edit_post,
             'suggested_friends': get_suggested_friends(
                                     request, following_list),
         }
@@ -78,7 +80,7 @@ def new_post(request):
 @require_POST
 @login_required
 def new_comment(request):
-    post_id = request.POST.get('id', None)
+    post_id = request.POST.get('pk', None)
     post = get_object_or_404(Post, pk=post_id)
 
     comment_form = CommentForm(request.POST)
@@ -141,34 +143,75 @@ def view_post(request, slug):
 
 
 @login_required
-def edit_post(request, slug):
-    post = get_object_or_404(Post, slug=slug)
+def edit_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
 
     if request.user != post.user:
         raise PermissionDenied()
 
     if request.method == 'POST':
-        form = PostForm(request.POST, instance=post)
+        form = PostForm(request.POST, instance=post)        
         if form.is_valid():
             form.save()
-            messages.success(
-                request, 'Your post has been successfully updated.'
-            )
-            return redirect('posts:view_post', post.slug)
-    else:
-        form = PostForm(instance=post)
 
-    args = {'post': post, 'form': form}
-    return render(request, 'posts/edit_post.html', args)
+            data = {
+                'post': render_to_string(
+                    'posts/_post_editable_content.html',
+                    {
+                        'post': post,
+                    },
+                    request=request
+                ),
+                'post_link': render_to_string(
+                    'posts/_post_link.html',
+                    {
+                        'post': post,
+                    },
+                    request=request
+                ),
+                'form_is_valid': True
+            }
+        else:
+            data = {
+                'form_is_valid': False
+            }
+    else:
+        edit_post_form = PostForm(instance=post)
+        data = {
+            'edit_post_form': render_to_string(
+                'posts/_edit_post_form_base.html',
+                {
+                    'post': post,
+                    'edit_post_form': edit_post_form
+                },
+                request=request,
+            )
+        }
+
+    return JsonResponse(data)
+
+@login_required
+def cancel_edit_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    data = {
+        'post': render_to_string(
+            'posts/_post_editable_content.html',
+            {
+                'post': post
+            },
+            request=request
+        )
+    }
+    return JsonResponse(data)
 
 
 @require_POST
 @login_required
-def delete_post(request, slug):
-    post = get_object_or_404(Post, slug=slug)
-    absolute_url = request.build_absolute_uri(
-        reverse('posts:view_post', args=[post.slug])
-    )
+def delete_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    # absolute_url = request.build_absolute_uri(
+    #     reverse('posts:view_post', args=[post.slug])
+    # )
 
     if request.user != post.user:
         raise PermissionDenied()
@@ -176,11 +219,12 @@ def delete_post(request, slug):
     post.delete()
     messages.success(request, 'Your post has been successfully deleted.')
 
-    referer_url = request.META.get('HTTP_REFERER', '/')
-    if referer_url == absolute_url:
-        return redirect('posts:home')
+    # referer_url = request.META.get('HTTP_REFERER', '/')
+    # if referer_url == absolute_url:
+        # return redirect('posts:home')
 
-    return HttpResponseRedirect(referer_url)
+    # return HttpResponseRedirect(referer_url)
+    return redirect('posts:home')
 
 
 @require_POST
@@ -210,14 +254,43 @@ def edit_commnet(request, pk):
         form = CommentForm(request.POST, instance=comment)
         if form.is_valid():
             form.save()
-            messages.success(
-                request,
-                f'Your comment has been on {comment.post.title} successfully updated.'
-            )
-            return redirect('posts:view_post', comment.post.slug)
-
+            data = {
+                'comment': render_to_string(
+                    'posts/_comment_editable_content.html',
+                    {
+                        'comment': comment
+                    },
+                    request=request
+                ),
+                'form_is_valid': True
+            }
     else:
-        form = CommentForm(instance=comment)
+        edit_comment_form = CommentForm(instance=comment)
+        data = {
+            'edit_comment_form': render_to_string(
+                'posts/_edit_comment_form_base.html',
+                {
+                    'comment': comment,
+                    'edit_comment_form': edit_comment_form
+                },
+                request=request,
+            )
+        }
+    return JsonResponse(data)
 
-    args = {'comment': comment, 'form': form}
-    return render(request, 'posts/edit_comment.html', args)
+
+@login_required
+def cancel_edit_comment(request, pk):
+    comment = get_object_or_404(Post, pk=pk)
+    data = {
+        'comment': render_to_string(
+            'posts/_comment_editable_content.html',
+            {
+                'comment': comment
+            },
+            request=request
+        )
+    }
+    return JsonResponse(data)
+
+

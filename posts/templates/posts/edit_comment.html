@@ -6,25 +6,7 @@
 {% block content %}
     <div class="content-section row long-page">
         <div class="col-12 pr-1 pl-1">
-            <form method="POST">
-                {% csrf_token %}
-                <legend class="pb-2 mb-4 post-title">
-                    Update Comment on
-                    <a href="#">
-                        {{ comment.post.title }}
-                    </a>
-                    Post
-                </legend>
-                <fieldset class="form-group">
-                    {{ form|crispy }}
-                </fieldset>
-                <div class="form-group text-center">
-                    <button class="btn btn-outline-info btn-sm" type="submit">
-                        Update
-                    </button>
-                    <input class="btn btn-outline-secondary btn-sm" action="action" type="button" value="Cancel" onclick="window.history.go(-1); return false;">
-                </div>
-            </form>
+            {% include "posts/_edit_comment_base.html" %}
         </div>
     </div>
 {% endblock content %}

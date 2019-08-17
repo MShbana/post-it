@@ -15,36 +15,23 @@
                     {{ post.user.username }}
                 </a>
             </div>
-            <div class="col-12">
-                <small>
-                    <a class="text-muted" href="{% url 'posts:view_post' post.slug %}">
-                        {{ post.date_posted|date:"g:i A - d M Y" }}
-                    </a>
-                </small>
+            <div class="col-12 post-link">
+                {% include "posts/_post_link.html" %}
             </div>
             {% if post.user == request.user %}
                 <div class="col-12 pl-2">
-                    <a class="btn btn-link btn-sm post-edit" href="{% url 'posts:edit_post' post.slug %}">
+                    <button class="btn btn-link btn-sm post-edit edit-post-btn" data-edit-post-btn="{{ post.id }}">
                         Edit
-                    </a>
-                    <button class="btn btn-link btn-sm post-delete test2" data-toggle="modal" data-target="#confirmDeletePost{{ post.slug }}">
+                    </button>
+                    <button class="btn btn-link btn-sm post-delete test2" data-toggle="modal" data-target="#confirmDeletePost{{ post.pk }}">
                         Delete
                     </button>
                     {% include "posts/delete_post_confirm.html" %}
                 </div>
             {% endif %}
         </div>
-        <div class="col-12 pt-4">
-            <h4 class="post-title">
-                <a href="{% url 'posts:view_post' post.slug %}">
-                    {{ post.title }}
-                </a>
-            </h4>
-        </div>
-        <div class="col-12 pt-2">
-            <p class="post-body">
-                {{ post.body }}
-            </p>
+        <div class="post-editable-content col-12">
+            {% include "posts/_post_editable_content.html" %}
         </div>
         <div class="col-12 text-center new-view-comment">
             <button type="button" class="btn btn-primary float-left w-50 btn-sm new-comment-btn " data-newcomment-btn-id="{{ post.id }}">

@@ -1,0 +1,12 @@
+<div class="col-12 pt-4">
+    <h4 class="post-title">
+        <a href="{% url 'posts:view_post' post.slug %}">
+            {{ post.title }}
+        </a>
+    </h4>
+</div>
+<div class="col-12 pt-2">
+    <p class="post-body">
+        {{ post.body }}
+    </p>
+</div>

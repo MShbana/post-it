@@ -1,4 +1,7 @@
+var jqXHR;
+
 $(function() {
+
     $('.following-btn').on('click', function(e) {
         e.preventDefault();
         var $follow_button = $(this);
@@ -37,7 +40,7 @@ $(function() {
         var $formMethod = $form.attr('method');
         $.ajax({
             type: $formMethod,
-            url: '/ajax/new_post/',
+            url: '/ajax/post/new/',
             data: $formData,
             success: function(data) {
                 if (data.form_is_valid) {
@@ -97,8 +100,8 @@ $(function() {
         var $formMethod = $form.attr('method');
         $.ajax({
             type: $formMethod,
-            url: '/ajax/new_comment/',
-            data: $formData + "&id=" + $post_id,
+            url: '/ajax/comment/new/',
+            data: $formData + "&pk=" + $post_id,
             success: function(data) {
                 if (data.form_is_valid) {
                     $postComments.html(data.comments);
@@ -119,5 +122,106 @@ $(function() {
             }
         });
         return false;
+    });
+
+    $(document).on('click', '.edit-post-btn', function(e) {
+        e.preventDefault()
+        var $post_id = $(this).data('edit-post-btn');
+        var $post = $("#post-" + $post_id);
+        $.ajax({
+            type: "GET",
+            url: '/ajax/post/' + $post_id + '/edit/',
+            success: function(data) {
+                $post.find($('.post-editable-content')).html(data.edit_post_form);
+            }
+        });
+    });
+
+    $(document).on('click', '.edit-comment-btn', function(e) {
+        e.preventDefault()
+        var $comment_id = $(this).data('edit-comment-btn');
+        var $comment = $("#comment-" + $comment_id);
+        $.ajax({
+            type: "GET",
+            url: '/ajax/comment/' + $comment_id + '/edit/',
+            success: function(data) {
+                $comment.find($('.comment-editable-content')).html(data.edit_comment_form);
+            }
+        });
+    });
+
+    $(document).on('submit', '.edit-post-form-ajax', function(e) {
+        e.preventDefault();
+        var $formData = $(this).serialize();
+        var $post_id = $('.edit-post-confirm').data('edit-post-confirm');
+        var $post = $("#post-" + $post_id);
+        jqXHR = $.ajax({
+            type: "POST",
+            url: '/ajax/post/' + $post_id + '/edit/',
+            data: $formData,
+            success: function(data) {
+                if (data.form_is_valid) {
+                    console.log('Post was successfully editted');
+                    $post.find($('.post-editable-content')).html(data.post);
+                    $post.find($('.post-link')).html(data.post_link);
+                }
+                else {
+                    alert('Post Edit Failed');
+                }
+            }
+        });
+        return false;
+    });
+
+    $(document).on('submit', '.edit-comment-form-ajax', function(e) {
+        e.preventDefault();
+        var $formData = $(this).serialize();
+        var $comment_id = $('.edit-comment-confirm').data('edit-comment-confirm');
+        var $comment = $("#comment-" + $comment_id);
+        jqXHR = $.ajax({
+            type: "POST",
+            url: '/ajax/comment/' + $comment_id + '/edit/',
+            data: $formData,
+            success: function(data) {
+                if (data.form_is_valid) {
+                    console.log('Comment was successfully editted');
+                    $comment.find($('.comment-editable-content')).html(data.comment);
+                    $comment.find($('.comment-link')).html(data.comment_link);
+                }
+                else {
+                    alert('Comment Edit Failed');
+                }
+            }
+        });
+        return false;
+    });
+
+
+    $(document).on('click', '.cancel-edit-post', function(e) {
+        e.preventDefault()
+        var $btn = $(this);
+        var $post_id = $(this).data('cancel-edit-post');
+        var $post = $("#post-" + $post_id);
+        $.ajax({
+            type: "GET",
+            url: '/ajax/post/' + $post_id + '/edit/cancel/',
+            success: function(data) {
+                $post.find($('.post-editable-content')).html(data.post);
+            }
+        });
+    });
+
+    $(document).on('click', '.cancel-edit-comment', function(e) {
+        e.preventDefault()
+        var $btn = $(this);
+        var $comment_id = $(this).data('cancel-edit-comment');
+        var $comment = $("#comment-" + $comment_id);
+        $.ajax({
+            type: "GET",
+            url: '/ajax/comment/' + $comment_id + '/edit/cancel/',
+            success: function(data) {
+                $comment.find($('.comment-editable-content')).html(data.comment);
+            }
+        });
     });
 });

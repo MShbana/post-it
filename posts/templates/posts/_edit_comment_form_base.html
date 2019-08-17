@@ -1,0 +1,15 @@
+{% load crispy_forms_tags %}
+<form method="POST" class="edit-comment-form-ajax">
+    {% csrf_token %}
+    <fieldset class="form-group">
+        {{ edit_comment_form|crispy }}
+    </fieldset>
+    <div class="form-group text-center">
+        <button class="btn btn-outline-info btn-sm edit-comment-confirm" type="submit" data-edit-comment-confirm="{{ comment.pk }}">
+            Update
+        </button>
+        <button type="button" class="btn btn-outline-secondary btn-sm cancel-edit-comment" data-cancel-edit-comment="{{ comment.pk }}">
+            Cancel
+        </button>
+    </div>
+</form>

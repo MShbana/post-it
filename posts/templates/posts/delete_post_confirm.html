@@ -1,4 +1,4 @@
-<div class="modal fade pt-5" id="confirmDeletePost{{ post.slug }}" tabindex="-1" role="dialog" aria-labelledby="confirmDeletePostLabel" aria-hidden="true">
+<div class="modal fade pt-5" id="confirmDeletePost{{ post.pk }}" tabindex="-1" role="dialog" aria-labelledby="confirmDeletePostLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -19,7 +19,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <form id="post-delete-form" action="{% url 'posts:delete_post' post.slug %}" method="POST">
+                <form id="post-delete-form" action="{% url 'posts:delete_post' post.pk %}" method="POST">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger post-delete-confirm">
                         Delete

@@ -30,14 +30,12 @@
                 {% include "accounts/_follow_base.html" %}
             {% endif %}
         </div>
-        <div class="btn-block btn-group btn-group-vertical">
-            <a class="btn btn-info" href="{% url 'accounts:view_following_or_followers' slug=profile.slug req='following' %}">
-                Following
-            </a>
-            <a class="btn btn-info " href="{% url 'accounts:view_following_or_followers' slug=profile.slug req='followers' %}">
-                Followers
-            </a>
-        </div>
+        <a class="btn btn-secondary following-list w-100" href="{% url 'accounts:view_following_or_followers' slug=profile.slug req='following' %}">
+            Following
+        </a>
+        <a class="btn btn-secondary followers-list w-100" href="{% url 'accounts:view_following_or_followers' slug=profile.slug req='followers' %}">
+            Followers
+        </a>
     </div>
     <div class="row">
         {% if user == current_user %}
@@ -46,7 +44,7 @@
             </div>
         {% endif %}
         {% if posts %}
-            <div class="col-12 pr-1 pl-1 posts">
+            <div class="col-12 pr-1 pl-1">
                 {% include "posts/_posts_base.html" %}
             </div>
             <div class="col-12">

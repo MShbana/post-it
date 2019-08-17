@@ -1,29 +1,11 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags %}
 {% block title %}
     Edit {{ post.title }}
 {% endblock title %}
 {% block content %}
     <div class="content-section row long-page">
         <div class="col-12 pr-1 pl-1">
-            <form method="POST">
-                {% csrf_token %}
-                <legend class="pb-2 mb-4 post-title">
-                    Update
-                    <a href="{% url 'posts:view_post' post.slug %}">
-                        {{ post.title }}
-                    </a>
-                </legend>
-                <fieldset class="form-group">
-                    {{ form|crispy }}
-                </fieldset>
-                <div class="form-group text-center">
-                    <button class="btn btn-outline-info btn-sm" type="submit">
-                        Update
-                    </button>
-                    <input class="btn btn-outline-secondary btn-sm" action="action" type="button" value="Cancel" onclick="window.history.go(-1); return false;">
-                </div>
-            </form>
+            {% include "posts/_edit_post_form_base.html" %}
         </div>
     </div>
 {% endblock content %}

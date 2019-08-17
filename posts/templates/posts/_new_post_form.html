@@ -1,14 +1,14 @@
 <form method="POST" class="new-post-form-ajax">
     {% csrf_token %}
     <div class="input-group mb-1">
-        {{ form.title }}
+        {{ post_form.title }}
         <div class="input-group-append">
-            <button class="btn btn-outline-info newPost" type="submit">
+            <button name="tets-post" class="btn btn-outline-info newPost" name="{{ aform.prefix }}" type="submit">
                 Post
             </button>
         </div>
     </div>
     <div class="form-group new-post">
-        {{ form.body }}
+        {{ post_form.body }}
     </div>
 </form>

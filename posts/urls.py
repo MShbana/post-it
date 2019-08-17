@@ -12,17 +12,22 @@ urlpatterns = [
         name='home'
     ),
     path(
-        'post/<slug:slug>/',
+        'post/<int:pk>/',
         views.view_post,
         name='view_post'
     ),
     path(
-        'post/<slug:slug>/edit/',
+        'ajax/post/<int:pk>/edit/',
         views.edit_post,
         name='edit_post'
     ),
     path(
-        'post/<slug:slug>/delete/',
+        'ajax/post/<int:pk>/edit/cancel/',
+        views.cancel_edit_post,
+        name='cancel_edit_post'
+    ),
+    path(
+        'post/<int:pk>/delete/',
         views.delete_post,
         name='delete_post'
     ),
@@ -32,8 +37,23 @@ urlpatterns = [
         name='delete_comment'
     ),
     path(
-        'comment/<int:pk>/edit/',
+        'ajax/comment/<int:pk>/edit/',
         views.edit_commnet,
         name='edit_comment'
+    ),
+    path(
+        'ajax/comment/<int:pk>/edit/cancel/',
+        views.cancel_edit_comment,
+        name='cancel_edit_comment'
+    ),
+    path(
+        'ajax/comment/new/',
+        views.new_comment,
+        name='new_comment'
+    ),
+    path(
+        'ajax/post/new/',
+        views.new_post,
+        name='new_post'
     ),
 ]

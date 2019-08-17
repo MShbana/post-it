@@ -15,7 +15,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.shortcuts import get_object_or_404, render, redirect
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_POST
-from posts.forms import PostForm
+from posts.forms import PostForm, CommentForm
 from posts.orm_utils import get_paginated_posts
 
 
@@ -128,36 +128,13 @@ def view_account(request, slug):
         'current_user': current_user,
         'posts': posts,
         'is_following': is_following,
-        'is_followed': is_followed
+        'is_followed': is_followed,
+        'comment_form': CommentForm()
     }
 
-    if user == current_user and request.method == 'POST':
-        form = PostForm(request.POST)
-        data = {}
-
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.user = current_user
-            post.save()
-            posts_list = user.posts.all()
-            posts = get_paginated_posts(request, posts_list)
-
-            data = {
-                'posts': render_to_string(
-                    'posts/_posts_base.html',
-                    {'posts': posts},
-                    request=request
-                ),
-                'pk': post.pk,
-                'form_is_valid': True
-            }
-        else:
-            data['form_is_valid'] = False
-        return JsonResponse(data)
-
-    elif user == current_user and request.method == 'GET':
-        form = PostForm()
-        args.update({'form': form})
+    if user == current_user and request.method == 'GET':
+        post_form = PostForm()
+        args.update({'post_form': PostForm()})
 
     return render(request, 'accounts/view_account.html', args)
 

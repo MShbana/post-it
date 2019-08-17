@@ -210,6 +210,7 @@ h2 { font-size: 1.6rem; }
 h3 { font-size: 1.4rem; }
 h4 { font-size: 1.2rem; }
 tr { font-size: 1rem; }
+.dropdown .dropdown-menu .dropdown-item { font-size: 1rem; }
 .navbar-toggler  .navbar-toggler-icon {font-size: 0.5rem; }
 .dropdown-menu .dropdown-item { font-size: 0.6rem; }
 .accounts-profile-pic { width: 100px; height: 100px; }

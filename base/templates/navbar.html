@@ -11,31 +11,35 @@
                             Home
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'accounts:view_account' request.user.profile.slug %}">
-                            Profile
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'accounts:view_update_account' %}">
-                            Account
-                        </a>
-                    </li>
                     {% if request.path == '/' %}
                         <li class="nav-item">
                             <a class="nav-link extra-btn" href="{% url 'posts:home' %}#popularPosts">
-                                Popular Posts
+                                Popular
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link extra-btn" href="{% url 'posts:home' %}#suggestedFriends">
-                                Suggested Friends
+                                Suggested
                             </a>
                         </li>
                     {% endif %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
-                    </li>
+                    <li class="nav-item dropdown text-center">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ request.user.username }}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{% url 'accounts:view_account' request.user.profile.slug %}">
+                                Profile
+                            </a>
+                            <a class="dropdown-item" href="{% url 'accounts:view_update_account' %}">
+                                Account
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'logout' %}">
+                                Log Out
+                            </a>
+                            </div>
+                          </li>
                 {% else %}
                     <li class="nav-item mr-auto">
                         <a class="nav-link py-1" href="{% url 'register' %}">Register</a>

@@ -274,7 +274,7 @@ def edit_commnet(request, pk):
 
 @login_required
 def cancel_edit_comment(request, pk):
-    comment = get_object_or_404(Post, pk=pk)
+    comment = get_object_or_404(Comment, pk=pk)
     data = {
         'comment': render_to_string(
             'posts/_comment_editable_content.html',

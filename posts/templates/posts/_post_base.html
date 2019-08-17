@@ -18,19 +18,24 @@
             <div class="col-12 post-link">
                 {% include "posts/_post_link.html" %}
             </div>
-            {% if post.user == request.user %}
-                <div class="col-12 pl-2">
-                    <button class="btn btn-link btn-sm post-edit edit-post-btn" data-edit-post-btn="{{ post.id }}">
+        </div>
+        {% if post.user == request.user %}
+            <div class="dropdown float-right">
+                <button class="btn btn-sm btn-secondary dropdown-toggle" id="dropdownMenuButton-{{ post.pk }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Edit / Delete
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton-{{ post.pk }}">
+                    <button class="dropdown-item btn btn-link btn-sm post-edit edit-post-btn" data-edit-post-btn="{{ post.pk }}">
                         Edit
                     </button>
-                    <button class="btn btn-link btn-sm post-delete test2" data-toggle="modal" data-target="#confirmDeletePost{{ post.pk }}">
+                    <button class="dropdown-item btn btn-link btn-sm post-delete" data-toggle="modal" data-target="#confirmDeletePost{{ post.pk }}">
                         Delete
                     </button>
-                    {% include "posts/delete_post_confirm.html" %}
                 </div>
-            {% endif %}
-        </div>
-        <div class="post-editable-content col-12">
+            </div>
+            {% include "posts/delete_post_confirm.html" %}
+        {% endif %}
+        <div class="post-editable-content col-12 pt-3">
             {% include "posts/_post_editable_content.html" %}
         </div>
         <div class="col-12 text-center new-view-comment">

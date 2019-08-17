@@ -12,12 +12,11 @@ urlpatterns = [
         name='home'
     ),
     path(
-        'post/<slug:slug>/',
+        'post/<int:pk>/',
         views.view_post,
         name='view_post'
     ),
     path(
-        # 'post/<slug:slug>/edit/',
         'ajax/post/<int:pk>/edit/',
         views.edit_post,
         name='edit_post'

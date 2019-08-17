@@ -163,7 +163,6 @@ $(function() {
                 if (data.form_is_valid) {
                     console.log('Post was successfully editted');
                     $post.find($('.post-editable-content')).html(data.post);
-                    $post.find($('.post-link')).html(data.post_link);
                 }
                 else {
                     alert('Post Edit Failed');

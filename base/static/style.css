@@ -33,11 +33,13 @@ body {
     text-decoration: none;
 }
 
+.home-comments-count,
 .post-title a {
     color: #51575D;
     font-weight: bold;
 }
 
+.home-comments-count:hover,
 .post-title a:hover {
     color: #050505;
     text-decoration: none;
@@ -91,15 +93,17 @@ button.post-delete:hover {
     color: #FD1C4D;
 }
 
-a.post-edit {
+button.post-edit,
+button.comment-edit {
     color: #044201;
 }
 
-a.post-edit:hover {
+button.post-edit:hover,
+button.comment-edit:hover {
     color: #0BBB02;
 }
 
-.new-view-comment a {
+.new-view-comment {
     color: #23116F;
 }
 

@@ -118,8 +118,8 @@ def new_comment(request):
 
 
 @login_required
-def view_post(request, slug):
-    post = get_object_or_404(Post, slug=slug)
+def view_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
 
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)
@@ -130,7 +130,7 @@ def view_post(request, slug):
             comment.save()
 
             messages.success(request, 'Your comment has been added.')
-            return redirect('posts:view_post', post.slug)
+            return redirect('posts:view_post', post.pk)
     else:
         comment_form = CommentForm()
 
@@ -157,13 +157,6 @@ def edit_post(request, pk):
             data = {
                 'post': render_to_string(
                     'posts/_post_editable_content.html',
-                    {
-                        'post': post,
-                    },
-                    request=request
-                ),
-                'post_link': render_to_string(
-                    'posts/_post_link.html',
                     {
                         'post': post,
                     },
@@ -210,7 +203,7 @@ def cancel_edit_post(request, pk):
 def delete_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     # absolute_url = request.build_absolute_uri(
-    #     reverse('posts:view_post', args=[post.slug])
+    #     reverse('posts:view_post', args=[post.pk])
     # )
 
     if request.user != post.user:

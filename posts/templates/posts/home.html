@@ -87,20 +87,22 @@
                                     </div>
                                 </div>
                                 <div class="col-12 post-title pt-2">
-                                    <a class="sidebar-post-title" href="{% url 'posts:view_post' post.slug %}">
+                                    <a class="sidebar-post-title" href="{% url 'posts:view_post' post.pk %}">
                                         {{ post.title }}
                                     </a>
                                 </div>
-                                <div class="col-12">
-                                    <small>
-                                        <a class="text-muted" href="{% url 'posts:view_post' post.slug %}">
-                                            {{ post.date_posted|date:"g:i A - d M Y" }}
-                                        </a>
-                                    </small>
+                                <div class="col-12 post-link">
+                                        <small>
+                                            <a class="text-muted" href="{% url 'posts:view_post' post.pk %}">
+                                                {{ post.date_posted|date:"g:i A - d M Y" }}
+                                            </a>
+                                        </small>
                                 </div>
                                 <div class="col-12 text-right">
                                     <small>
-                                        {{ post.comments.count }} comments
+                                        <a class="home-comments-count" href="{% url 'posts:view_post' post.pk %}">
+                                            {{ post.comments.count }} comments
+                                        </a>
                                     </small>
                                 </div>
                             </div>

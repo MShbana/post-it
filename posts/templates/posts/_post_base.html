@@ -46,34 +46,19 @@
                 {{ post.body }}
             </p>
         </div>
-        <div class="col-12 text-right new-view-comment">
-            <button type="button" class="btn btn-link btn-sm new-comment-btn" data-newcomment-btn-id="{{ post.id }}">
+        <div class="col-12 text-center new-view-comment">
+            <button type="button" class="btn btn-primary float-left w-50 btn-sm new-comment-btn " data-newcomment-btn-id="{{ post.id }}">
                 Comment
             </button>
-            <button type="button" class="btn btn-link btn-sm view-comments-btn" data-viewcomments-btn-id="{{ post.id }}">
-                View Comments ({{ post.comments.all.count }})
+            <button type="button" class="btn btn-info btn-sm float-right w-50 view-comments-btn " data-viewcomments-btn-id="{{ post.id }}" id="view-comments-btn-{{ post.id }}">
+                {% include "posts/_comments_count_base.html" %}
             </button>
         </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-12 view-comments hidden pt-1 pb-4" data-viewcomments-id="{{ post.id }}">
-        <ul class="list-group">
-            <li class="list-group-item text-center sidebar-header">
-                Comments
-            </li>
-            {% for comment in post.comments.all %}
-                <li class="list-group-item">
-                    {% include "posts/_comment_base.html" %}
-                </li>
-            {% empty %}
-                <li class="list-group-item text-center">
-                    This post has no comments yet...
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-    <div class="col-12 pt-0 hidden pt-1 pb-4 new-comment-form" data-newcomment-form-id="{{ post.id }}">
-        {% include "posts/_new_comment_form.html" %}
+        <div class="col-12 view-comments comments hidden pt-4" data-viewcomments-id="{{ post.id }}">
+            {% include "posts/_comments_base.html" with comments=post.comments.all %}
+        </div>
+        <div class="col-12">
+            {% include "posts/_new_comment_form.html" %}
+        </div>
     </div>
 </div>

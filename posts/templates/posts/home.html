@@ -9,7 +9,7 @@
         <div class="col-md-3 pr-1 pl-1 pl-sm-2 mb-5 order-2 order-md-1">
             <a id="suggestedFriends"></a>
             <ul class="list-group">
-                <li class="list-group-item text-center sidebar-header">Suggested Friends</li>
+                <li class="list-group-item text-center header sidebar-header">Suggested Friends</li>
                 {% if suggested_friends %}
                     {% for profile in suggested_friends %}
                         <li class="list-group-item">
@@ -50,7 +50,7 @@
                     {% include "posts/_new_post_form.html" %}
                 </div>
             {% if posts %}
-                <div class="col-12 pt-2 pr-1 pl-1 posts">
+                <div class="col-12 pt-2 pr-1 pl-1">
                     {% include 'posts/_posts_base.html' %}
                 </div>
                 <div class="col-12">
@@ -65,7 +65,7 @@
         <div class="col-md-3 pr-1 pl-1 pl-sm-2 order-3 order-md-3">
             <a id="popularPosts"></a>
             <ul class="list-group">
-                <li class="list-group-item text-center sidebar-header">Most Commented Posts</li>
+                <li class="list-group-item text-center header sidebar-header">Most Commented Posts</li>
                 {% if most_popular_posts %}
                     {% for post in most_popular_posts %}
                         <li class="list-group-item">

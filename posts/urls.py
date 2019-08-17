@@ -36,4 +36,14 @@ urlpatterns = [
         views.edit_commnet,
         name='edit_comment'
     ),
+    path(
+        'ajax/new_comment/',
+        views.new_comment,
+        name='new_comment'
+    ),
+    path(
+        'ajax/new_post/',
+        views.new_post,
+        name='new_post'
+    ),
 ]

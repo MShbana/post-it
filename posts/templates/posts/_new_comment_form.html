@@ -1,9 +1,9 @@
-<form method="POST">
+<form method="POST" class="pt-4 pb-4 hidden new-comment-form" data-newcomment-form-id="{{ post.id }}">
     {% csrf_token %}
     <div class="input-group">
         {{ comment_form.body }}
         <div class="input-group-append">
-            <button class="btn btn-outline-info" type="submit">
+            <button class="btn btn-primary post-comment" type="submit" data-postcomment-btn-id="{{ post.id }}">
                 Comment
             </button>
         </div>

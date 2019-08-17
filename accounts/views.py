@@ -128,40 +128,13 @@ def view_account(request, slug):
         'current_user': current_user,
         'posts': posts,
         'is_following': is_following,
-        'is_followed': is_followed
+        'is_followed': is_followed,
+        'comment_form': CommentForm()
     }
 
-    if user == current_user and request.method == 'POST':
-        post_form = PostForm(request.POST)
-        data = {}
-
-        if post_form.is_valid():
-            post = post_form.save(commit=False)
-            post.user = current_user
-            post.save()
-            posts_list = user.posts.all()
-            posts = get_paginated_posts(request, posts_list)
-
-            data = {
-                'posts': render_to_string(
-                    'posts/_posts_base.html',
-                    {'posts': posts},
-                    request=request
-                ),
-                'pk': post.pk,
-                'form_is_valid': True
-            }
-        else:
-            data['form_is_valid'] = False
-        return JsonResponse(data)
-
-    elif user == current_user and request.method == 'GET':
+    if user == current_user and request.method == 'GET':
         post_form = PostForm()
-        comment_form = CommentForm()
-        args.update({
-            'post_form': post_form,
-            'comment_form': comment_form
-        })
+        args.update({'post_form': PostForm()})
 
     return render(request, 'accounts/view_account.html', args)
 

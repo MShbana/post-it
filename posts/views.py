@@ -10,7 +10,7 @@ from accounts.models import Profile
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse
@@ -25,40 +25,94 @@ class Home(TemplateView):
     def get(self, request):
         post_form = PostForm()
         comment_form = CommentForm()
-        posts_list, following_list, current_user = get_home_posts_list(request)
+
+        posts_list, following_list, _ = get_home_posts_list(request)
         posts = get_paginated_posts(request, posts_list)
         args = {
             'posts': posts,
             'most_popular_posts': get_most_popular_posts(),
             'post_form': post_form,
             'comment_form': comment_form,
-            'suggested_friends': get_suggested_friends(request, following_list),
+            'suggested_friends': get_suggested_friends(
+                                    request, following_list),
         }
         return render(request, self.template_name, args)
 
-    def post(self, request):
-        post_form = PostForm(request.POST)
-        data = {}
 
-        if post_form.is_valid():
-            post = post_form.save(commit=False)
-            post.user = request.user
-            post.save()
-            posts_list, _, _ = get_home_posts_list(request)
-            posts = get_paginated_posts(request, posts_list)
+@require_POST
+@login_required
+def new_post(request):
+    post_form = PostForm(request.POST)
+    post_data = {}
 
-            data = {
-                'posts': render_to_string(
-                    'posts/_posts_base.html',
-                    {'posts': posts},
-                    request=request
-                ),
-                'pk': post.pk,
-                'form_is_valid': True
-            }
-        else:
-            data['form_is_valid'] = False
-        return JsonResponse(data)
+    if post_form.is_valid():
+        post = post_form.save(commit=False)
+        post.user = request.user
+        post.save()
+
+        post_data = {
+            'pk': post.pk,
+            'form_is_valid': True,
+            'post': render_to_string(
+                'posts/_post_base.html',
+                {
+                    'post': post,
+                    'comment_form': CommentForm()
+                },
+                request=request
+            ),
+            'comments_count': render_to_string(
+                'posts/_comments_count_base.html',
+                {
+                    'comments_count': post.comments.count()
+                },
+                request=request
+            )
+        }
+    else:
+        post_data['form_is_valid'] = False
+
+    return JsonResponse(post_data)
+
+
+@require_POST
+@login_required
+def new_comment(request):
+    post_id = request.POST.get('id', None)
+    post = get_object_or_404(Post, pk=post_id)
+
+    comment_form = CommentForm(request.POST)
+
+    if comment_form.is_valid():
+        comment = comment_form.save(commit=False)
+        comment.author = request.user
+        comment.post = post
+        comment.save()
+
+        comments = post.comments.all()
+        comment_data = {
+            'pk': comment.pk,
+            'form_is_valid': True,
+            'comments': render_to_string(
+                'posts/_comments_base.html',
+                {
+                    'post': post,
+                    'comments': comments
+                },
+                request=request
+            ),
+            'comments_count': render_to_string(
+                'posts/_comments_count_base.html',
+                {
+                    'comments_count': comments.count
+                },
+                request=request
+            )
+        }
+    else:
+        comment_data['form_is_valid'] = False
+
+    return JsonResponse(comment_data)
 
 
 @login_required
@@ -72,16 +126,18 @@ def view_post(request, slug):
             comment.author = request.user
             comment.post = post
             comment.save()
+
             messages.success(request, 'Your comment has been added.')
             return redirect('posts:view_post', post.slug)
     else:
         comment_form = CommentForm()
 
-    args = {'post': post, 'comment_form': comment_form}
+    args = {
+        'post': post,
+        'comment_form': comment_form,
+        'comments_count': post.comments.count()
+    }
     return render(request, 'posts/view_post.html', args)
-
-
-from django.http import JsonResponse
 
 
 @login_required
@@ -137,8 +193,10 @@ def delete_comment(request, pk):
 
     comment.delete()
     messages.success(request, 'Your comment has been successfully deleted.')
-    return redirect('posts:view_post', comment.post.slug)
 
+    referer_url = request.META.get('HTTP_REFERER', '/')
+
+    return HttpResponseRedirect(referer_url)
 
 
 @login_required

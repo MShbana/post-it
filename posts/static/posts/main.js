@@ -1,8 +1,6 @@
-var jqXHR;
-
 $(function() {
 
-    $('.following-btn').on('click', function(e) {
+    $(document).on('click', '.home-following-btn', function(e) {
         e.preventDefault();
         var $follow_button = $(this);
         var $account_wrapper = $(this).closest('.list-group-item');

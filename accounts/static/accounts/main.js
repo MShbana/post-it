@@ -44,7 +44,7 @@ $(function() {
         });
     });
 
-    $('.following-btn').on('click', function(e) {
+    $(document).on('click', '.following-btn', function(e) {
         e.preventDefault();
 
         var $follow_button = $(this);

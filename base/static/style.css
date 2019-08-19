@@ -28,6 +28,7 @@ body {
     font-weight: bold;
 }
 
+.home-following-btn,
 .following-btn {
     width: 100px;
 }

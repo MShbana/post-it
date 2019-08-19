@@ -30,7 +30,7 @@
                                 </div>
                                 {% if profile.user != request.user %}
                                     <div class="col text-right">
-                                        {% include "accounts/_follow_base.html" with is_following=False %}
+                                        {% include "posts/_home_follow_base.html" with is_following=False %}
                                     </div>
                                 {% endif %}
                             </div>

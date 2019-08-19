@@ -1,4 +1,4 @@
-<form method="POST" class="pt-4 pb-4 hidden new-comment-form" data-newcomment-form-id="{{ post.id }}">
+<form method="POST" class="pt-4 pb-4 hidden new-comment-form-ajax" data-newcomment-form-id="{{ post.id }}">
     {% csrf_token %}
     <div class="input-group">
         {{ comment_form.body }}

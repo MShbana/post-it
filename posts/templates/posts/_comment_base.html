@@ -1,38 +1,40 @@
-<div class="row py-2" id="comment-{{ comment.pk }}">
-    <div class="col-auto pr-0">
-        <a href="{% url 'accounts:view_account' comment.author.profile.slug %}">
-            {% if comment.author.profile.image %}
-                <img class="rounded-circle comments-profile-pic" src="{{ comment.author.profile.image.url }}">
-            {% else %}
-                <img class="rounded-circle posts-profile-pic" src="/media/default.jpg">
-            {% endif %}
-        </a>
-    </div>
-    <div class="float-right pl-0">
-        <div class="col-12 post-author">
+<li class="list-group-item comments pb-0 comment-{{ comment.pk }}" id="comment-{{ comment.pk }}">
+    <div class="row py-2" id="comment-{{ comment.pk }}">
+        <div class="col-auto pr-0">
             <a href="{% url 'accounts:view_account' comment.author.profile.slug %}">
-                {{ comment.author.username }}
+                {% if comment.author.profile.image %}
+                    <img class="rounded-circle comments-profile-pic" src="{{ comment.author.profile.image.url }}">
+                {% else %}
+                    <img class="rounded-circle posts-profile-pic" src="/media/default.jpg">
+                {% endif %}
             </a>
         </div>
-    </div>
-    <div class="col-12 pt-2 pb-0 comment-editable-content">
-        {% include "posts/_comment_editable_content.html" %}
-    </div>
-    {% if comment.author == request.user %}
-        <div class="col-12 pl-2 text-right">
-            <button class="btn btn-link btn-sm comment-edit edit-comment-btn" data-edit-comment-btn="{{ comment.pk }}">
-                Edit
-            </button>
-            <button class="btn btn-link btn-sm comment-delete" data-toggle="modal" data-target="#confirmDeleteComment{{ comment.pk }}">
-                Delete
-            </button>
-            {% include "posts/delete_comment_confirm.html" %}
+        <div class="float-right pl-0">
+            <div class="col-12 post-author">
+                <a href="{% url 'accounts:view_account' comment.author.profile.slug %}">
+                    {{ comment.author.username }}
+                </a>
+            </div>
         </div>
-    {% endif %}
+        <div class="col-12 pt-2 pb-0 comment-editable-content">
+            {% include "posts/_comment_editable_content.html" %}
+        </div>
+        {% if comment.author == request.user %}
+            <div class="col-12 pl-2 text-right">
+                <button class="btn btn-link btn-sm comment-edit edit-comment-btn" data-edit-comment-btn="{{ comment.pk }}">
+                    Edit
+                </button>
+                <button class="btn btn-link btn-sm comment-delete" data-toggle="modal" data-target="#confirmDeleteComment{{ comment.pk }}">
+                    Delete
+                </button>
+                {% include "posts/delete_comment_confirm.html" %}
+            </div>
+        {% endif %}
 
-    <div class="col-12 text-right">
-        <small class="comment-date">
-            {{ comment.date_posted|date:"g:i A - d M Y" }}
-        </small>
+        <div class="col-12 text-right">
+            <small class="comment-date">
+                {{ comment.date_posted|date:"g:i A - d M Y" }}
+            </small>
+        </div>
     </div>
-</div>
+</li>

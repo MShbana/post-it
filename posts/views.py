@@ -14,7 +14,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST, require_GET
 from django.views.generic import TemplateView
 
 
@@ -25,20 +25,33 @@ class Home(TemplateView):
     def get(self, request):
         post_form = PostForm()
         comment_form = CommentForm()
-        # edit_post_form = PostForm()
         form = PostForm()
+
         posts_list, following_list, _ = get_home_posts_list(request)
         posts = get_paginated_posts(request, posts_list)
+
         args = {
             'posts': posts,
             'most_popular_posts': get_most_popular_posts(),
             'post_form': post_form,
             'comment_form': comment_form,
-            # 'edit_post_form': edit_post,
             'suggested_friends': get_suggested_friends(
                                     request, following_list),
         }
         return render(request, self.template_name, args)
+
+@require_GET
+@login_required
+def view_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    comment_form = CommentForm()
+
+    args = {
+        'post': post,
+        'comment_form': comment_form,
+        'comments_count': post.comments.count()
+    }
+    return render(request, 'posts/view_post.html', args)
 
 
 @require_POST
@@ -82,7 +95,6 @@ def new_post(request):
 def new_comment(request):
     post_id = request.POST.get('pk', None)
     post = get_object_or_404(Post, pk=post_id)
-
     comment_form = CommentForm(request.POST)
 
     if comment_form.is_valid():
@@ -92,21 +104,23 @@ def new_comment(request):
         comment.save()
 
         comments = post.comments.all()
+        comments_count = comments.count()
+
         comment_data = {
             'pk': comment.pk,
             'form_is_valid': True,
-            'comments': render_to_string(
-                'posts/_comments_base.html',
-                {
-                    'post': post,
-                    'comments': comments
-                },
-                request=request
-            ),
+            'post_id': post.id,
             'comments_count': render_to_string(
                 'posts/_comments_count_base.html',
                 {
-                    'comments_count': comments.count
+                    'comments_count': comments_count
+                },
+                request=request
+            ),
+            'comment': render_to_string(
+                'posts/_comment_base.html',
+                {
+                    'comment': comment,
                 },
                 request=request
             )
@@ -118,31 +132,6 @@ def new_comment(request):
 
 
 @login_required
-def view_post(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-
-    if request.method == 'POST':
-        comment_form = CommentForm(request.POST)
-        if comment_form.is_valid():
-            comment = comment_form.save(commit=False)
-            comment.author = request.user
-            comment.post = post
-            comment.save()
-
-            messages.success(request, 'Your comment has been added.')
-            return redirect('posts:view_post', post.pk)
-    else:
-        comment_form = CommentForm()
-
-    args = {
-        'post': post,
-        'comment_form': comment_form,
-        'comments_count': post.comments.count()
-    }
-    return render(request, 'posts/view_post.html', args)
-
-
-@login_required
 def edit_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
 
@@ -150,9 +139,9 @@ def edit_post(request, pk):
         raise PermissionDenied()
 
     if request.method == 'POST':
-        form = PostForm(request.POST, instance=post)        
-        if form.is_valid():
-            form.save()
+        edit_post_form = PostForm(request.POST, instance=post)
+        if edit_post_form.is_valid():
+            edit_post_form.save()
 
             data = {
                 'post': render_to_string(
@@ -180,73 +169,19 @@ def edit_post(request, pk):
                 request=request,
             )
         }
-
     return JsonResponse(data)
 
 @login_required
-def cancel_edit_post(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    data = {
-        'post': render_to_string(
-            'posts/_post_editable_content.html',
-            {
-                'post': post
-            },
-            request=request
-        )
-    }
-    return JsonResponse(data)
-
-
-@require_POST
-@login_required
-def delete_post(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    # absolute_url = request.build_absolute_uri(
-    #     reverse('posts:view_post', args=[post.pk])
-    # )
-
-    if request.user != post.user:
-        raise PermissionDenied()
-
-    post.delete()
-    messages.success(request, 'Your post has been successfully deleted.')
-
-    # referer_url = request.META.get('HTTP_REFERER', '/')
-    # if referer_url == absolute_url:
-        # return redirect('posts:home')
-
-    # return HttpResponseRedirect(referer_url)
-    return redirect('posts:home')
-
-
-@require_POST
-@login_required
-def delete_comment(request, pk):
-    comment = get_object_or_404(Comment, pk=pk)
-
-    if request.user != comment.author:
-        raise PermissionDenied()
-
-    comment.delete()
-    messages.success(request, 'Your comment has been successfully deleted.')
-
-    referer_url = request.META.get('HTTP_REFERER', '/')
-
-    return HttpResponseRedirect(referer_url)
-
-
-@login_required
-def edit_commnet(request, pk):
+def edit_comment(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
 
     if request.user != comment.author:
         raise PermissionDenied()
 
     if request.method == 'POST':
-        form = CommentForm(request.POST, instance=comment)
-        if form.is_valid():
-            form.save()
+        edit_comment_form = CommentForm(request.POST, instance=comment)
+        if edit_comment_form.is_valid():
+            edit_comment_form.save()
             data = {
                 'comment': render_to_string(
                     'posts/_comment_editable_content.html',
@@ -256,6 +191,10 @@ def edit_commnet(request, pk):
                     request=request
                 ),
                 'form_is_valid': True
+            }
+        else:
+            data = {
+                'form_is_valid': False
             }
     else:
         edit_comment_form = CommentForm(instance=comment)
@@ -271,7 +210,22 @@ def edit_commnet(request, pk):
         }
     return JsonResponse(data)
 
+@require_GET
+@login_required
+def cancel_edit_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    data = {
+        'post': render_to_string(
+            'posts/_post_editable_content.html',
+            {
+                'post': post
+            },
+            request=request
+        )
+    }
+    return JsonResponse(data)
 
+@require_GET
 @login_required
 def cancel_edit_comment(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
@@ -287,3 +241,59 @@ def cancel_edit_comment(request, pk):
     return JsonResponse(data)
 
 
+@require_POST
+@login_required
+def delete_post(request):
+    pk = request.POST.get('pk', None)
+    post = get_object_or_404(Post, pk=pk)
+
+    if request.user != post.user:
+        raise PermissionDenied()
+
+    data = {}
+    absolute_url = request.build_absolute_uri(
+        reverse('posts:view_post', args=[post.pk])
+    )
+    referer_url = request.META.get('HTTP_REFERER', '/')
+    if referer_url == absolute_url:
+        data = {
+            'redirect': reverse('posts:home')
+        }
+    post.delete()
+    return JsonResponse(data)
+
+
+@require_POST
+@login_required
+def delete_comment(request):
+    pk = request.POST.get('pk', None)
+    comment = get_object_or_404(Comment, pk=pk)
+    post = comment.post
+    if request.user != comment.author:
+        raise PermissionDenied()
+
+    comment.delete()
+    comments_count = post.comments.count()
+
+    data = {
+        'comments_count': render_to_string(
+                'posts/_comments_count_base.html',
+                {
+                    'comments_count': comments_count
+                },
+                request=request
+            ),
+        'post_id': post.pk
+    }
+    if comments_count == 0:
+        data.update({
+            'empty_comments': render_to_string(
+                'posts/_comments_base.html',
+                {
+                    'comments': post.comments.all(),
+                    'post': post,
+                },
+                request=request
+            )
+        })
+    return JsonResponse(data)

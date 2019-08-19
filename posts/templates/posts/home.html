@@ -46,21 +46,10 @@
             </ul>
         </div>
         <div class="col-md-6 pr-1 pl-1 order-1 order-md-2">
-                <div class="col-12 pr-1 pl-1">
-                    {% include "posts/_new_post_form.html" %}
-                </div>
-            {% if posts %}
-                <div class="col-12 pt-2 pr-1 pl-1">
-                    {% include 'posts/_posts_base.html' %}
-                </div>
-                <div class="col-12">
-                    {% include "posts/_paginations.html" with page=posts %}
-                </div>
-            {% else %}
-                <div class="col-12 content-section text-center mb-4">
-                    <h3>There are no posts yet... <br>Follow more people to see their posts in your homepage.</h3>
-                </div>
-            {% endif %}
+            <div class="col-12 pr-1 pl-1">
+                {% include "posts/_new_post_form.html" %}
+            </div>
+            {% include "posts/_posts_base.html" %}
         </div>
         <div class="col-md-3 pr-1 pl-1 pl-sm-2 order-3 order-md-3">
             <a id="popularPosts"></a>

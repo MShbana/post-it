@@ -17,6 +17,11 @@ urlpatterns = [
         name='view_post'
     ),
     path(
+        'ajax/post/new/',
+        views.new_post,
+        name='new_post'
+    ),
+    path(
         'ajax/post/<int:pk>/edit/',
         views.edit_post,
         name='edit_post'
@@ -27,18 +32,18 @@ urlpatterns = [
         name='cancel_edit_post'
     ),
     path(
-        'post/<int:pk>/delete/',
+        'ajax/post/delete/',
         views.delete_post,
         name='delete_post'
     ),
     path(
-        'comment/<int:pk>/delete/',
-        views.delete_comment,
-        name='delete_comment'
+        'ajax/comment/new/',
+        views.new_comment,
+        name='new_comment'
     ),
     path(
         'ajax/comment/<int:pk>/edit/',
-        views.edit_commnet,
+        views.edit_comment,
         name='edit_comment'
     ),
     path(
@@ -47,13 +52,8 @@ urlpatterns = [
         name='cancel_edit_comment'
     ),
     path(
-        'ajax/comment/new/',
-        views.new_comment,
-        name='new_comment'
-    ),
-    path(
-        'ajax/post/new/',
-        views.new_post,
-        name='new_post'
+        'ajax/comment/delete/',
+        views.delete_comment,
+        name='delete_comment'
     ),
 ]

@@ -43,22 +43,7 @@
                 {% include "posts/_new_post_form.html" %}
             </div>
         {% endif %}
-        {% if posts %}
-            <div class="col-12 pr-1 pl-1">
-                {% include "posts/_posts_base.html" %}
-            </div>
-            <div class="col-12">
-                {% include "posts/_paginations.html" with page=posts %}
-            </div>
-        {% else %}
-            <div class="col-12 content-section text-center mb-2 long-page">
-                {% if user == current_user %}
-                    <h3>You do not have any posts yet...</h3>
-                {% else %}
-                    <h3>{{ user.username }} has no posts yet...</h3>
-                {% endif %}
-            </div>
-        {% endif %}
+        {% include "posts/_posts_base.html" %}
     </div>
 {% endblock content %}
 {% block scripts %}

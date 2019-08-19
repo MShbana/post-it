@@ -14,16 +14,12 @@
                     Are you sure you want to delete your comment on
                 </span>
                 <span class="post-title">
-                    {% if comment.post.user == request.user %}
-                        Your
-                    {% else %}
-                        {{ comment.post.user }}
-                    {% endif %}
-                </span>Post?
+                    {{ comment.post.title }}
+                </span>?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <form id="comment-delete-form" action="{% url 'posts:delete_comment' comment.pk %}" method="POST">
+                <form class="comment-delete-form" method="POST" data-comment-delete-form="{{ comment.pk }}">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger comment-delete-confirm">
                         Delete

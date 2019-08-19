@@ -1,14 +1,14 @@
 <ul class="list-group">
     <li class="list-group-item header text-center sidebar-header mb-0">
-        {{ post.title.title }} Comments
+        Comments &mdash; {{ post.title.title }}
     </li>
-    {% for comment in comments %}
-        <li class="list-group-item comments pb-0 comment-{{ comment.pk }}" id="comment-{{ comment.pk }}">
+    <div class="post-comments-{{ post.pk }} comments" data-post-comments-id="{{ post.id }}">
+        {% for comment in comments %}
             {% include "posts/_comment_base.html" %}
-        </li>
-    {% empty %}
-        <li class="list-group-item comments text-center">
-            This post has no comments yet...
-        </li>
-    {% endfor %}
+        {% empty %}
+            <li class="list-group-item comments text-center" data-empty-post-comments-id="{{ post.id }}">
+                <strong>This post has no comments.</strong>
+            </li>
+        {% endfor %}
+    </div>
 </ul>

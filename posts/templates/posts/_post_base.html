@@ -46,7 +46,7 @@
                 {% include "posts/_comments_count_base.html" %}
             </button>
         </div>
-        <div class="col-12 view-comments comments hidden pt-4" data-viewcomments-id="{{ post.id }}">
+        <div class="col-12 view-comments hidden pt-4" data-viewcomments-id="{{ post.id }}">
             {% include "posts/_comments_base.html" with comments=post.comments.all %}
         </div>
         <div class="col-12">

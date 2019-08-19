@@ -26,14 +26,7 @@ $(function() {
         return false;
     });
 
-
-    // $('.comment-delete').on("click",function(){
-    //     $(window).scrollTop(0);
-    // });
-
-
-    $('.new-post-form-ajax').on('submit', function(e)  {
-        $(this).submit(false);
+    $(document).on('submit', '.new-post-form-ajax', function(e)  {
         e.preventDefault();
         var $form = $(this);
         var $formData = $form.serialize();
@@ -45,11 +38,14 @@ $(function() {
             success: function(data) {
                 if (data.form_is_valid) {
                     console.log('Post was successfully added.');
-                    $('.posts').prepend(data.post);
+                    if ($('.empty-posts').length) {
+                        $('.empty-posts').remove();
+                        // $('.empty-posts').addClass('hidden');
+                    }
+                    $('.posts').prepend(data.post).hide().fadeIn();
                     $('#view-comments-btn-' + data.pk ).html(data.comments_count);
                     $('#post-' + data.pk).css('background-color', '#FFFFFF');
                     $form[0].reset();
-                    $('div.new-post-success').show().delay(500).fadeOut(3000);
                     window.setTimeout(function() {
                         $('#post-' + data.pk).css('background-color', '#E3E8ED');
                     }, 3000);
@@ -91,7 +87,7 @@ $(function() {
         }
     });
 
-    $(document).on('submit', '.new-comment-form', function(e) {
+    $(document).on('submit', '.new-comment-form-ajax', function(e) {
         e.preventDefault();
         $form = $(this);
         var $formData = $form.serialize();
@@ -104,20 +100,55 @@ $(function() {
             data: $formData + "&pk=" + $post_id,
             success: function(data) {
                 if (data.form_is_valid) {
-                    $postComments.html(data.comments);
-                    $('#view-comments-btn-' + $post_id).html(data.comments_count);
+                    console.log('Comment was successfully added.');
                     $postComments.removeClass('hidden');
                     $form[0].reset();
                     $form.addClass('hidden');
+                    $empty_comments = $('[data-empty-post-comments-id=' + data.post_id + ']');
+                    if ($empty_comments.length) {
+                        $empty_comments.remove();
+                    }
+                    $('[data-post-comments-id=' + $post_id + ']').prepend(data.comment).hide().fadeIn();
+                    $('#view-comments-btn-' + $post_id).html(data.comments_count);
+
                     var $comment = $('.list-group-item.comment-' + data.pk);
                     $comment.css('background-color', '#FFFFFF ');
                     window.setTimeout(function() {
                         $comment.css('background-color', '#C1CCD7');
                     }, 3000);
-                    console.log('Comment was successfully added.');
                 }
                 else {
                     console.log('Comment Creation Failed.');
+                }
+            }
+        });
+        return false;
+    });
+
+
+    $(document).on('submit', '.comment-delete-form', function(e) {
+        e.preventDefault()
+        var $comment_id = $(this).data('comment-delete-form');
+        var $comment = $("#comment-" + $comment_id);
+        $.ajax({
+            type: "POST",
+            url: '/ajax/comment/delete/',
+            data: {
+                'pk': $comment_id
+            },
+            success: function(data) {
+                console.log('Comment deletion was successfull');
+                $('#confirmDeleteComment' + $comment_id).modal('hide');
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+
+                $('#view-comments-btn-' + data.post_id).html(data.comments_count);
+                $comment.slideUp("normal", function() {
+                    $(this).remove();
+                });
+
+                if (data.empty_comments) {
+                    $('[data-viewcomments-id=' + data.post_id + ']').html(data.empty_comments)
                 }
             }
         });
@@ -133,6 +164,7 @@ $(function() {
             url: '/ajax/post/' + $post_id + '/edit/',
             success: function(data) {
                 $post.find($('.post-editable-content')).html(data.edit_post_form);
+                $post.css('background-color', '#FFFFFF');
             }
         });
     });
@@ -146,6 +178,7 @@ $(function() {
             url: '/ajax/comment/' + $comment_id + '/edit/',
             success: function(data) {
                 $comment.find($('.comment-editable-content')).html(data.edit_comment_form);
+                $comment.css('background-color', '#FFFFFF');
             }
         });
     });
@@ -163,9 +196,13 @@ $(function() {
                 if (data.form_is_valid) {
                     console.log('Post was successfully editted');
                     $post.find($('.post-editable-content')).html(data.post);
+                    $post.css('background-color', '#FFFFFF');
+                    window.setTimeout(function() {
+                        $post.css('background-color', '#E3E8ED');
+                    }, 3000);
                 }
                 else {
-                    alert('Post Edit Failed');
+                    console.log('Post Edit Failed');
                 }
             }
         });
@@ -185,7 +222,10 @@ $(function() {
                 if (data.form_is_valid) {
                     console.log('Comment was successfully editted');
                     $comment.find($('.comment-editable-content')).html(data.comment);
-                    $comment.find($('.comment-link')).html(data.comment_link);
+                    $comment.css('background-color', '#FFFFFF ');
+                    window.setTimeout(function() {
+                        $comment.css('background-color', '#C1CCD7');
+                    }, 3000);
                 }
                 else {
                     alert('Comment Edit Failed');
@@ -198,7 +238,6 @@ $(function() {
 
     $(document).on('click', '.cancel-edit-post', function(e) {
         e.preventDefault()
-        var $btn = $(this);
         var $post_id = $(this).data('cancel-edit-post');
         var $post = $("#post-" + $post_id);
         $.ajax({
@@ -206,13 +245,13 @@ $(function() {
             url: '/ajax/post/' + $post_id + '/edit/cancel/',
             success: function(data) {
                 $post.find($('.post-editable-content')).html(data.post);
+                $post.css('background-color', '#E3E8ED');
             }
         });
     });
 
     $(document).on('click', '.cancel-edit-comment', function(e) {
         e.preventDefault()
-        var $btn = $(this);
         var $comment_id = $(this).data('cancel-edit-comment');
         var $comment = $("#comment-" + $comment_id);
         $.ajax({
@@ -220,7 +259,46 @@ $(function() {
             url: '/ajax/comment/' + $comment_id + '/edit/cancel/',
             success: function(data) {
                 $comment.find($('.comment-editable-content')).html(data.comment);
+                $comment.css('background-color', '#C1CCD7');
+
             }
         });
     });
+
+    $(document).on('submit', '.post-delete-form', function(e) {
+        e.preventDefault()
+        var $post_id = $(this).data('post-delete-form');
+        var $post = $("#post-" + $post_id);
+        $.ajax({
+            type: "POST",
+            url: '/ajax/post/delete/',
+            data: {
+                'pk': $post_id
+            },
+            success: function(data) {
+                console.log('Post deletion was successfull');
+                if (data.redirect) {
+                    window.location.href = data.redirect
+                }
+                else {
+                    $('.modal-backdrop').remove();
+                    $('#confirmDeletePost' + $post_id).modal('hide');
+                    $('body').removeClass('modal-open');
+                    $('.modal-backdrop').remove();
+
+                    $post.slideUp("normal", function() {
+                        $(this).remove();
+                    });
+
+                    if ($('.posts').find('.post').length === 1) {
+                        $('.posts').html('<h3 class="content-section text-center py-4 empty-posts"><strong>This page has no posts.</strong></h3>');
+                    }
+                }
+            }
+        });
+        return false;
+    });
+
+
+
 });

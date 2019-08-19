@@ -1,5 +1,12 @@
-<div class="posts">
+<div class="col-12 posts pt-2 pr-1 pl-1">
     {% for post in posts %}
         {% include "posts/_post_base.html" with comments_count=post.comments.all.count %}
+    {% empty %}
+        <h3 class="content-section text-center py-4 empty-posts">
+            <strong>This page has no posts.</strong>
+        </h3>
     {% endfor %}
+</div>
+<div class="col-12">
+    {% include "posts/_paginations.html" with page=posts %}
 </div>

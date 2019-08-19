@@ -28,6 +28,10 @@ body {
     font-weight: bold;
 }
 
+.following-btn {
+    width: 100px;
+}
+
 .post-author a:hover {
     color: #527EA3;
     text-decoration: none;

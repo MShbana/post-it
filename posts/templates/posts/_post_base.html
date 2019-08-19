@@ -39,10 +39,11 @@
             {% include "posts/_post_editable_content.html" %}
         </div>
         <div class="col-12 text-center new-view-comment">
-            <button type="button" class="btn btn-primary float-left w-50 btn-sm new-comment-btn " data-newcomment-btn-id="{{ post.id }}">
+            {% include "posts/_like_base.html" %}
+            <button type="button" class="btn btn-primary btn-sm float-left new-comment-btn " data-newcomment-btn-id="{{ post.id }}">
                 Comment
             </button>
-            <button type="button" class="btn btn-info btn-sm float-right w-50 view-comments-btn " data-viewcomments-btn-id="{{ post.id }}" id="view-comments-btn-{{ post.id }}">
+            <button type="button" class="btn btn-info btn-sm float-right view-comments-btn " data-viewcomments-btn-id="{{ post.id }}" id="view-comments-btn-{{ post.id }}">
                 {% include "posts/_comments_count_base.html" %}
             </button>
         </div>

@@ -297,3 +297,28 @@ def delete_comment(request):
             )
         })
     return JsonResponse(data)
+
+@require_POST
+@login_required
+def like_post(request):
+    current_user = request.user
+    post_id = request.POST.get('pk', None)
+    post = get_object_or_404(Post, pk=post_id)
+
+    if post.likes.filter(id=current_user.id).exists():
+        post.likes.remove(current_user)
+    else:
+        post.likes.add(current_user)
+
+    data = {
+        'likes': render_to_string(
+            'posts/_like_base.html',
+            {
+                'post': post
+            },
+            request=request
+        ),
+        'likes_count': post.total_likes,
+        'form_is_valid': True
+    }
+    return JsonResponse(data)

@@ -1,0 +1,11 @@
+<div class="likes">
+        {% if post in request.user.likes.all %}
+            <button class="btn btn-primary btn-sm float-left mr-2 like-btn" style="width: 70px;" data-like-btn-id="{{ post.id }}">
+                Unlike ({{ post.total_likes }})
+            </button>
+        {% else %}
+            <button class="btn btn-outline-primary btn-sm float-left mr-2 like-btn" style="width: 70px;" data-like-btn-id="{{ post.id }}">
+                Like ({{ post.total_likes }})
+            </button>
+        {% endif %}
+</div>

@@ -299,5 +299,19 @@ $(function() {
     });
 
 
-
+    $(document).on('click', '.like-btn', function(e) {
+        e.preventDefault()
+        var $btn = $(this);
+        var $post_id = $btn.data('like-btn-id');
+        $.ajax({
+            url: '/ajax/post/like/',
+            type: "POST",
+            data: {
+                'pk': $post_id
+            },
+            success: function(data){
+                $('#post-' + $post_id).find('.likes').html(data.likes);
+            }
+        });
+    });
 });

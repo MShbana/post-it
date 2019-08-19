@@ -10,10 +10,15 @@ class Post(models.Model):
                 related_name='posts'
     )
     title = models.CharField(max_length=250, null=False, blank=False)
+    likes = models.ManyToManyField(User, related_name='likes')
     slug = models.SlugField(unique=True, blank=True)
     body = models.TextField()
     date_posted = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
+
+    @property
+    def total_likes(self):
+        return self.likes.count()
 
     class Meta:
         ordering = ('-date_posted',)

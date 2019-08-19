@@ -56,4 +56,9 @@ urlpatterns = [
         views.delete_comment,
         name='delete_comment'
     ),
+    path(
+        'ajax/post/like/',
+        views.like_post,
+        name='like_post'
+    ),
 ]

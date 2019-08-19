@@ -10,7 +10,7 @@ class Post(models.Model):
                 related_name='posts'
     )
     title = models.CharField(max_length=250, null=False, blank=False)
-    likes = models.ManyToManyField(User, related_name='likes')
+    likes = models.ManyToManyField(User, related_name='likes', blank=True)
     slug = models.SlugField(unique=True, blank=True)
     body = models.TextField()
     date_posted = models.DateTimeField(auto_now_add=True)

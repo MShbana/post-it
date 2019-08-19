@@ -58,9 +58,13 @@ http://post-itapp.herokuapp.com/
 3. `python3 -m venv post_it_venv` to create a new virtual environment.
 4. `source post_it_venv/bin/activate` to activate the virtual environment.
 
-4. `pip install -r requirements.txt` to install the required software.
+5. `pip install -r requirements.txt` to install the required software.
 
-5. `python manage.py runserver` to run the server on the default port.
+6. `python manage.py makemigrations` to set the database migrations.
+
+7. `python manage.py migrate` to run the database migrations.
+
+8. `python manage.py runserver` to run the server on the default port.
 
 
 The app will run on http://127.0.0.1:8000 (http://localhost:8000) by default.

@@ -19,6 +19,7 @@ $(function() {
                 $account_wrapper.fadeTo(500, 0.4, function() {
                     $(this).slideUp();
                 });
+                window.location.reload(false);
             }
         });
         return false;

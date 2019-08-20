@@ -29,7 +29,7 @@ http://post-itapp.herokuapp.com/
     * Javascript (JQuery)
     * Bootstrap
 2. Back End (Python3.6.x):
-    * Django 2.2.3.
+    * Django 2.2.4.
     * django-Crispy-forms
     * Django-Contries
 

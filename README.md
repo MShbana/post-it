@@ -7,7 +7,62 @@ This website is for practice purposes.
 http://post-itapp.herokuapp.com/
 
 ---
-## Project Overview
+## About
+
+* A simple Django App that allows registered users to post articles/posts to their profiles, with the option to update/delete their posts.
+* The app has a following/followers system where the user can choose whose posts should appear on their homepage.
+* Comments system on users' posts, with the option to update/delete their comments.
+* Like/Unlike system on users's posts.
+* For a better User Experience; Creating, Updating and Deleting posts/comments are done using AJAX requests to eliminate the page refreshes and to live-update the number of comments at the moment of a comment is created or deleted.
+* Post liking uses an AJAX request to update the number of likes on a post, with each user like.
+* Following/Unfollowing profiles also uses AJAX requests.
+* Following suggested profiles from the hompage uses an AJAX request, then reloads the page with the posts of the newly followed profile.
+* Notifications system will be implemented soon.
+
+---
+
+## Prerequisites
+
+1. Front End:
+    * HTML (Jinja2)
+    * CSS
+    * Javascript (JQuery)
+    * Bootstrap
+2. Back End (Python3.6.x):
+    * Django 2.2.3.
+    * django-Crispy-forms
+    * Django-Contries
+
+---
+
+## Configuration and Installation
+
+1. Set Environment Variables in the ~/.bashrc file:
+
+    ```
+    export EMAIL_HOST_USER='<Your Email>'
+    export EMAIL_HOST_PASSWORD='<Your Email Password>'
+    export SECRET_KEY='<Your App Secret Key>'
+    export DEBUG_VALUE='True'
+    ```
+
+2. `git clone https://github.com/MShbana/post_it.git` to clone the app from GitHub.com.
+3. `python3 -m venv post_it_venv` to create a new virtual environment.
+4. `source post_it_venv/bin/activate` to activate the virtual environment.
+
+5. `pip install -r requirements.txt` to install the required software.
+
+6. `python manage.py makemigrations` to set the database migrations.
+
+7. `python manage.py migrate` to run the database migrations.
+
+8. `python manage.py runserver` to run the server on the default port.
+
+The app will run on http://127.0.0.1:8000 (http://localhost:8000) by default.
+
+---
+
+## Apps and Models
 
 1. **Accounts App:**
     * **User Registeration:** Extended Django's [UserCreationForm][link_UserCreationForm] to add extra fields such as *First Name*, *Last Name*, *Email*, and made those extra fields required, using a mixin.
@@ -33,44 +88,10 @@ http://post-itapp.herokuapp.com/
     * Used Ajax requests for the create/update/delete views.
 
 ---
-## Prerequisites
-1. Front End:
-    * HTML (Jinja2)
-    * CSS
-    * Javascript (JQuery) - AJAX
-    * Bootstrap
-2. Back End (Python3.6.x):
-    * Django 2.2.3.
-    * django-Crispy-forms
-    * Django-Contries
 
----
-## Configuration and Installation
-1. Set Environment Variables in the ~/.bashrc file:
+## TODO
 
-    ```
-    export EMAIL_HOST_USER='<Your Email>'
-    export EMAIL_HOST_PASSWORD='<Your Email Password>'
-    export SECRET_KEY='<Your App Secret Key>'
-    export DEBUG_VALUE='True'
-    ```
-2. `git clone https://github.com/MShbana/post_it.git` to clone the app from GitHub.com.
-3. `python3 -m venv post_it_venv` to create a new virtual environment.
-4. `source post_it_venv/bin/activate` to activate the virtual environment.
-
-5. `pip install -r requirements.txt` to install the required software.
-
-6. `python manage.py makemigrations` to set the database migrations.
-
-7. `python manage.py migrate` to run the database migrations.
-
-8. `python manage.py runserver` to run the server on the default port.
-
-
-The app will run on http://127.0.0.1:8000 (http://localhost:8000) by default.
-
-## TODO List
-* Notifications.
+* Notifications System.
 
 [//]:  # (Links and images relative paths)
 

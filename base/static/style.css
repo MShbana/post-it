@@ -54,6 +54,14 @@ body {
     font-size: 0.9rem;
 }
 
+.comment-notice {
+    /* border: 2px solid #BED4E9; */
+    border-top: 1px solid #BED4E9;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    padding-top: 5px;
+}
+
 .content-section,
 .list-group-item {
     /* background-color: #C1CCD7; */
@@ -207,6 +215,16 @@ body.modal-open div.modal-backdrop {
 
 .hidden {
     display: none;
+}
+
+
+.notification-counter {
+    background-color: #B9EDFD;
+    /* border: 1px solid #06B8EF; */
+    border-radius: 2px;
+    color: #011F28;
+    padding-left: 5px;
+    padding-right: 2px;
 }
 
 /******************* #Responsiveness# ******************/

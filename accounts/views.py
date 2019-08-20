@@ -10,6 +10,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import Http404, JsonResponse
+from django.urls import reverse
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.shortcuts import get_object_or_404, render, redirect
@@ -17,6 +18,7 @@ from django.template.loader import render_to_string
 from django.views.decorators.http import require_POST
 from posts.forms import PostForm, CommentForm
 from posts.orm_utils import get_paginated_posts
+from notifications.signals import notify
 
 
 def register(request):
@@ -177,6 +179,13 @@ def follow_or_unfollow_profile(request):
     if is_following:
         current_user_profile.following.remove(profile_to_follow_or_unfollow)
     else:
+        notify.send(
+            sender=request.user,
+            recipient=profile_to_follow_or_unfollow.user,
+            verb='followed you.',
+            level='success',
+            public=False
+        )
         current_user_profile.following.add(profile_to_follow_or_unfollow)
 
     data = {

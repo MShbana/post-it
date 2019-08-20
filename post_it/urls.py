@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('post_it/', include('post_it.urls'))
 """
 
-
+import notifications.urls
 from accounts import views as account_views
 from base import views as error_views
 from django.conf import settings
@@ -96,6 +96,11 @@ urlpatterns = [
         'change-password/',
         account_views.change_password,
         name='change_password'
+    ),
+    path(
+        'inbox/notifications/',
+        include(notifications.urls),
+        name='notifications'
     ),
 ]
 

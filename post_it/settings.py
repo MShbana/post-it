@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'base.apps.BaseConfig',
     'posts.apps.PostsConfig',
     'accounts.apps.AccountsConfig',
+    'notifications',
     'django_countries',
     'crispy_forms',
     'django.contrib.admin',

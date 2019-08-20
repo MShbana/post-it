@@ -1,0 +1,35 @@
+<div class="alert alert-block alert-{{ notice.level }}">
+      {% if notice in request.user.notifications.unread %}
+      <a class="close pull-right" href="{% url 'notifications:mark_as_read' notice.slug %}">
+          <span class="icon-close">
+              Mark As Read
+          </span>
+      </a>
+      {% endif %}
+      <span class="post-author">
+          <a href="{% url 'accounts:view_account' notice.actor.profile.slug %}">
+              {{ notice.actor }}
+          </a>
+      </span>{{ notice.verb }}
+      {% if notice.target %}
+          <span class="post-title">
+                <a href="{% url 'posts:view_post' notice.target.pk %}">
+                    {{ notice.target }}
+                </a>
+          </span>
+      {% endif %}
+      {% if notice.description %}
+          <div class="comment-notice">
+              <strong>Comment: </strong>{{ notice.description }}
+          </div>
+      {% endif %}
+      <div class="notice-actions">
+          {% for action in notice.data.actions %}
+              <a class="btn" href="{{ action.href }}">{{ action.title }}</a>
+          {% endfor %}
+      </div>
+
+      <p class="pt-2">
+          {{ notice.timesince }} ago
+      </p>
+</div>

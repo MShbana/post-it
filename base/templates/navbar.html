@@ -1,3 +1,8 @@
+{% load notifications_tags %}
+{% load static %}
+<script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
+{% register_notify_callbacks callbacks='fill_notification_list,fill_notification_badge' refresh_period=5 %}
+
 <nav class="navbar navbar-expand navbar-dark bg-custom fixed-top">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -11,18 +16,23 @@
                             Home
                         </a>
                     </li>
-                    {% if request.path == '/' %}
-                        <li class="nav-item">
-                            <a class="nav-link extra-btn" href="{% url 'posts:home' %}#popularPosts">
-                                Popular
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="notification-counter py-1">
+                                <strong>{% live_notify_badge %}</strong>
+                             </span> &nbsp;
+                            Notifications
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a href="{% url 'notifications:unread' %}" class="dropdown-item">
+                                You have {% live_notify_badge %} unread notifications.
                             </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link extra-btn" href="{% url 'posts:home' %}#suggestedFriends">
-                                Suggested
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'notifications:all' %}">
+                                All Notifications (Read and Unread)
                             </a>
-                        </li>
-                    {% endif %}
+                        </div>
+                    </li>
                     <li class="nav-item dropdown text-center">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ request.user.username }}
@@ -34,12 +44,18 @@
                             <a class="dropdown-item" href="{% url 'accounts:view_update_account' %}">
                                 Account
                             </a>
+                            <a class="dropdown-item extra-btn" href="{% url 'posts:home' %}#popularPosts">
+                                Popular Posts
+                            </a>
+                            <a class="dropdown-item extra-btn" href="{% url 'posts:home' %}#suggestedFriends">
+                                Suggested Users
+                            </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{% url 'logout' %}">
                                 Log Out
                             </a>
-                            </div>
-                          </li>
+                        </div>
+                    </li>
                 {% else %}
                     <li class="nav-item mr-auto">
                         <a class="nav-link py-1" href="{% url 'register' %}">Register</a>

@@ -30,6 +30,10 @@ $(function() {
         var $form = $(this);
         var $formData = $form.serialize();
         var $formMethod = $form.attr('method');
+        var $postBtn = $('.newPost');
+
+        $postBtn.attr('disabled', true);
+
         $.ajax({
             type: $formMethod,
             url: '/ajax/post/new/',
@@ -52,6 +56,9 @@ $(function() {
                 else {
                     console.log('Post Creation Failed.');
                 }
+            },
+            complete: function() {
+                $postBtn.attr('disabled', false);
             }
         });
         return false;
@@ -93,6 +100,10 @@ $(function() {
         var $post_id = $form.data('newcomment-form-id');
         var $postComments = $('[data-viewcomments-id=' + $post_id + ']');
         var $formMethod = $form.attr('method');
+        var $postBtn = $('[data-postcomment-btn-id=' + $post_id + ']');
+
+        $postBtn.attr('disabled', true);
+
         $.ajax({
             type: $formMethod,
             url: '/ajax/comment/new/',
@@ -119,6 +130,9 @@ $(function() {
                 else {
                     console.log('Comment Creation Failed.');
                 }
+            },
+            complete: function() {
+                $postBtn.attr('disabled', false);
             }
         });
         return false;

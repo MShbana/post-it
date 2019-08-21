@@ -97,6 +97,9 @@ def new_comment(request):
     post_id = request.POST.get('pk', None)
     post = get_object_or_404(Post, pk=post_id)
     comment_form = CommentForm(request.POST)
+    
+    current_user = request.user
+    post_author = post.user
 
     if comment_form.is_valid():
         comment = comment_form.save(commit=False)
@@ -126,15 +129,16 @@ def new_comment(request):
                 request=request
             )
         }
-        notify.send(
-            sender=request.user,
-            recipient=post.user,
-            verb=f'commented on your post',
-            description=comment.body,
-            target=post,
-            level='info',
-            public=False,
-        )
+        if current_user != post_author:
+            notify.send(
+                sender=request.user,
+                recipient=post.user,
+                verb=f'commented on your post',
+                description=comment.body,
+                target=post,
+                level='info',
+                public=False,
+            )
     else:
         comment_data['form_is_valid'] = False
 
@@ -318,15 +322,17 @@ def like_post(request):
     if post.likes.filter(id=current_user.id).exists():
         post.likes.remove(current_user)
     else:
-        notify.send(
-            sender=current_user,
-            recipient=post.user,
-            verb='liked your post',
-            target=post,
-            level='primary',
-            public=False
-        )
         post.likes.add(current_user)
+        
+        if current_user != post.user:
+            notify.send(
+                sender=current_user,
+                recipient=post.user,
+                verb='liked your post',
+                target=post,
+                level='primary',
+                public=False
+            )
 
     data = {
         'likes': render_to_string(

@@ -17,7 +17,7 @@ http://post-itapp.herokuapp.com/
 * Post liking uses an AJAX request to update the number of likes on a post, with each user like.
 * Following/Unfollowing profiles also uses AJAX requests.
 * Following suggested profiles from the hompage uses an AJAX request, then reloads the page with the posts of the newly followed profile.
-* Notifications system will be implemented soon.
+* Notifications for user's new comments, likes and following.
 
 ---
 
@@ -32,6 +32,7 @@ http://post-itapp.herokuapp.com/
     * Django 2.2.4.
     * django-Crispy-forms
     * Django-Contries
+    * Django-Notifications
 
 ---
 
@@ -86,12 +87,10 @@ The app will run on http://127.0.0.1:8000 (http://localhost:8000) by default.
     * **Comment Model:** Has a Many To One relationship with both the User and Post models.
 3. **CRUD Operations:**
     * Used Ajax requests for the create/update/delete views.
+4. **Notifications App:**
+    * Used Django-notification to implement the notifications for user's comments, likes and following
 
 ---
-
-## TODO
-
-* Notifications System.
 
 [//]:  # (Links and images relative paths)
 

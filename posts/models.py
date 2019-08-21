@@ -51,7 +51,7 @@ class Comment(models.Model):
     date_updated = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ('-date_posted', )
+        ordering = ('date_posted', )
 
     def __repr__(self):
         return f"<Comment: post='{self.post}', body='{self.body}'>"

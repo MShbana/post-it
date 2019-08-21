@@ -50,6 +50,8 @@ $(function() {
         var $follow_button = $(this);
         var $slug = $(this).data('profile-slug');
 
+        $follow_button.attr('disabled', true);
+
         $.ajax({
             type: 'POST',
             url: '/account/ajax/follow/',
@@ -67,6 +69,9 @@ $(function() {
                     $follow_button.removeClass('btn-danger')
                     $follow_button.addClass('btn-success');
                 }
+            },
+            complete: function() {
+                $follow_button.attr('disabled', false);
             }
         });
         return false;

@@ -13,7 +13,11 @@
       </span>{{ notice.verb }}
       {% if notice.target %}
           <span class="post-title">
-                <a href="{% url 'posts:view_post' notice.target.pk %}">
+                {% if notice.action_object %}
+                    <a href="{% url 'posts:view_post' notice.target.pk %}#comment-{{ notice.action_object.pk }}">
+                {% else %}
+                    <a href="{% url 'posts:view_post' notice.target.pk %}">
+                {% endif %}
                     {{ notice.target }}
                 </a>
           </span>

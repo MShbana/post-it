@@ -106,7 +106,6 @@ def new_comment(request):
         comment.author = request.user
         comment.post = post
         comment.save()
-
         comments = post.comments.all()
         comments_count = comments.count()
 
@@ -136,6 +135,7 @@ def new_comment(request):
                 verb=f'commented on your post',
                 description=comment.body,
                 target=post,
+                action_object=comment,
                 level='info',
                 public=False,
             )

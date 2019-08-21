@@ -16,7 +16,11 @@
                 </a>
             </div>
             <div class="col-12 post-link">
-                {% include "posts/_post_link.html" %}
+                <small>
+                    <a class="text-muted" href="{% url 'posts:view_post' post.pk %}#comment-1132">
+                        {{ post.date_posted|date:"g:i A - d M Y" }}
+                    </a>
+                </small>
             </div>
         </div>
         {% if post.user == request.user %}

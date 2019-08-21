@@ -217,6 +217,9 @@ body.modal-open div.modal-backdrop {
     display: none;
 }
 
+.comments:target {
+    background-color: #FFA;
+}
 
 .notification-counter {
     background-color: #B9EDFD;

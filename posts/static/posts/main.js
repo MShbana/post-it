@@ -1,5 +1,4 @@
 $(function() {
-
     $(document).on('click', '.home-following-btn', function(e) {
         e.preventDefault();
         var $follow_button = $(this);
@@ -53,11 +52,11 @@ $(function() {
                     }
                     $('.posts').prepend(data.post).hide().fadeIn();
                     $('#view-comments-btn-' + data.pk ).html(data.comments_count);
-                    $('#post-' + data.pk).css('background-color', '#FFFFFF');
+                    $('#post-' + data.pk).css('background-color', '#FFA');
                     $form[0].reset();
                     window.setTimeout(function() {
                         $('#post-' + data.pk).css('background-color', '#E3E8ED');
-                    }, 3000);
+                    }, 5000);
                 }
                 else {
                     console.log('Post Creation Failed.');
@@ -88,6 +87,8 @@ $(function() {
         }
     });
 
+    var $post = $('#view-post-view');
+    $post.find('.view-comments').removeClass('hidden');
 
     $(document).on('click', '.view-comments-btn', function(e) {
         var $post_id = $(this).data('viewcomments-btn-id');
@@ -128,10 +129,10 @@ $(function() {
                     $('#view-comments-btn-' + $post_id).html(data.comments_count);
 
                     var $comment = $('.list-group-item.comment-' + data.pk);
-                    $comment.css('background-color', '#FFFFFF ');
+                    $comment.css('background-color', '#FFA ');
                     window.setTimeout(function() {
                         $comment.css('background-color', '#C1CCD7');
-                    }, 3000);
+                    }, 5000);
                 }
                 else {
                     console.log('Comment Creation Failed.');
@@ -219,10 +220,10 @@ $(function() {
                 if (data.form_is_valid) {
                     console.log('Post was successfully editted');
                     $post.find($('.post-editable-content')).html(data.post);
-                    $post.css('background-color', '#FFFFFF');
+                    $post.css('background-color', '#FFA');
                     window.setTimeout(function() {
                         $post.css('background-color', '#E3E8ED');
-                    }, 3000);
+                    }, 5000);
                 }
                 else {
                     console.log('Post Edit Failed');
@@ -252,10 +253,10 @@ $(function() {
                 if (data.form_is_valid) {
                     console.log('Comment was successfully editted');
                     $comment.find($('.comment-editable-content')).html(data.comment);
-                    $comment.css('background-color', '#FFFFFF ');
+                    $comment.css('background-color', '#FFA ');
                     window.setTimeout(function() {
                         $comment.css('background-color', '#C1CCD7');
-                    }, 3000);
+                    }, 5000);
                 }
                 else {
                     alert('Comment Edit Failed');

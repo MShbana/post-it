@@ -338,6 +338,9 @@ $(function() {
         e.preventDefault()
         var $btn = $(this);
         var $post_id = $btn.data('like-btn-id');
+
+        $btn.attr('disabled', true);
+
         $.ajax({
             url: '/ajax/post/like/',
             type: "POST",
@@ -346,6 +349,9 @@ $(function() {
             },
             success: function(data){
                 $('#post-' + $post_id).find('.likes').html(data.likes);
+            },
+            complete: function() {
+                $btn.attr('disabled', false);
             }
         });
     });

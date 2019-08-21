@@ -133,7 +133,6 @@ def new_comment(request):
                 sender=request.user,
                 recipient=post.user,
                 verb=f'commented on your post',
-                description=comment.body,
                 target=post,
                 action_object=comment,
                 level='info',

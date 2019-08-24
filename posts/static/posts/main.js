@@ -87,9 +87,6 @@ $(function() {
         }
     });
 
-    // var $post = $('#view-post-view');
-    // $post.find('.view-comments').removeClass('hidden');
-
     $(document).on('click', '.view-comments-btn', function(e) {
         var $post_id = $(this).data('viewcomments-btn-id');
         var $postComments = $('[data-viewcomments-id=' + $post_id + ']');

@@ -1,0 +1,61 @@
+<div class="content-section post mr-0" id="post-{{post.pk}}">
+    <div class="row">
+        <div class="col-auto pr-0">
+            <a href="{% url 'accounts:view_account' post.user.profile.slug %}">
+                {% if post.user.profile.image %}
+                    <img class="rounded-circle posts-profile-pic" src="{{ post.user.profile.image_url }}">
+                {% else %}
+                    <img class="rounded-circle posts-profile-pic" src="/media/default.jpg">
+                {% endif %}
+            </a>
+        </div>
+        <div class="float-right pl-0">
+            <div class="col-12 post-author">
+                <a href="{% url 'accounts:view_account' post.user.profile.slug %}">
+                    {{ post.user.username }}
+                </a>
+            </div>
+            <div class="col-12 post-link">
+                <small>
+                    <a class="text-muted" href="{% url 'posts:view_post' post.pk %}#comment-1132">
+                        {{ post.date_posted|date:"g:i A - d M Y" }}
+                    </a>
+                </small>
+            </div>
+        </div>
+        {% if post.user == request.user %}
+            <div class="dropdown float-right">
+                <button class="btn btn-sm btn-secondary dropdown-toggle" id="dropdownMenuButton-{{ post.pk }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Edit / Delete
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton-{{ post.pk }}">
+                    <button class="dropdown-item btn btn-link btn-sm post-edit edit-post-btn" data-edit-post-btn="{{ post.pk }}">
+                        Edit
+                    </button>
+                    <button class="dropdown-item btn btn-link btn-sm post-delete" data-toggle="modal" data-target="#confirmDeletePost{{ post.pk }}">
+                        Delete
+                    </button>
+                </div>
+            </div>
+            {% include "posts/delete_post_confirm.html" %}
+        {% endif %}
+        <div class="post-editable-content col-12 pt-3 pb-2 pr-2 pl-2">
+            {% include "posts/_post_editable_content.html" %}
+        </div>
+        <div class="col-12 text-center new-view-comment">
+            {% include "posts/_like_base.html" %}
+            <button type="button" class="btn btn-primary btn-sm float-left new-comment-btn " data-newcomment-btn-id="{{ post.id }}">
+                Comment
+            </button>
+            <button type="button" class="btn btn-info btn-sm float-right view-comments-btn " data-viewcomments-btn-id="{{ post.id }}" id="view-comments-btn-{{ post.id }}">
+                {% include "posts/_comments_count_base.html" %}
+            </button>
+        </div>
+        <div class="col-12 view-comments pt-4" data-viewcomments-id="{{ post.id }}">
+            {% include "posts/_comments_base.html" with comments=post.comments.all %}
+        </div>
+        <div class="col-12">
+            {% include "posts/_new_comment_form.html" %}
+        </div>
+    </div>
+</div>

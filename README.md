@@ -31,7 +31,7 @@ http://post-itapp.herokuapp.com/
 2. Back End (Python3.6.x):
     * Django 2.2.4.
     * django-Crispy-forms
-    * Django-Contries
+    * Django-Countries
     * Django-Notifications
 
 ---
@@ -88,7 +88,7 @@ The app will run on http://127.0.0.1:8000 (http://localhost:8000) by default.
 3. **CRUD Operations:**
     * Used Ajax requests for the create/update/delete views.
 4. **Notifications App:**
-    * Used Django-notification to implement the notifications for user's comments, likes and following
+    * Used [Django-notification][link_django_notifications] to implement the notifications for user's comments, likes and following
 
 ---
 
@@ -100,3 +100,4 @@ The app will run on http://127.0.0.1:8000 (http://localhost:8000) by default.
 [link_ModelForm]: <https://docs.djangoproject.com/en/2.2/topics/forms/modelforms/>
 [link_PasswordChangeForm]: <https://docs.djangoproject.com/en/2.2/topics/auth/default/#django.contrib.auth.forms.PasswordChangeForm>
 [link_user_model]: <https://docs.djangoproject.com/en/2.2/ref/contrib/auth/>
+[link_django_notifications]: <https://github.com/django-notifications/django-notifications/>

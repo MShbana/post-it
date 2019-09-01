@@ -1,6 +1,5 @@
 # Post It
 
----
 ## Live Version
 http://post-itapp.herokuapp.com/
 

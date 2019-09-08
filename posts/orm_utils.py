@@ -41,5 +41,6 @@ def get_suggested_friends(request, following_list):
     suggested_friends = Profile.objects.all().\
         exclude(pk__in=following_list).\
         exclude(user=request.user).\
-        order_by('-created')[:10]
+        exclude(user__is_active=False).\
+        order_by('created')[:10]
     return suggested_friends

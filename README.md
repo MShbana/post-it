@@ -1,8 +1,5 @@
 # Post It
 
-This website is for practice purposes.
-
----
 ## Live Version
 http://post-itapp.herokuapp.com/
 

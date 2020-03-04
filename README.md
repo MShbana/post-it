@@ -3,7 +3,16 @@
 ## Live Version
 http://post-itapp.herokuapp.com/
 
+**Note:** Sometimes Google blocks sending emails for insecure apps (because this is a free heroku-based website), which is used in the registeration page for email verification.
+
+In case, you encounter this problem, you can log in using this email for testing purposes:
+
+**Email:** post.it.test1@gmail.com
+
+**Password:** Password_123
+
 ---
+
 ## About
 
 * A simple Django App that allows registered users to post articles/posts to their profiles, with the option to update/delete their posts.
@@ -60,6 +69,52 @@ The app will run on http://127.0.0.1:8000 (http://localhost:8000) by default.
 
 ---
 
+## Screenshots of the website:
+
+1. Front-End Validation for the Registeration Form.
+
+    ![Alt text][site_img1]
+
+2. Back-End Validation for the Registeration Form.
+
+    ![Alt text][site_img2]
+
+3. Successful Registeration Email Validation Redirect. 
+
+    ![Alt text][site_img3]
+
+
+4. Sign-In Form.
+
+    ![Alt text][site_img4]
+
+5. Password Reset by Email.
+
+    ![Alt text][site_img5]
+
+6. Profile Page of a profile I am following.
+
+    ![Alt text][site_img6]
+
+1. Profile Followers page.
+
+    ![Alt text][site_img7]
+
+2. Profile Following Page.
+
+    ![Alt text][site_img8]
+
+3. My own Profile.
+
+    ![Alt text][site_img9]
+
+
+10. Update Account Form.
+
+    ![Alt text][site_img10]
+
+---
+
 ## Apps and Models
 
 1. **Accounts App:**
@@ -87,7 +142,6 @@ The app will run on http://127.0.0.1:8000 (http://localhost:8000) by default.
 4. **Notifications App:**
     * Used [Django-notification][link_django_notifications] to implement the notifications for user's comments, likes and following
 
----
 
 [//]:  # (Links and images relative paths)
 
@@ -98,3 +152,20 @@ The app will run on http://127.0.0.1:8000 (http://localhost:8000) by default.
 [link_PasswordChangeForm]: <https://docs.djangoproject.com/en/2.2/topics/auth/default/#django.contrib.auth.forms.PasswordChangeForm>
 [link_user_model]: <https://docs.djangoproject.com/en/2.2/ref/contrib/auth/>
 [link_django_notifications]: <https://github.com/django-notifications/django-notifications/>
+
+
+[site_img1]: <./base/static/screenshots/1.png?raw=true>
+[site_img2]: <./base/static/screenshots/2.png?raw=true>
+[site_img3]: <./base/static/screenshots/3.png?raw=true>
+[site_img4]: <./base/static/screenshots/4.png?raw=true>
+[site_img5]: <./base/static/screenshots/5.png?raw=true>
+[site_img6]: <./base/static/screenshots/6.png?raw=true>
+[site_img7]: <./base/static/screenshots/7.png?raw=true>
+[site_img8]: <./base/static/screenshots/8.png?raw=true>
+[site_img9]: <./base/static/screenshots/9.png?raw=true>
+[site_img10]: <./base/static/screenshots/10.png?raw=true>
+[site_img11]: <./base/static/screenshots/11.png?raw=true>
+[site_img12]: <./base/static/screenshots/12.png?raw=true>
+
+
+

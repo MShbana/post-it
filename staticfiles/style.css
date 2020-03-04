@@ -1,0 +1,259 @@
+html {
+    font-size: 80%;
+    padding-bottom: 40px;
+    padding-top: 60px;
+}
+
+body {
+    background-color: #2B3137;
+}
+
+.bg-custom {
+    background-color: #1F2428;
+    border-bottom: 2px solid #121517;
+}
+
+.site-name {
+    color: #6E6977;
+}
+
+.post-body,
+.post-title {
+    color: #3E4347;
+    word-wrap: break-word;
+}
+
+.post-author a {
+    color: #37546C;
+    font-weight: bold;
+}
+
+.home-following-btn,
+.following-btn {
+    width: 100px;
+}
+
+.post-author a:hover {
+    color: #527EA3;
+    text-decoration: none;
+}
+
+.home-comments-count,
+.post-title a {
+    color: #51575D;
+    font-weight: bold;
+}
+
+.home-comments-count:hover,
+.post-title a:hover {
+    color: #050505;
+    text-decoration: none;
+}
+
+.sidebar-post-title {
+    font-size: 0.9rem;
+}
+
+
+.content-section,
+.list-group-item {
+    /* background-color: #C1CCD7; */
+    background-color: #E3E8ED;
+}
+
+.list-group-item.header {
+    color: #FFFFFF;
+    background-color: #145D6B;
+}
+
+.list-group-item.comments {
+    border: 1px solid #2C3844;
+    background-color: #C1CCD7;
+}
+
+.post-body.comment {
+    color: #28333E;
+}
+
+.comment-date {
+    color: #4A5E73;
+}
+
+
+input[type=text]:focus,
+.new-post textarea:focus {
+    outline: 2px solid #C3EBF4;
+}
+
+.new-post textarea {
+    height: 80px;
+}
+
+button.comment-delete,
+button.post-delete {
+    color: #420E01;
+}
+
+button.comment-delete:hover,
+button.post-delete:hover {
+    color: #FD1C4D;
+}
+
+button.post-edit,
+button.comment-edit {
+    color: #044201;
+}
+
+button.post-edit:hover,
+button.comment-edit:hover {
+    color: #0BBB02;
+}
+
+.new-view-comment {
+    color: #23116F;
+}
+
+.new-view-comment a:hover {
+    color: #491CFD;
+}
+
+.sidebar-header {
+    color: #16222C;
+    font-weight: bold;
+    /* border-bottom: 2px solid #16222C; */
+}
+
+.long-page {
+    min-height: 100vh;
+}
+
+.logged-out {
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.account-header {
+    background-color: #E3E8ED;
+    border: 1px solid #4A545E;
+    border-radius: 3px;
+    padding-top: 15px;
+    margin-bottom: 10px;
+}
+
+.accounts-profile-pic {
+    border: 1px solid #4E6379;
+    border-radius: 3px;
+}
+
+.username,
+.fullname,
+.following-list,
+.followers-list,
+.new-comment-btn,
+.view-comments-btn {
+    font-weight: bold;
+}
+
+.username a {
+    color: #163B60;
+}
+
+.username a:hover {
+    color: #286BAF;
+}
+
+.view-update-account-header {
+    font-weight: bold;
+    color: #4C4F52;
+}
+
+legend {
+    border-bottom: 1px solid #A9B3BC;
+}
+
+.followers-list {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.btn-group > .btn:last-child,
+.following-list {
+    border-bottom: 1px solid #000000;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+#popularPosts::before,
+#suggestedFriends::before {
+    content: "";
+    display: block;
+    height: 60px;
+    margin: -60px 0 0 0;
+}
+
+.follows-you {
+    background-color: #D4D4D4;
+    border-radius: 3px;
+    color: #151471;
+    font-weight: bold;
+    padding: 4px;
+}
+
+body.modal-open div.modal-backdrop {
+    z-index: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+.comments:target {
+    background-color: #FFA;
+}
+
+.notification-counter {
+    background-color: #B9EDFD;
+    /* border: 1px solid #06B8EF; */
+    border-radius: 2px;
+    color: #011F28;
+    padding-left: 5px;
+    padding-right: 2px;
+}
+
+/******************* #Responsiveness# ******************/
+h1 { font-size: 1.8rem; }
+h2 { font-size: 1.6rem; }
+h3 { font-size: 1.4rem; }
+h4 { font-size: 1.2rem; }
+tr { font-size: 1rem; }
+.dropdown .dropdown-menu .dropdown-item { font-size: 1rem; }
+.navbar-toggler  .navbar-toggler-icon {font-size: 0.5rem; }
+.dropdown-menu .dropdown-item { font-size: 0.6rem; }
+.accounts-profile-pic { width: 100px; height: 100px; }
+.posts-profile-pic { width: 50px; height: 50px; }
+.comments-profile-pic { width: 30px; height: 30px; }
+
+@media screen and (max-width: 320px) {
+    html { font-size: 70%; }
+    .accounts-profile-pic { width: 60px; height: 60px;}
+}
+@media screen and (min-width: 321px) and (max-width: 576px) {
+    .accounts-profile-pic { width: 70px; height: 70px;}
+}
+@media screen and (min-width: 577px) and (max-width: 768px) {
+    .accounts-profile-pic { width: 100px; height: 100px;}
+    .posts-profile-pic { width: 60px; height: 60px; }
+}
+@media screen and (max-width: 768px)
+{
+    .extra-btn { display: block; }
+    .content-section { border-bottom: 1px solid #ADB3B8; padding-top: 20px; padding-right: 12px; padding-left: 12px; padding-bottom: 5px; }
+}
+@media screen and (min-width: 769px) {
+    .extra-btn { display: none; }
+    .content-section { border: 1px solid #768593; border-radius: 3px; padding-top: 20px; padding-right: 15px; padding-left: 15px; padding-bottom: 5px; margin-bottom: 5px; }
+}
+/******************* /#Repsponiveness# ******************/

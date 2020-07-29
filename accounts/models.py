@@ -26,7 +26,7 @@ class Profile(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     image = models.ImageField(
-                default='default.jpg',
+                default='media/default.jpg',
                 upload_to='profile_pics',
                 blank=True
     )

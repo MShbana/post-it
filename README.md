@@ -7,7 +7,7 @@ http://post-itapp.herokuapp.com/
 
 In case, you encounter this problem, you can log in using this email for testing purposes:
 
-**Email:** post.it.test1@gmail.com
+**Username:** test_account
 
 **Password:** Password_123
 

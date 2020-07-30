@@ -69,7 +69,11 @@ The app will run on http://127.0.0.1:8000 (http://localhost:8000) by default.
 
 ---
 
-## Screenshots of the website:
+## Overview for some of the website's functionalities and design
+
+![Alt Text][site_gif]
+
+## Screenshots of the website
 
 1. Front-End Validation for the Registeration Form.
 
@@ -154,6 +158,7 @@ The app will run on http://127.0.0.1:8000 (http://localhost:8000) by default.
 [link_django_notifications]: <https://github.com/django-notifications/django-notifications/>
 
 
+[site_gif]: <./base/static/screenshots/post_it.gif>
 [site_img1]: <./base/static/screenshots/1.png?raw=true>
 [site_img2]: <./base/static/screenshots/2.png?raw=true>
 [site_img3]: <./base/static/screenshots/3.png?raw=true>

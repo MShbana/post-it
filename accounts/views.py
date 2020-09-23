@@ -2,7 +2,7 @@ from .tokens import account_activation_token
 from .forms import UserRegisterationForm, UserUpdateForm, ProfileUpdateForm
 from .models import Profile
 from django.contrib import messages
-from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth import update_session_auth_hash, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import User
@@ -28,28 +28,12 @@ def register(request):
     if request.method == 'POST':
         form = UserRegisterationForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.is_active = False
-            user.save()
-
-            current_site = get_current_site(request)
-            mail_subject = 'Activate your Post It account'
-            message = render_to_string(
-                'accounts/account_activation_email.html', {
-                    'user': user,
-                    'domain': current_site.domain,
-                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                    'token': account_activation_token.make_token(user), }
-            )
-            to_email = form.cleaned_data.get('email')
-            email = EmailMessage(
-                        mail_subject, message, to=[to_email]
-            )
-            email.send()
+            user = form.save()
             messages.success(
-                request, 'Your account has been successfully created.'
+                request, 'Your account has been successfully created. You are now logged in.'
             )
-            return render(request, 'accounts/account_created.html')
+            login(request, user)
+            return redirect('posts:home')
     else:
         form = UserRegisterationForm()
 
@@ -73,6 +57,7 @@ def validate_email(request):
     return JsonResponse(data)
 
 
+# DEPRECATED
 def activate_account(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))

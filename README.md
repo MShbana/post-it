@@ -3,14 +3,6 @@
 ## Live Version
 http://post-itapp.herokuapp.com/
 
-**Very Important Note:** Sometimes Google blocks sending emails for insecure apps (because this is a free heroku-based website), which is used in the registeration page for email verification.
-
-In case, you encounter this problem, you can log in using this email for testing purposes:
-
-**Username:** test_account
-
-**Password:** Password_123
-
 ---
 
 ## About

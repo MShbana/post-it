@@ -150,7 +150,7 @@ The app will run on http://127.0.0.1:8000 (http://localhost:8000) by default.
 [link_django_notifications]: <https://github.com/django-notifications/django-notifications/>
 
 
-[site_gif]: <https://media.giphy.com/media/7BGDP4bdpu0msN6S6L/giphy.gif>
+[site_gif]: <./base/static/screenshots/post_it.gif>
 [site_img1]: <./base/static/screenshots/1.png?raw=true>
 [site_img2]: <./base/static/screenshots/2.png?raw=true>
 [site_img3]: <./base/static/screenshots/3.png?raw=true>

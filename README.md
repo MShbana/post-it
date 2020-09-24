@@ -63,43 +63,52 @@ The app will run on http://127.0.0.1:8000 (http://localhost:8000) by default.
 
 ## Screenshots of the website
 
-1. Front-End Validation for the Registeration Form.
-
-    ![Alt text][site_img1]
-
-2. Back-End Validation for the Registeration Form.
-
-    ![Alt text][site_img2]
+1. Home Page
+    ![Alt text][site_img13]
 
 
-3. Sign-In Form.
-
-    ![Alt text][site_img4]
-
-4. Password Reset by Email.
-
-    ![Alt text][site_img5]
-
-5. Profile Page of a profile I am following.
-
-    ![Alt text][site_img6]
-
-6. Profile Followers page.
-
-    ![Alt text][site_img7]
-
-7. Profile Following Page.
-
-    ![Alt text][site_img8]
-
-8. My own Profile.
+2. My own Profile.
 
     ![Alt text][site_img9]
 
 
-9. Update Account Form.
+3. Profile Page of a profile I am following.
+
+    ![Alt text][site_img6]
+
+
+4. Profile Following Page.
+
+    ![Alt text][site_img8]
+
+
+5. Profile Followers page.
+
+    ![Alt text][site_img7]
+
+
+6. Update Account Form.
 
     ![Alt text][site_img10]
+
+
+7. Front-End Validation for the Registeration Form.
+
+    ![Alt text][site_img1]
+
+8. Back-End Validation for the Registeration Form.
+
+    ![Alt text][site_img2]
+
+
+9. Sign-In Form.
+
+    ![Alt text][site_img4]
+
+10. Password Reset by Email.
+
+    ![Alt text][site_img5]
+
 
 ---
 
@@ -155,6 +164,8 @@ The app will run on http://127.0.0.1:8000 (http://localhost:8000) by default.
 [site_img10]: <./base/static/screenshots/10.png?raw=true>
 [site_img11]: <./base/static/screenshots/11.png?raw=true>
 [site_img12]: <./base/static/screenshots/12.png?raw=true>
+[site_img13]: <./base/static/screenshots/13.png?raw=true>
+
 
 
 

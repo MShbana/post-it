@@ -71,37 +71,33 @@ The app will run on http://127.0.0.1:8000 (http://localhost:8000) by default.
 
     ![Alt text][site_img2]
 
-3. Successful Registeration Email Validation Redirect. 
 
-    ![Alt text][site_img3]
-
-
-4. Sign-In Form.
+3. Sign-In Form.
 
     ![Alt text][site_img4]
 
-5. Password Reset by Email.
+4. Password Reset by Email.
 
     ![Alt text][site_img5]
 
-6. Profile Page of a profile I am following.
+5. Profile Page of a profile I am following.
 
     ![Alt text][site_img6]
 
-1. Profile Followers page.
+6. Profile Followers page.
 
     ![Alt text][site_img7]
 
-2. Profile Following Page.
+7. Profile Following Page.
 
     ![Alt text][site_img8]
 
-3. My own Profile.
+8. My own Profile.
 
     ![Alt text][site_img9]
 
 
-10. Update Account Form.
+9. Update Account Form.
 
     ![Alt text][site_img10]
 

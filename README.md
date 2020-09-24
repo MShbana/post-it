@@ -61,10 +61,6 @@ The app will run on http://127.0.0.1:8000 (http://localhost:8000) by default.
 
 ---
 
-## Overview for some of the website's functionalities and design
-
-![Alt Text][site_gif]
-
 ## Screenshots of the website
 
 1. Front-End Validation for the Registeration Form.

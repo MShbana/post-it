@@ -164,7 +164,7 @@ The app will run on http://127.0.0.1:8000 (http://localhost:8000) by default.
 [site_img10]: <./base/static/screenshots/10.png?raw=true>
 [site_img11]: <./base/static/screenshots/11.png?raw=true>
 [site_img12]: <./base/static/screenshots/12.png?raw=true>
-[site_img13]: <./base/static/screenshots/13.png?raw=true>
+[site_img13]: <./base/static/screenshots/13.jpg?raw=true>
 
 
 
